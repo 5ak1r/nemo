@@ -36,18 +36,18 @@ namespace draw
     // thanks sebastian lague
     // BMP header
     bmp.write("BM", 2); // BMP header start
-    draw::writeLittleEndian(bmp, byteCounts[0] + byteCounts[1] + byteCounts[2]); //total file size
-    draw::writeLittleEndian(bmp, (uint32_t)0); // unused
-    draw::writeLittleEndian(bmp, byteCounts[0] + byteCounts[1]); // data offset
+    writeLittleEndian(bmp, byteCounts[0] + byteCounts[1] + byteCounts[2]); //total file size
+    writeLittleEndian(bmp, (uint32_t)0); // unused
+    writeLittleEndian(bmp, byteCounts[0] + byteCounts[1]); // data offset
 
     // DIP header
-    draw::writeLittleEndian(bmp, byteCounts[1]); // DIP header size
-    draw::writeLittleEndian(bmp, width); // image width
-    draw::writeLittleEndian(bmp, height); //image height
-    draw::writeLittleEndian(bmp, (uint16_t)1); // num color planes
-    draw::writeLittleEndian(bmp, (uint16_t)32); // bits per pixel (RGBA)
-    draw::writeLittleEndian(bmp, (uint32_t)0); // RGB format no compression
-    draw::writeLittleEndian(bmp, byteCounts[2]); // data size
+    writeLittleEndian(bmp, byteCounts[1]); // DIP header size
+    writeLittleEndian(bmp, width); // image width
+    writeLittleEndian(bmp, height); //image height
+    writeLittleEndian(bmp, (uint16_t)1); // num color planes
+    writeLittleEndian(bmp, (uint16_t)32); // bits per pixel (RGBA)
+    writeLittleEndian(bmp, (uint32_t)0); // RGB format no compression
+    writeLittleEndian(bmp, byteCounts[2]); // data size
 
     char zeros[16] = {};
     bmp.write(zeros, 16); // print resolution and palette info

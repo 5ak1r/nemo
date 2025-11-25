@@ -1,7 +1,9 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-#include "float.hpp"
+#include "math/float2.hpp"
+#include "math/float3.hpp"
+#include "math/math.hpp"
 
 #include <iostream>
 #include <string>

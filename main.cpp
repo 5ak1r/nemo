@@ -6,11 +6,17 @@ int main() {
 
 	std::vector<std::vector<math::float3>> image(width);
 
-	for(int y = 0; y < height; y++) {
-		for(int x = 0; x < width; x++) {
-			float r = x / (width - 1.0f);
-			float g = y / (height - 1.0f);
-			image[x].push_back({r, g, 0});
+	const math::float2 a = math::float2(2.0f, 34.0f);
+	const math::float2 b = math::float2(22.0f, 3.0f);
+	const math::float2 c = math::float2(63.0f, 0.0f);
+
+	for(float y = 0; y < height; y++) {
+		for(float x = 0; x < width; x++) {
+			if (math::inTriangle(a, b, c, {x, y})) {
+				image[x].push_back(math::float3(0.0f, 0.0f, 1.0f));
+			} else {
+				image[x].push_back(math::float3(0.0f,0.0f,0.0f));
+			}
 		}
 	}
 
