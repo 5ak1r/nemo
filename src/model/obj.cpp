@@ -1,4 +1,5 @@
 #include "obj.hpp"
+#include "model.hpp"
 
 namespace model {
   namespace OBJ {
@@ -11,9 +12,14 @@ namespace model {
       std::string line;
       while(std::getline(file, line)) {
         if(line[0] == '#' || line[0] == 'o') continue;
-          std::vector<std::string> splitLine = helpers::strings::split(line);
-          std::cout << splitLine[0] << std::endl;
+        
+        std::vector<std::string> splitLine = helpers::strings::split(line);
+        for(auto s: splitLine) {
+          std::cout << s << std::endl;
         }
+      }
+
+      return Model{};
     }
   }
 }
