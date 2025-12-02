@@ -1,0 +1,18 @@
+#include "strings.hpp"
+
+namespace helpers {
+  namespace strings {
+    std::vector<std::string> split(const std::string& line, const std::string& delimiter) {
+      std::vector<std::string> tokens;
+      int last = 0;
+      int next = 0;
+
+      while((next = line.find(delimiter, last)) != std::string::npos) {
+        tokens.push_back(line.substr(last, next - last));
+        last = next + 1;
+      }
+
+      return tokens;
+    }
+  }
+}

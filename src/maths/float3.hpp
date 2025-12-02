@@ -1,7 +1,7 @@
 #ifndef FLOAT3_H
 #define FLOAT3_H
 
-namespace math {
+namespace maths {
   union float3 {
     struct { float x, y, z; };
     struct { float r, g, b; };
