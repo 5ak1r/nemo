@@ -11,6 +11,7 @@ namespace helpers {
         tokens.push_back(line.substr(last, next - last));
         last = next + 1;
       }
+      tokens.push_back(line.substr(last));
 
       return tokens;
     }
