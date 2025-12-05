@@ -6,10 +6,13 @@ SRC := main.cpp \
 	$(wildcard src/model/*.cpp) \
 	$(wildcard src/utils/*.cpp)
 
-TARGET := a.out
+TARGET := main.out
 
 $(TARGET):
 	$(CXX) $(SRC) -o $(TARGET)
+
+run:
+	make && ./main.out
 
 clean:
 	rm -f $(TARGET)
