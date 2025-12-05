@@ -1,6 +1,6 @@
 #include "strings.hpp"
 
-namespace helpers {
+namespace utils {
   namespace strings {
     std::vector<std::string> split(const std::string& line, const std::string& delimiter) {
       std::vector<std::string> tokens;

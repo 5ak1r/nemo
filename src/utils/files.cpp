@@ -1,7 +1,7 @@
 
 #include "files.hpp"
 
-namespace helpers {
+namespace utils {
   namespace files {
     bool read(std::ifstream& file, const std::string& name) {
       file.open(name, std::ios::in);

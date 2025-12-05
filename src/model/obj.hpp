@@ -5,8 +5,8 @@
 #include <fstream>
 
 #include "model.hpp"
-#include "../helpers/files.hpp"
-#include "../helpers/strings.hpp"
+#include "../utils/files.hpp"
+#include "../utils/strings.hpp"
 
 namespace model {
   namespace OBJ {

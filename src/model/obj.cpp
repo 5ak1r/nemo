@@ -5,7 +5,7 @@ namespace model {
   namespace OBJ {
     Model read(const std::string& filename) {
       std::ifstream file;
-      if(!helpers::files::read(file, filename)) {
+      if(!utils::files::read(file, filename)) {
         exit(1);
       }
 
@@ -13,7 +13,7 @@ namespace model {
       while(std::getline(file, line)) {
         if(line[0] == '#' || line[0] == 'o') continue;
         
-        std::vector<std::string> splitLine = helpers::strings::split(line);
+        std::vector<std::string> splitLine = utils::strings::split(line);
         for(auto s: splitLine) {
           std::cout << s << std::endl;
         }

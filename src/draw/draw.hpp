@@ -7,7 +7,7 @@
 #include <fstream>
 #include <vector>
 
-#include "../helpers/binaries.hpp"
+#include "../utils/binaries.hpp"
 
 #include "../maths/float2.hpp"
 #include "../maths/float3.hpp"

@@ -1,6 +1,6 @@
 #include "binaries.hpp"
 
-namespace helpers {
+namespace utils {
   namespace binaries {
     void writeLE(std::ofstream& out, uint16_t value) {
       char bytes[2];

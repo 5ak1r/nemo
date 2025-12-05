@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <fstream>
 
-namespace helpers {
+namespace utils {
   namespace binaries {
     void writeLE(std::ofstream& out, uint16_t value);
     void writeLE(std::ofstream& out, uint32_t value);
