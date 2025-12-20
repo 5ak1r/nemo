@@ -23,10 +23,14 @@ int main() {
 	}
 
   draw::BMP::write(image, "test");
-	model::Mesh mesh = model::OBJ::read("resources/fox.obj");
+	model::Mesh mesh = model::OBJ::read("resources/cube.obj");
 
 	const int foxW = 2560;
 	const int foxH = 1600;
 
 	std::vector<std::vector<math::float3>> foxI(width);
+
+	for(auto& v : mesh.vertices) {
+		std::cout << v.position.x << " " << v.position.y << " " << v.position.z << '\n';
+	}
 }

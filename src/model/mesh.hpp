@@ -10,10 +10,10 @@
 namespace model {
   struct Vertex {
     math::float3 position;
-    math::float3 normal;
     math::float2 texture;
+    math::float3 normal;
 
-    Vertex(math::float3 v, math::float3 vn, math::float2 vt) : position(v), normal(vn), texture(vt) {}
+    Vertex(math::float3 v, math::float2 vt, math::float3 vn) : position(v), texture(vt), normal(vn) {}
   };
 
   struct Mesh {

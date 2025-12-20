@@ -31,6 +31,12 @@ namespace model {
             std::stof(splitLine[3])
           );
           meshBuilder.positions.push_back(vertex);
+        } else if(splitLine[0] == "vt") {
+          math::float2 texture(
+            std::stof(splitLine[1]),
+            std::stof(splitLine[2])
+          );
+          meshBuilder.textures.push_back(texture);
         } else if(splitLine[0] == "vn") {
           math::float3 normal(
             std::stof(splitLine[1]),
@@ -38,12 +44,6 @@ namespace model {
             std::stof(splitLine[3])
           );
           meshBuilder.normals.push_back(normal);
-        } else if(splitLine[0] == "vt") {
-          math::float2 texture(
-            std::stof(splitLine[1]),
-            std::stof(splitLine[2])
-          );
-          meshBuilder.textures.push_back(texture);
         } else if(splitLine[0] == "f") {
           std::vector<vKey> face;
 

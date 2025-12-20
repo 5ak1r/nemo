@@ -9,8 +9,8 @@ namespace model {
 
     Vertex v(
       positions[key.v],
-      normals[key.vn],
-      textures[key.vt]
+      textures[key.vt],
+      normals[key.vn]
     );
 
     int index = mesh.vertices.size();
