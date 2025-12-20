@@ -1,16 +1,17 @@
 #ifndef OBJ_H
 #define OBJ_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <unordered_map>
 
-#include "model.hpp"
+#include "mesh.hpp"
 #include "../utils/files.hpp"
 #include "../utils/strings.hpp"
 
 namespace model {
   namespace OBJ {
-    Model read(const std::string& filename);
+    Mesh read(const std::string& filename);
   }
 }
 

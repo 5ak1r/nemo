@@ -1,7 +1,7 @@
 #ifndef FLOAT2_H
 #define FLOAT2_H
 
-namespace maths {
+namespace math {
   struct float2 {
     float x, y;
 

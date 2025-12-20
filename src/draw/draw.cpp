@@ -3,7 +3,7 @@
 namespace draw
 {
   namespace BMP {
-    void write(const std::vector<std::vector<maths::float3>>& image, const std::string& name) {
+    void write(const std::vector<std::vector<math::float3>>& image, const std::string& name) {
       std::ofstream bmp(name + ".bmp", std::ios::binary);
       
       if (!bmp) {
@@ -36,7 +36,7 @@ namespace draw
       // draw using the data
       for (int y = 0; y < image[0].size(); y++) {
         for (int x = 0; x < image.size(); x++) {
-          maths::float3 col = image[x][y];
+          math::float3 col = image[x][y];
           bmp.put(static_cast<char>(col.b * 255));
           bmp.put(static_cast<char>(col.g * 255));
           bmp.put(static_cast<char>(col.r * 255));

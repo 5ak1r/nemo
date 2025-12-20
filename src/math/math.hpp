@@ -3,7 +3,7 @@
 
 #include "float2.hpp"
 
-namespace maths {
+namespace math {
   namespace vectors {
     inline float dot(const float2& a, const float2& b) {
       return a.x * b.x + a.y * b.y;
