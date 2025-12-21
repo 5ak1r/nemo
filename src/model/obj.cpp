@@ -9,7 +9,7 @@ namespace model {
   namespace OBJ {
     Mesh read(const std::string& filename) {
       std::ifstream file;
-      if(!utils::files::read(file, filename)) {
+      if(!utils::file::read(file, filename)) {
         exit(1);
       }
 
@@ -21,7 +21,7 @@ namespace model {
         //skip comments, s (for now) and object name
         if(!line.empty() && std::string("#os").find(line[0]) != std::string::npos) continue;
         
-        std::vector<std::string> splitLine = utils::strings::split(line);
+        std::vector<std::string> splitLine = utils::string::split(line);
 
         //TODO : error handling
         if(splitLine[0] == "v") {
@@ -48,7 +48,7 @@ namespace model {
           std::vector<vKey> face;
 
           for(int f = 1; f < splitLine.size(); f++) {
-            std::vector<std::string> data = utils::strings::split(splitLine[f], "/");
+            std::vector<std::string> data = utils::string::split(splitLine[f], "/");
 
             face.push_back(vKey(
               std::stoi(data[0]) - 1,

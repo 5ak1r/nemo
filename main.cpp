@@ -3,34 +3,26 @@
 #include "src/model/mesh.hpp"
 
 int main() {
-  const int width = 64;
-	const int height = 64;
+  const int width = 1024;
+	const int height = 1024;
 
-	std::vector<std::vector<math::float3>> image(width);
+	model::Mesh mesh = model::OBJ::read("resources/cube.obj");
 
-	const math::float2 a = math::float2(2.0f, 34.0f);
-	const math::float2 b = math::float2(22.0f, 3.0f);
-	const math::float2 c = math::float2(63.0f, 0.0f);
+	std::vector<math::float3> imgRow(width, math::float3(0,0,0));
+	std::vector<std::vector<math::float3>> image(height, imgRow);
 
-	for(float y = 0; y < height; y++) {
-		for(float x = 0; x < width; x++) {
-			if (math::triangles::inTriangle(a, b, c, {x, y})) {
-				image[x].push_back(math::float3(0.0f, 0.0f, 1.0f));
-			} else {
-				image[x].push_back(math::float3(0.0f,0.0f,0.0f));
+	for(int i = 0; i < mesh.vertices.size(); i += 3) {
+		//math::float2 a = mesh.vertices[mesh.triangles[i]];
+		//math::float2 b = mesh.vertices[mesh.triangles[i + 1]];
+		//math::float2 c = mesh.vertices[mesh.triangles[i + 2]];
+
+		for(float y = 0; y < height; y++) {
+			for(float x = 0; x < width; x++) {
+				//if (math::triangle::inTriangle(a, b, c, {x, y}))
+					image[x][y] = math::float3(0.0f, 0.0f, 1.0f);
 			}
 		}
 	}
 
   draw::BMP::write(image, "test");
-	model::Mesh mesh = model::OBJ::read("resources/cube.obj");
-
-	const int foxW = 2560;
-	const int foxH = 1600;
-
-	std::vector<std::vector<math::float3>> foxI(width);
-
-	for(auto& v : mesh.vertices) {
-		std::cout << v.position.x << " " << v.position.y << " " << v.position.z << '\n';
-	}
 }

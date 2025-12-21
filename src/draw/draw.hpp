@@ -11,7 +11,7 @@
 #include "../math/float3.hpp"
 #include "../math/math.hpp"
 
-#include "../utils/binaries.hpp"
+#include "../utils/binary.hpp"
 
 namespace draw {
   namespace BMP {

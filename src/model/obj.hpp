@@ -6,8 +6,8 @@
 #include <unordered_map>
 
 #include "mesh.hpp"
-#include "../utils/files.hpp"
-#include "../utils/strings.hpp"
+#include "../utils/file.hpp"
+#include "../utils/string.hpp"
 
 namespace model {
   namespace OBJ {
