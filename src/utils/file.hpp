@@ -4,7 +4,9 @@
 
 
 namespace utils {
-  namespace file {
-    bool read(std::ifstream& file, const std::string& name);
-  }
+namespace file {
+
+bool Read(std::ifstream& file, const std::string& name);
+
+}
 }

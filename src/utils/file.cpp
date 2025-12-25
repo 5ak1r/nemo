@@ -2,16 +2,18 @@
 #include "file.hpp"
 
 namespace utils {
-  namespace file {
-    bool read(std::ifstream& file, const std::string& name) {
-      file.open(name, std::ios::in);
+namespace file {
 
-      if(!file.is_open()) {
-        std::cerr << "error opening file" << std::endl;
-        return false;
-      }
+bool Read(std::ifstream& file, const std::string& name) {
+  file.open(name, std::ios::in);
 
-      return true;
-    }
+  if(!file.is_open()) {
+    std::cerr << "error opening file" << std::endl;
+    return false;
   }
+
+  return true;
+}
+
+}
 }

@@ -10,9 +10,11 @@
 #include "../utils/string.hpp"
 
 namespace model {
-  namespace OBJ {
-    Mesh read(const std::string& filename);
-  }
+namespace OBJ {
+
+Mesh Read(const std::string& filename);
+
+}
 }
 
 #endif

@@ -2,7 +2,9 @@
 #include <vector>
 
 namespace utils {
-  namespace string {
-    std::vector<std::string> split(const std::string& line, const std::string& delimiter = " ");
-  }
+namespace string {
+  
+std::vector<std::string> Split(const std::string& line, const std::string& delimiter = " ");
+
+}
 }

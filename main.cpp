@@ -6,7 +6,7 @@ int main() {
   const int width = 1024;
 	const int height = 1024;
 
-	model::Mesh mesh = model::OBJ::read("resources/cube.obj");
+	model::Mesh mesh = model::OBJ::Read("resources/cube.obj");
 
 	std::vector<math::float3> imgRow(width, math::float3(0,0,0));
 	std::vector<std::vector<math::float3>> image(height, imgRow);
@@ -24,5 +24,5 @@ int main() {
 		}
 	}
 
-  draw::BMP::write(image, "test");
+  draw::BMP::Write(image, "test");
 }

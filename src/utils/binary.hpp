@@ -5,10 +5,12 @@
 #include <fstream>
 
 namespace utils {
-  namespace binary {
-    void writeLE(std::ofstream& out, uint16_t value);
-    void writeLE(std::ofstream& out, uint32_t value);
-  }
+namespace binary {
+  
+void WriteLE(std::ofstream& out, uint16_t value);
+void WriteLE(std::ofstream& out, uint32_t value);
+
+}
 }
 
 #endif
