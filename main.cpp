@@ -1,6 +1,7 @@
 #include "src/draw/draw.hpp"
-#include "src/model/obj.hpp"
+#include "src/math/matrix.hpp"
 #include "src/model/mesh.hpp"
+#include "src/model/obj.hpp"
 
 int main() {
   const int width = 1024;

@@ -2,11 +2,13 @@
 #define FLOAT3_H
 
 namespace math {
+
 union float3 {
   struct { float x, y, z; };
   struct { float r, g, b; };
 
   float3(float a, float b, float c) : x(a), y(b), z(c) {}
+
 };
 
 inline float3 operator-(const float3& a, const float3& b) {
