@@ -29,7 +29,7 @@ class Matrix {
   static_assert(std::is_arithmetic<T>::value, "Matrix<T> requires an arithmetic type");
 
 public:
-  Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) { mData.fill(0); }
+  Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {}
 
   // setters
   void setData(int pos, T value) {
@@ -42,7 +42,7 @@ public:
   // getters
   int rows() const { return mRows; }
   int cols() const { return mCols; }
-  int size() const { return size; }
+  int size() const { return mSize; }
   std::vector<T> data() const { return mData; }
 
   T& operator()(int i, int j) {
@@ -66,7 +66,7 @@ public:
     if(mRows != other.rows() || mCols != other.cols())
       throw std::invalid_argument("Matrix dimensions must be equal");
 
-    for(int i = 0; i < mSize; i++) mData[i] += static_cast<T>(other.data[i]);
+    for(int i = 0; i < mSize; i++) mData[i] += static_cast<T>(other.data()[i]);
 
     return *this;
   }
@@ -78,7 +78,7 @@ public:
     if(mRows != other.rows() || mCols != other.cols())
       throw std::invalid_argument("Matrix dimensions must be equal");
 
-    for(int i = 0; i < mSize; i++) mData[i] -= static_cast<T>(other.data[i]);
+    for(int i = 0; i < mSize; i++) mData[i] -= static_cast<T>(other.data()[i]);
 
     return *this;
   }
@@ -100,8 +100,10 @@ auto operator+(const Matrix<T1>& a, const Matrix<T2>& b) {
   Matrix<T3> result(a.rows(), a.cols());
 
   for(int i = 0; i < a.size(); i++) {
-    result.setData(i, static_cast<T3>(a.data()[i]) + static_cast<T3>(b.data[i]));
+    result.setData(i, static_cast<T3>(a.data()[i]) + static_cast<T3>(b.data()[i]));
   }
+
+  return result;
 }
 
 template<typename T1, typename T2>
@@ -114,8 +116,10 @@ auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
   Matrix<T3> result(a.rows(), b.cols());
 
   for(int i = 0; i < a.size(); i++) {
-    result.setData(i, static_cast<T3>(a.data()[i] - static_cast<T3>(b.data[i])));
+    result.setData(i, static_cast<T3>(a.data()[i] - static_cast<T3>(b.data()[i])));
   }
+
+  return result;
 }
 
 }

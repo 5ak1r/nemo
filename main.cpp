@@ -26,4 +26,15 @@ int main() {
 	}
 
   draw::BMP::Write(image, "test");
+
+  math::Matrix<int> mat1(2, 2);
+  math::Matrix<float> mat2(2, 2);
+  for(int i = 0; i < 4; i++) {
+    mat1.setData(i, i);
+    mat2.setData(i, i);
+  }
+
+  auto mat3 = mat1 + mat2;
+
+  for(auto m : mat3.data()) std::cout << m << std::endl;
 }
