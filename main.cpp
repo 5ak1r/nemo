@@ -27,14 +27,13 @@ int main() {
 
   draw::BMP::Write(image, "test");
 
-  math::Matrix<int> mat1(2, 2);
-  math::Matrix<float> mat2(2, 2);
+  math::Matrix<int> mat1(4, 4);
   for(int i = 0; i < 4; i++) {
-    mat1.setData(i, i);
-    mat2.setData(i, i);
+    for(int j = 0; j < 4; j++)
+    mat1.setData(i * 4 + j, i * 4 + j);
   }
 
-  auto mat3 = mat1 + mat2;
+  mat1.updateT();
 
-  for(auto m : mat3.data()) std::cout << m << std::endl;
+  for(auto t1 : mat1.transpose()) std::cout << t1 << std::endl;
 }

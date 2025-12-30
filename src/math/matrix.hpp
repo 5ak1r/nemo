@@ -30,6 +30,13 @@ class Matrix {
 
 public:
   Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {}
+  Matrix(int rows, int cols, std::vector<T> data) : mRows(rows), mCols(cols), mSize(rows * cols) {
+    if(data.size() != rows * cols)
+      throw std::invalid_argument("Data does not match row and column size");
+
+    mData = data;
+    updateT();
+  }
 
   // setters
   void setData(int pos, T value) {
@@ -44,6 +51,20 @@ public:
   int cols() const { return mCols; }
   int size() const { return mSize; }
   std::vector<T> data() const { return mData; }
+  std::vector<T> transpose() const { return mTranspose; }
+
+  void updateT() {
+    std::vector<T> transposed;
+    transposed.reserve(mSize);
+
+    for(int i = 0; i < mCols; i++) {
+      for(int j = 0; j < mRows; j++) {
+        transposed.push_back(mData[j * mCols + i]);
+      }
+    }
+
+    mTranspose = std::move(transposed);
+  }
 
   T& operator()(int i, int j) {
     if(i < 0 || i >= mRows || j < 0 || j >= mCols)
@@ -83,11 +104,27 @@ public:
     return *this;
   }
 
+  template<typename T2>
+  Matrix& operator*=(const Matrix<T2>& other) {
+    static_assert(std::is_convertible<T2, T>::value, "Incompatible typing");
+
+    if(mRows != other.columns())
+      throw std::invalid_argument("Other matrix column count must equal row count");
+
+    Matrix<T2> otherT = other.transpose();
+
+    // 1D matrix so they're all in order
+    for(int i = 0; i < mSize; i++) {
+      //todo
+    }
+  }
+
 private:
   int mRows;
   int mCols;
   int mSize;
   std::vector<T> mData;
+  std::vector<T> mTranspose;
 };
 
 template<typename T1, typename T2>
