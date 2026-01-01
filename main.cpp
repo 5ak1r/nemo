@@ -29,10 +29,21 @@ int main() {
 
   math::Matrix<int> mat1(2, 2);
   math::Matrix<int> mat2(2, 2);
+  math::Matrix<float> mat3(4, 2);
   for(int i = 0; i < 4; i++) {
     mat1.setData(i, i);
     mat2.setData(i, i);
+    mat3.setData(i, i);
   }
 
-  std::cout << mat1 << std::endl;
+  for(int i = 0; i < 4; i++) mat3.setData(i + 4, i + 4);
+
+  mat1 *= mat2;
+  std::cout << mat1 << "\n\n";
+
+  auto mat4 = mat1 * mat2;
+  std::cout << (mat1 * mat2) << "\n\n";
+
+  std::cout << mat3 << "\n\n";
+  std::cout << mat3 * mat2 << std::endl;
 }

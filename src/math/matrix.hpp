@@ -37,7 +37,6 @@ public:
       throw std::invalid_argument("Data does not match row and column size");
 
     mData = data;
-    updateT();
   }
 
   // setters
@@ -53,11 +52,12 @@ public:
   int cols() const { return mCols; }
   int size() const { return mSize; }
   std::vector<T> data() const { return mData; }
-  std::vector<T> transpose() const { return mTranspose; }
 
-  void updateT() {
+  std::vector<T> transpose() const {
     std::vector<T> transposed;
     transposed.reserve(mSize);
+
+    if(mRows == 1 || mCols == 1) return mData;
 
     for(int i = 0; i < mCols; i++) {
       for(int j = 0; j < mRows; j++) {
@@ -65,7 +65,7 @@ public:
       }
     }
 
-    mTranspose = std::move(transposed);
+    return transposed;
   }
 
   T& operator()(int i, int j) {
@@ -107,33 +107,13 @@ public:
   }
 
   template<typename T2>
-  Matrix& operator*=(Matrix<T2>& other) {
+  Matrix& operator*=(const Matrix<T2>& other) {
     static_assert(std::is_convertible<T2, T>::value, "Incompatible typing");
 
-    if(mRows != other.cols())
+    if(mCols != other.rows())
       throw std::invalid_argument("Other matrix column count must equal row count");
 
-    std::vector<T> result;
-    result.reserve(mCols * other.rows());
-
-    other.updateT();
-    std::vector<T2> otherT = other.transpose();
-
-    for(int i = 0; i < mRows; i++) {
-      for(int j = 0; j < other.cols(); j++) {
-        T sum = T{};
-        const T* row = &mData[i * mCols];
-        const T2* rowOther = &otherT.data()[j * mCols];
-
-        for(int k = 0; k < mCols; k++) {
-          sum += row[k] * rowOther[k];
-        }
-
-        result.push_back(sum);
-      }
-    }
-
-    mData = std::move(result);
+    *this = multiplyM(*this, other);
     return *this;
   }
 
@@ -142,12 +122,11 @@ private:
   int mCols;
   int mSize;
   std::vector<T> mData;
-  std::vector<T> mTranspose;
 };
 
 template<typename T1, typename T2>
 auto operator+(const Matrix<T1>& a, const Matrix<T2>& b) {
-  typedef typename std::common_type_t<T1, T2> T3;
+  using T3 = std::common_type_t<T1, T2>;
 
   if(a.rows() != b.rows() || a.cols() != b.cols())
     throw std::invalid_argument("Matrix dimensions must be equal");
@@ -163,7 +142,7 @@ auto operator+(const Matrix<T1>& a, const Matrix<T2>& b) {
 
 template<typename T1, typename T2>
 auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
-  typedef typename std::common_type_t<T1, T2> T3;
+  using T3 = std::common_type_t<T1, T2>;
 
   if(a.rows() != b.rows() || a.cols() != b.cols())
     throw std::invalid_argument("Matrix dimensions must be equal");
@@ -177,10 +156,47 @@ auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
   return result;
 }
 
+template<typename T1, typename T2>
+auto operator*(const Matrix<T1>& a, const Matrix<T2>& b) {
+  using T3 = std::common_type_t<T1, T2>;
+
+  if(a.cols() != b.rows())
+    throw std::invalid_argument("Other matrix column count must equal row count");
+
+  Matrix<T3> res = multiplyM(a, b);
+  return res;
+}
+
+template<typename T1, typename T2>
+auto multiplyM(const Matrix<T1>& a, const Matrix<T2>& b) {
+  using T3 = std::common_type_t<T1, T2>;
+
+  std::vector<T3> result;
+  result.reserve(a.cols() * b.rows());
+
+  auto bT = b.transpose();
+
+  for(int i = 0; i < a.rows(); i++) {
+    for(int j = 0; j < b.cols(); j++) {
+      T3 sum = T3{};
+      const int start = i * a.cols();
+      const int startOther = j * a.cols();
+
+      for(int k = 0; k < a.cols(); k++) {
+        sum += a.data()[start + k] * bT[startOther + k];
+      }
+
+      result.push_back(sum);
+    }
+  }
+
+  return Matrix<T3>(a.rows(), b.cols(), std::move(result));
+}
+
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
   for(int i = 0; i < matrix.size(); i++) {
-    if(i != 0 && i % matrix.rows() == 0) {
+    if(i != 0 && i % matrix.cols() == 0) {
       os << "\n" << matrix.data()[i] << " ";
     } else {
       os << matrix.data()[i] << (i == matrix.size() - 1 ? "" : " ");
