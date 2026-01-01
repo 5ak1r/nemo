@@ -1,6 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <cstddef>
+#include <ostream>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
@@ -105,18 +107,34 @@ public:
   }
 
   template<typename T2>
-  Matrix& operator*=(const Matrix<T2>& other) {
+  Matrix& operator*=(Matrix<T2>& other) {
     static_assert(std::is_convertible<T2, T>::value, "Incompatible typing");
 
-    if(mRows != other.columns())
+    if(mRows != other.cols())
       throw std::invalid_argument("Other matrix column count must equal row count");
 
-    Matrix<T2> otherT = other.transpose();
+    std::vector<T> result;
+    result.reserve(mCols * other.rows());
 
-    // 1D matrix so they're all in order
-    for(int i = 0; i < mSize; i++) {
-      //todo
+    other.updateT();
+    std::vector<T2> otherT = other.transpose();
+
+    for(int i = 0; i < mRows; i++) {
+      for(int j = 0; j < other.cols(); j++) {
+        T sum = T{};
+        const T* row = &mData[i * mCols];
+        const T2* rowOther = &otherT.data()[j * mCols];
+
+        for(int k = 0; k < mCols; k++) {
+          sum += row[k] * rowOther[k];
+        }
+
+        result.push_back(sum);
+      }
     }
+
+    mData = std::move(result);
+    return *this;
   }
 
 private:
@@ -157,6 +175,19 @@ auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
   }
 
   return result;
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
+  for(int i = 0; i < matrix.size(); i++) {
+    if(i != 0 && i % matrix.rows() == 0) {
+      os << "\n" << matrix.data()[i] << " ";
+    } else {
+      os << matrix.data()[i] << (i == matrix.size() - 1 ? "" : " ");
+    }
+  }
+
+  return os;
 }
 
 }
