@@ -10,18 +10,8 @@
 #include "float3.hpp"
 
 /*
-- create a matrix
-  - 2d array or flat array with manipulation (index = row * cols + col)
-  - mat struct -> rows, cols, data
-- access and modify elements
-  - check bounds, decide if 0 based
-- addition / subtraction
-- multiplication / division
-- transpose
 - determinant, inverse
 - eigenvalues
-- optimisations (BLAS)
-- sparce matrices
 */
 
 namespace math {
@@ -31,8 +21,14 @@ class Matrix {
   static_assert(std::is_arithmetic<T>::value, "Matrix<T> requires an arithmetic type");
 
 public:
-  Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {}
+  Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {
+    if(rows <= 0 || cols <= 0)
+      throw std::invalid_argument("Rows and Columns must be greater than zero");
+  }
+
   Matrix(int rows, int cols, std::vector<T> data) : mRows(rows), mCols(cols), mSize(rows * cols) {
+    if(rows <= 0 || cols <= 0)
+      throw std::invalid_argument("Rows and Columns must be greater than zero");
     if(data.size() != rows * cols)
       throw std::invalid_argument("Data does not match row and column size");
 
@@ -52,6 +48,7 @@ public:
   int cols() const { return mCols; }
   int size() const { return mSize; }
   std::vector<T> data() const { return mData; }
+  bool isSquare() const { return mRows == mCols; }
 
   std::vector<T> transpose() const {
     std::vector<T> transposed;
@@ -165,6 +162,42 @@ auto operator*(const Matrix<T1>& a, const Matrix<T2>& b) {
 
   Matrix<T3> res = multiplyM(a, b);
   return res;
+}
+
+template<typename T>
+T det2x2(const Matrix<T>& matrix) {
+  return matrix.data()[0] * matrix.data()[3] - matrix.data()[1] * matrix.data()[2];
+}
+
+// recursive so probably incredibly inefficient, symbolab uses upper triangle form (will investigate)
+template<typename T>
+T det(const Matrix<T>& matrix) {
+  if(!matrix.isSquare())
+    throw std::invalid_argument("Cannot compute the determinant of a non-square matrix");
+
+  if(matrix.rows() == 1) return matrix.data()[0];
+  if(matrix.rows() == 2) return det2x2(matrix);
+
+  T total = 0;
+
+  for(int i = 0; i < matrix.cols(); i++) {
+    Matrix<T> temp = Matrix<T>(matrix.rows() - 1, matrix.cols() - 1);
+    int pos = 0;
+
+    for(int j = 0; j < matrix.size(); j++) {
+      const int row = j / matrix.cols();
+      const int col = j % matrix.cols();
+
+      if(row == 0 || col == i) continue;
+
+      temp.setData(pos++, matrix.data()[j]);
+    }
+
+    int sign = (i % 2 == 0) ? 1 : -1;
+    total += sign * matrix(0, i) * det(temp);
+  }
+
+  return total;
 }
 
 template<typename T1, typename T2>

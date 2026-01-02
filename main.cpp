@@ -45,5 +45,12 @@ int main() {
   std::cout << (mat1 * mat2) << "\n\n";
 
   std::cout << mat3 << "\n\n";
-  std::cout << mat3 * mat2 << std::endl;
+  std::cout << mat3 * mat2 << "\n\n";
+
+  std::cout << math::det(mat2) << "\n\n";
+
+  std::vector<int> data5 = { 1, 2, 3, 4, 5, 5, 52, 24, 12, 23, 1, 44, 234, 9, 2, 1 };
+  math::Matrix<int> mat5(4, 4, data5);
+
+  std::cout << mat5 << math::det(mat5) << "\n\n";
 }
