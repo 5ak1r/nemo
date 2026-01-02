@@ -2,6 +2,7 @@
 #define MATRIX_H
 
 #include <cstddef>
+#include <iomanip>
 #include <ostream>
 #include <stdexcept>
 #include <type_traits>
@@ -223,12 +224,21 @@ auto multiplyM(const Matrix<T1>& a, const Matrix<T2>& b) {
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
+  int width = 0;
+  int precision = 3;
+
   for (int i = 0; i < matrix.size(); i++) {
-    if (i != 0 && i % matrix.cols() == 0) {
-      os << "\n" << matrix.data()[i] << " ";
-    } else {
-      os << matrix.data()[i] << (i == matrix.size() - 1 ? "" : " ");
+    std::string num = std::to_string(matrix.data()[i]);
+    int length = num.length();
+    width = std::max(width, length);
+    if (num.find('.') != std::string::npos) width -= precision;
+  }
+
+  for (int i = 0; i < matrix.rows(); i++) {
+    for (int j = 0; j < matrix.cols(); j++) {
+      os << std::fixed << std::setw(width + 1) << std::setprecision(precision) << matrix(i, j);
     }
+    os << "\n";
   }
 
   return os;

@@ -53,4 +53,5 @@ int main() {
   math::Matrix<int> mat5(4, 4, data5);
 
   std::cout << mat5 << math::det(mat5) << "\n\n";
+  std::cout << mat5 * mat5 << "\n\n";
 }
