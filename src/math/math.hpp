@@ -10,7 +10,7 @@ inline float Dot(const float2& a, const float2& b) {
 }
 
 inline float2 Perpendicular(const float2& a) {
-  return {a.y, -a.x};
+  return { a.y, -a.x };
 }
 }
 

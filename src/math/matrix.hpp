@@ -10,7 +10,7 @@
 #include "float3.hpp"
 
 /*
-- determinant, inverse
+- inverse
 - eigenvalues
 */
 
@@ -22,14 +22,14 @@ class Matrix {
 
 public:
   Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {
-    if(rows <= 0 || cols <= 0)
+    if (rows <= 0 || cols <= 0)
       throw std::invalid_argument("Rows and Columns must be greater than zero");
   }
 
   Matrix(int rows, int cols, std::vector<T> data) : mRows(rows), mCols(cols), mSize(rows * cols) {
-    if(rows <= 0 || cols <= 0)
+    if (rows <= 0 || cols <= 0)
       throw std::invalid_argument("Rows and Columns must be greater than zero");
-    if(data.size() != rows * cols)
+    if (data.size() != rows * cols)
       throw std::invalid_argument("Data does not match row and column size");
 
     mData = data;
@@ -37,7 +37,7 @@ public:
 
   // setters
   void setData(int pos, T value) {
-    if(pos < 0 || pos > mRows * mCols)
+    if (pos < 0 || pos > mRows * mCols)
       throw std::invalid_argument("Index out of range");
 
     mData[pos] = value;
@@ -54,10 +54,10 @@ public:
     std::vector<T> transposed;
     transposed.reserve(mSize);
 
-    if(mRows == 1 || mCols == 1) return mData;
+    if (mRows == 1 || mCols == 1) return mData;
 
-    for(int i = 0; i < mCols; i++) {
-      for(int j = 0; j < mRows; j++) {
+    for (int i = 0; i < mCols; i++) {
+      for (int j = 0; j < mRows; j++) {
         transposed.push_back(mData[j * mCols + i]);
       }
     }
@@ -66,14 +66,14 @@ public:
   }
 
   T& operator()(int i, int j) {
-    if(i < 0 || i >= mRows || j < 0 || j >= mCols)
+    if (i < 0 || i >= mRows || j < 0 || j >= mCols)
       throw std::out_of_range("Matrix index out of range");
 
     return mData[i * mCols + j];
   }
 
   T operator()(int i, int j) const {
-    if(i < 0 || i >= mRows || j < 0 || j >= mCols)
+    if (i < 0 || i >= mRows || j < 0 || j >= mCols)
       throw std::out_of_range("Matrix index out of range");
 
     return mData[i * mCols + j];
@@ -83,10 +83,10 @@ public:
   Matrix& operator+=(const Matrix<T2>& other) {
     static_assert(std::is_convertible<T2, T>::value, "Incompatible typing");
 
-    if(mRows != other.rows() || mCols != other.cols())
+    if (mRows != other.rows() || mCols != other.cols())
       throw std::invalid_argument("Matrix dimensions must be equal");
 
-    for(int i = 0; i < mSize; i++) mData[i] += static_cast<T>(other.data()[i]);
+    for (int i = 0; i < mSize; i++) mData[i] += static_cast<T>(other.data()[i]);
 
     return *this;
   }
@@ -95,10 +95,10 @@ public:
   Matrix& operator-=(const Matrix<T2>& other) {
     static_assert(std::is_convertible<T2, T>::value, "Incompatible typing");
 
-    if(mRows != other.rows() || mCols != other.cols())
+    if (mRows != other.rows() || mCols != other.cols())
       throw std::invalid_argument("Matrix dimensions must be equal");
 
-    for(int i = 0; i < mSize; i++) mData[i] -= static_cast<T>(other.data()[i]);
+    for (int i = 0; i < mSize; i++) mData[i] -= static_cast<T>(other.data()[i]);
 
     return *this;
   }
@@ -107,7 +107,7 @@ public:
   Matrix& operator*=(const Matrix<T2>& other) {
     static_assert(std::is_convertible<T2, T>::value, "Incompatible typing");
 
-    if(mCols != other.rows())
+    if (mCols != other.rows())
       throw std::invalid_argument("Other matrix column count must equal row count");
 
     *this = multiplyM(*this, other);
@@ -125,12 +125,12 @@ template<typename T1, typename T2>
 auto operator+(const Matrix<T1>& a, const Matrix<T2>& b) {
   using T3 = std::common_type_t<T1, T2>;
 
-  if(a.rows() != b.rows() || a.cols() != b.cols())
+  if (a.rows() != b.rows() || a.cols() != b.cols())
     throw std::invalid_argument("Matrix dimensions must be equal");
 
   Matrix<T3> result(a.rows(), a.cols());
 
-  for(int i = 0; i < a.size(); i++) {
+  for (int i = 0; i < a.size(); i++) {
     result.setData(i, static_cast<T3>(a.data()[i]) + static_cast<T3>(b.data()[i]));
   }
 
@@ -141,12 +141,12 @@ template<typename T1, typename T2>
 auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
   using T3 = std::common_type_t<T1, T2>;
 
-  if(a.rows() != b.rows() || a.cols() != b.cols())
+  if (a.rows() != b.rows() || a.cols() != b.cols())
     throw std::invalid_argument("Matrix dimensions must be equal");
 
   Matrix<T3> result(a.rows(), b.cols());
 
-  for(int i = 0; i < a.size(); i++) {
+  for (int i = 0; i < a.size(); i++) {
     result.setData(i, static_cast<T3>(a.data()[i] - static_cast<T3>(b.data()[i])));
   }
 
@@ -157,38 +157,33 @@ template<typename T1, typename T2>
 auto operator*(const Matrix<T1>& a, const Matrix<T2>& b) {
   using T3 = std::common_type_t<T1, T2>;
 
-  if(a.cols() != b.rows())
+  if (a.cols() != b.rows())
     throw std::invalid_argument("Other matrix column count must equal row count");
 
   Matrix<T3> res = multiplyM(a, b);
   return res;
 }
 
-template<typename T>
-T det2x2(const Matrix<T>& matrix) {
-  return matrix.data()[0] * matrix.data()[3] - matrix.data()[1] * matrix.data()[2];
-}
-
 // recursive so probably incredibly inefficient, symbolab uses upper triangle form (will investigate)
 template<typename T>
 T det(const Matrix<T>& matrix) {
-  if(!matrix.isSquare())
+  if (!matrix.isSquare())
     throw std::invalid_argument("Cannot compute the determinant of a non-square matrix");
 
-  if(matrix.rows() == 1) return matrix.data()[0];
-  if(matrix.rows() == 2) return det2x2(matrix);
+  if (matrix.rows() == 1) return matrix.data()[0];
+  if (matrix.rows() == 2) return matrix.data()[0] * matrix.data()[3] - matrix.data()[1] * matrix.data()[2]; //(ad - bc)
 
   T total = 0;
 
-  for(int i = 0; i < matrix.cols(); i++) {
+  for (int i = 0; i < matrix.cols(); i++) {
     Matrix<T> temp = Matrix<T>(matrix.rows() - 1, matrix.cols() - 1);
     int pos = 0;
 
-    for(int j = 0; j < matrix.size(); j++) {
+    for (int j = 0; j < matrix.size(); j++) {
       const int row = j / matrix.cols();
       const int col = j % matrix.cols();
 
-      if(row == 0 || col == i) continue;
+      if (row == 0 || col == i) continue;
 
       temp.setData(pos++, matrix.data()[j]);
     }
@@ -209,13 +204,13 @@ auto multiplyM(const Matrix<T1>& a, const Matrix<T2>& b) {
 
   auto bT = b.transpose();
 
-  for(int i = 0; i < a.rows(); i++) {
-    for(int j = 0; j < b.cols(); j++) {
+  for (int i = 0; i < a.rows(); i++) {
+    for (int j = 0; j < b.cols(); j++) {
       T3 sum = T3{};
       const int start = i * a.cols();
       const int startOther = j * a.cols();
 
-      for(int k = 0; k < a.cols(); k++) {
+      for (int k = 0; k < a.cols(); k++) {
         sum += a.data()[start + k] * bT[startOther + k];
       }
 
@@ -228,8 +223,8 @@ auto multiplyM(const Matrix<T1>& a, const Matrix<T2>& b) {
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
-  for(int i = 0; i < matrix.size(); i++) {
-    if(i != 0 && i % matrix.cols() == 0) {
+  for (int i = 0; i < matrix.size(); i++) {
+    if (i != 0 && i % matrix.cols() == 0) {
       os << "\n" << matrix.data()[i] << " ";
     } else {
       os << matrix.data()[i] << (i == matrix.size() - 1 ? "" : " ");

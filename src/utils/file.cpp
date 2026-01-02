@@ -7,7 +7,7 @@ namespace file {
 bool Read(std::ifstream& file, const std::string& name) {
   file.open(name, std::ios::in);
 
-  if(!file.is_open()) {
+  if (!file.is_open()) {
     std::cerr << "error opening file" << std::endl;
     return false;
   }
