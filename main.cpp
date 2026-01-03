@@ -1,4 +1,5 @@
 #include "src/draw/draw.hpp"
+#include "src/math/lu_decomp.hpp"
 #include "src/math/matrix.hpp"
 #include "src/model/mesh.hpp"
 #include "src/model/obj.hpp"
@@ -65,9 +66,22 @@ int main() {
 
   math::Matrix<int> mat7 = math::Matrix<int>(3, 3, { 2, -1, -2, -4, 6, 3, -4, -2, 8 });
 
-  auto res = math::DoolittleLU(mat7);
-  std::cout << res.pivot << "\n\n";
-  std::cout << res.upper << "\n\n";
-  std::cout << res.lower << "\n\n";
+  auto res7 = math::DoolittleLU(mat7);
+  std::cout << res7.pivot << "\n\n";
+  std::cout << res7.upper << "\n\n";
+  std::cout << res7.lower << "\n\n";
   std::cout << math::det(mat7) << "\n\n";
+
+  std::vector<int> data8 = {
+    7, 12, -3,  8,  0, 15,
+    -6,  4,  9, -1, 11,  2,
+    14, -8,  5,  3, -2, 10,
+    1, 13, -5,  6,  9, -7,
+    8,  0, 16, -4,  2, 11,
+    -9,  5,  3, 12, -1,  4
+  };
+  math::Matrix<int> mat8 = math::Matrix<int>(6, 6, data8 );
+  auto res8 = math::DoolittleLU(mat8);
+  std::cout << res8.upper << "\n\n";
+  std::cout << math::det(mat8) << "\n\n";
 }

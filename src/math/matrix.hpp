@@ -224,14 +224,16 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
 template<typename T>
 auto det(const Matrix<T>& matrix) {
   PLU<T> plu = DoolittleLU<T>(matrix);
-  auto U = plu.upper;
+  auto& U = plu.upper;
 
   using T3 = std::common_type_t<T, float>;
 
   T3 res = T3{1};
   for (int i = 0; i < matrix.rows(); i++) {
-    res *= U(i * matrix.rows() + i);
+    res *= U(i, i);
   }
+
+  if (plu.swaps % 2 != 0) res = -res;
 
   return res;
 }
