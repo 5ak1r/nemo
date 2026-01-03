@@ -4,8 +4,10 @@
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 
 #include "mesh.hpp"
+#include "mesh_builder.hpp"
 #include "../utils/file.hpp"
 #include "../utils/string.hpp"
 

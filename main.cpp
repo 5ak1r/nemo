@@ -31,12 +31,12 @@ int main() {
   math::Matrix<int> mat2(2, 2);
   math::Matrix<float> mat3(4, 2);
   for (int i = 0; i < 4; i++) {
-    mat1.setData(i, i);
-    mat2.setData(i, i);
-    mat3.setData(i, i);
+    mat1(i) = i;
+    mat2(i) = i;
+    mat3(i) = i;
   }
 
-  for (int i = 0; i < 4; i++) mat3.setData(i + 4, i + 4);
+  for (int i = 0; i < 4; i++) mat3(i + 4) = i + 4;
 
   mat1 *= mat2;
   std::cout << mat1 << "\n\n";
@@ -47,11 +47,27 @@ int main() {
   std::cout << mat3 << "\n\n";
   std::cout << mat3 * mat2 << "\n\n";
 
+  std::cout << mat2 << "\n\n";
   std::cout << math::det(mat2) << "\n\n";
 
   std::vector<int> data5 = { 1, 2, 3, 4, 5, 5, 52, 24, 12, 23, 1, 44, 234, 9, 2, 1 };
   math::Matrix<int> mat5(4, 4, data5);
 
-  std::cout << mat5 << math::det(mat5) << "\n\n";
+  std::cout << mat5 << "\n\n";
+  std::cout << math::det(mat5) << "\n\n";
   std::cout << mat5 * mat5 << "\n\n";
+
+  math::Matrix<int> mat6 = math::Matrix<int>::identity(4);
+  std::cout << mat6 << "\n\n";
+
+  mat2(0, 0) = 2;
+  std::cout << mat2 << "\n\n";
+
+  math::Matrix<int> mat7 = math::Matrix<int>(3, 3, { 2, -1, -2, -4, 6, 3, -4, -2, 8 });
+
+  auto res = math::DoolittleLU(mat7);
+  std::cout << res.pivot << "\n\n";
+  std::cout << res.upper << "\n\n";
+  std::cout << res.lower << "\n\n";
+  std::cout << math::det(mat7) << "\n\n";
 }

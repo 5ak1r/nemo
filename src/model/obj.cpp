@@ -1,10 +1,5 @@
 #include "obj.hpp"
 
-#include "mesh_builder.hpp"
-
-#include <unordered_map>
-#include <vector>
-
 namespace model {
 namespace OBJ {
 
