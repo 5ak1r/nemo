@@ -28,51 +28,7 @@ int main() {
 
   draw::BMP::Write(image, "test");
 
-  math::Matrix<int> mat1(2, 2);
-  math::Matrix<int> mat2(2, 2);
-  math::Matrix<float> mat3(4, 2);
-  for (int i = 0; i < 4; i++) {
-    mat1(i) = i;
-    mat2(i) = i;
-    mat3(i) = i;
-  }
-
-  for (int i = 0; i < 4; i++) mat3(i + 4) = i + 4;
-
-  mat1 *= mat2;
-  std::cout << mat1 << "\n\n";
-
-  auto mat4 = mat1 * mat2;
-  std::cout << (mat1 * mat2) << "\n\n";
-
-  std::cout << mat3 << "\n\n";
-  std::cout << mat3 * mat2 << "\n\n";
-
-  std::cout << mat2 << "\n\n";
-  std::cout << math::det(mat2) << "\n\n";
-
-  std::vector<int> data5 = { 1, 2, 3, 4, 5, 5, 52, 24, 12, 23, 1, 44, 234, 9, 2, 1 };
-  math::Matrix<int> mat5(4, 4, data5);
-
-  std::cout << mat5 << "\n\n";
-  std::cout << math::det(mat5) << "\n\n";
-  std::cout << mat5 * mat5 << "\n\n";
-
-  math::Matrix<int> mat6 = math::Matrix<int>::identity(4);
-  std::cout << mat6 << "\n\n";
-
-  mat2(0, 0) = 2;
-  std::cout << mat2 << "\n\n";
-
-  math::Matrix<int> mat7 = math::Matrix<int>(3, 3, { 2, -1, -2, -4, 6, 3, -4, -2, 8 });
-
-  auto res7 = math::DoolittleLU(mat7);
-  std::cout << res7.pivot << "\n\n";
-  std::cout << res7.upper << "\n\n";
-  std::cout << res7.lower << "\n\n";
-  std::cout << math::det(mat7) << "\n\n";
-
-  std::vector<int> data8 = {
+  std::vector<int> data1 = {
     7, 12, -3,  8,  0, 15,
     -6,  4,  9, -1, 11,  2,
     14, -8,  5,  3, -2, 10,
@@ -80,8 +36,21 @@ int main() {
     8,  0, 16, -4,  2, 11,
     -9,  5,  3, 12, -1,  4
   };
-  math::Matrix<int> mat8 = math::Matrix<int>(6, 6, data8 );
-  auto res8 = math::DoolittleLU(mat8);
-  std::cout << res8.upper << "\n\n";
-  std::cout << math::det(mat8) << "\n\n";
+  math::Matrix<int> mat1 = math::Matrix<int>(6, 6, data1 );
+
+  std::cout << mat1.cofactors() << "\n\n";
+  std::cout << mat1.adjugate() << "\n\n";
+
+  std::cout << mat1.inverse() << "\n\n";
+  std::cout << mat1.inverse() * mat1 << "\n\n";
+
+  std::cout << mat1 * mat1 << "\n\n";
+
+  math::Matrix<int> mat2 = math::Matrix<int>(2, 3, { 1, 1, 1, 2, 2, 2 });
+  math::Matrix<int> mat3 = math::Matrix<int>(2, 2, { 1, 1, 2, 2 });
+
+  std::cout << mat2 * mat2.transpose() << std::endl;
+  std::cout << mat2.transpose() << std::endl;
+  std::cout << mat3 * mat2 << "\n\n";
+
 }

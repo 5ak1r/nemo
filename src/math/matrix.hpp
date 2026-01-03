@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 
-#include "lu_decomp.hpp"
+#include "matrix_helpers.hpp"
 
 /*
 - optimise determinant perchance
@@ -55,6 +55,9 @@ public:
   std::vector<T> data() const { return mData; }
   bool isSquare() const { return mRows == mCols; }
 
+  int getRow(int idx) const { return idx / mCols; }
+  int getCol(int idx) const { return idx % mCols; }
+
   // helpers
   void swapRows(int r1, int r2) {
     if (r1 == r2) return;
@@ -66,19 +69,28 @@ public:
       std::swap((*this)(r1, c), (*this)(r2, c));
   }
 
-  std::vector<T> transpose() const {
-    std::vector<T> transposed;
-    transposed.reserve(mSize);
+  Matrix<T> adjugate() const {
+    if (!isSquare())
+      throw std::invalid_argument("Cannot compute the adjugate of a non-square matrix");
 
-    if (mRows == 1 || mCols == 1) return mData;
+    return matrix::adjugate(*this);
+  }
 
-    for (int i = 0; i < mCols; i++) {
-      for (int j = 0; j < mRows; j++) {
-        transposed.push_back(mData[j * mCols + i]);
-      }
-    }
+  // we don't need to convert data types as the determinant matches the type of the data
+  Matrix<T> cofactors() const {
+    return matrix::cofactors(*this);
+  }
 
-    return transposed;
+  auto determinant() const {
+    return matrix::determinant(*this);
+  }
+
+  auto inverse() const {
+    return matrix::inverse(*this);
+  }
+
+  Matrix<T> transpose() const {
+    return matrix::transpose(*this);
   }
 
   // operator overloads
@@ -143,7 +155,7 @@ public:
     if (mCols != other.rows())
       throw std::invalid_argument("Other matrix column count must equal row count");
 
-    *this = multiplyM(*this, other);
+    *this = matrix::multiply(*this, other);
     return *this;
   }
 
@@ -188,20 +200,47 @@ auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
 }
 
 template<typename T1, typename T2>
+auto operator*(const T1& scalar, const Matrix<T2>& matrix) {
+  using T3 = std::common_type_t<T1, T2>;
+
+  Matrix<T3> result(matrix.rows(), matrix.cols());
+
+  for (int i = 0; i < matrix.size(); i++) {
+    result(i) = static_cast<T3>(scalar) * static_cast<T3>(matrix(i));
+  }
+
+  return result;
+}
+
+template<typename T1, typename T2>
 auto operator*(const Matrix<T1>& a, const Matrix<T2>& b) {
   using T3 = std::common_type_t<T1, T2>;
 
   if (a.cols() != b.rows())
     throw std::invalid_argument("Other matrix column count must equal row count");
 
-  Matrix<T3> res = multiplyM(a, b);
+  Matrix<T3> res = matrix::multiply(a, b);
   return res;
+}
+
+template<typename T1, typename T2>
+bool operator==(const Matrix<T1>& a, const Matrix<T2>& b) {
+  if (a.size() != b.size())
+    return false;
+
+  using T3 = std::common_type_t<T1, T2>;
+
+  for (int i = 0; i < a.size(); i++) {
+    if (static_cast<T3>(a(i)) != static_cast<T3>(b(i))) return false;
+  }
+
+  return true;
 }
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
   int width = 0;
-  int precision = 3;
+  int precision = 6;
 
   for (int i = 0; i < matrix.size(); i++) {
     std::ostringstream oss;
@@ -217,51 +256,6 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
   }
 
   return os;
-}
-
-// more helpers
-// LU Decomposition! Much faster :)
-template<typename T>
-auto det(const Matrix<T>& matrix) {
-  PLU<T> plu = DoolittleLU<T>(matrix);
-  auto& U = plu.upper;
-
-  using T3 = std::common_type_t<T, float>;
-
-  T3 res = T3{1};
-  for (int i = 0; i < matrix.rows(); i++) {
-    res *= U(i, i);
-  }
-
-  if (plu.swaps % 2 != 0) res = -res;
-
-  return res;
-}
-
-template<typename T1, typename T2>
-auto multiplyM(const Matrix<T1>& a, const Matrix<T2>& b) {
-  using T3 = std::common_type_t<T1, T2>;
-
-  std::vector<T3> result;
-  result.reserve(a.cols() * b.rows());
-
-  auto bT = b.transpose();
-
-  for (int i = 0; i < a.rows(); i++) {
-    for (int j = 0; j < b.cols(); j++) {
-      T3 sum = T3{};
-      const int start = i * a.cols();
-      const int startOther = j * a.cols();
-
-      for (int k = 0; k < a.cols(); k++) {
-        sum += a(start + k) * bT[startOther + k];
-      }
-
-      result.push_back(sum);
-    }
-  }
-
-  return Matrix<T3>(a.rows(), b.cols(), std::move(result));
 }
 
 }
