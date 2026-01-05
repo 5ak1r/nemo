@@ -89,24 +89,24 @@ public:
     if (!isSquare())
       throw std::invalid_argument("Cannot compute the adjugate of a non-square matrix");
 
-    return matrix::adjugate(*this);
+    return matrix::Adjugate(*this);
   }
 
   // we don't need to convert data types as the determinant matches the type of the data
   Matrix<T> cofactors() const {
-    return matrix::cofactors(*this);
+    return matrix::Cofactors(*this);
   }
 
   auto determinant() const {
-    return matrix::determinant(*this);
+    return matrix::Determinant(*this);
   }
 
   auto inverse() const {
-    return matrix::inverse(*this);
+    return matrix::Inverse(*this);
   }
 
   Matrix<T> transpose() const {
-    return matrix::transpose(*this);
+    return matrix::Transpose(*this);
   }
 
   // operator overloads
@@ -171,7 +171,7 @@ public:
     if (mCols != other.rows())
       throw std::invalid_argument("Other matrix column count must equal row count");
 
-    *this = matrix::multiply(*this, other);
+    *this = matrix::Multiply(*this, other);
     return *this;
   }
 
@@ -235,7 +235,7 @@ auto operator*(const Matrix<T1>& a, const Matrix<T2>& b) {
   if (a.cols() != b.rows())
     throw std::invalid_argument("Other matrix column count must equal row count");
 
-  Matrix<T3> res = matrix::multiply(a, b);
+  Matrix<T3> res = matrix::Multiply(a, b);
   return res;
 }
 

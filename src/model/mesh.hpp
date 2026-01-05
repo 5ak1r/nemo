@@ -4,17 +4,17 @@
 #include <string>
 #include <vector>
 
-#include "../math/float2.hpp"
-#include "../math/float3.hpp"
+#include "../math/double2.hpp"
+#include "../math/double3.hpp"
 
 namespace model {
 
 struct Vertex {
-  math::float3 position;
-  math::float2 texture;
-  math::float3 normal;
+  math::double3 position;
+  math::double2 texture;
+  math::double3 normal;
 
-  Vertex(math::float3 v, math::float2 vt, math::float3 vn) : position(v), texture(vt), normal(vn) {}
+  Vertex(math::double3 v, math::double2 vt, math::double3 vn) : position(v), texture(vt), normal(vn) {}
 };
 
 struct Mesh {

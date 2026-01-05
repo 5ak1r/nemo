@@ -22,20 +22,20 @@ Mesh Read(const std::string& filename) {
 
     //TODO : error handling
     if (splitLine[0] == "v") {
-      math::float3 vertex(
+      math::double3 vertex(
         std::stof(splitLine[1]),
         std::stof(splitLine[2]),
         std::stof(splitLine[3])
       );
       meshBuilder.positions.push_back(vertex);
     } else if (splitLine[0] == "vt") {
-      math::float2 texture(
+      math::double2 texture(
         std::stof(splitLine[1]),
         std::stof(splitLine[2])
       );
       meshBuilder.textures.push_back(texture);
     } else if (splitLine[0] == "vn") {
-      math::float3 normal(
+      math::double3 normal(
         std::stof(splitLine[1]),
         std::stof(splitLine[2]),
         std::stof(splitLine[3])

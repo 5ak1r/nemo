@@ -8,36 +8,37 @@
 
 // f v/vt/vn
 namespace model {
-  struct vKey {
-    int v, vt, vn;
 
-    vKey(int v, int vt, int vn) : v(v), vt(vt), vn(vn) {}
+struct vKey {
+  int v, vt, vn;
 
-    bool operator==(const vKey& other) const {
-      return v == other.v && vt == other.vt && vn == other.vn;
-    }
-  };
+  vKey(int v, int vt, int vn) : v(v), vt(vt), vn(vn) {}
 
-  struct vHash {
-    size_t operator()(const vKey& key) const {
-      return (key.v * 6291469) ^ (key.vt * 3145739) ^ (key.vn * 1572869);
-    }
-  };
+  bool operator==(const vKey& other) const {
+    return v == other.v && vt == other.vt && vn == other.vn;
+  }
+};
 
-  class MeshBuilder {
-  public:
-    MeshBuilder(Mesh& mesh);
+struct vHash {
+  size_t operator()(const vKey& key) const {
+    return (key.v * 6291469) ^ (key.vt * 3145739) ^ (key.vn * 1572869);
+  }
+};
 
-    int getVIndex(const vKey& key);
+class MeshBuilder {
+public:
+  MeshBuilder(Mesh& mesh);
 
-    std::vector<math::float3> positions;
-    std::vector<math::float2> textures;
-    std::vector<math::float3> normals;
+  int getVIndex(const vKey& key);
 
-  private:
-    Mesh& mMesh;
-    std::unordered_map<vKey, int, vHash> mMap;
-  };
+  std::vector<math::double3> positions;
+  std::vector<math::double2> textures;
+  std::vector<math::double3> normals;
+
+private:
+  Mesh& mMesh;
+  std::unordered_map<vKey, int, vHash> mMap;
+};
 }
 
 

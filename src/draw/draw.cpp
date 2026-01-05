@@ -3,9 +3,9 @@
 namespace draw {
 namespace BMP {
 
-void Write(const std::vector<std::vector<math::float3>>& image, const std::string& name) {
+void Write(const std::vector<std::vector<math::double3>>& image, const std::string& name) {
   std::ofstream bmp(name + ".bmp", std::ios::binary);
-  
+
   if (!bmp) {
       throw std::runtime_error("failed to open file");
   }
@@ -13,7 +13,7 @@ void Write(const std::vector<std::vector<math::float3>>& image, const std::strin
   uint32_t width = image.size();
   uint32_t height = image[0].size();
   uint32_t byteCounts[3] = {14, 40, width * height * 4};
-  
+
   // thanks sebastian lague
   // BMP header
   bmp.write("BM", 2); // BMP header start
@@ -36,7 +36,7 @@ void Write(const std::vector<std::vector<math::float3>>& image, const std::strin
   // draw using the data
   for (int y = 0; y < image[0].size(); y++) {
     for (int x = 0; x < image.size(); x++) {
-      math::float3 col = image[x][y];
+      math::double3 col = image[x][y];
       bmp.put(static_cast<char>(col.b * 255));
       bmp.put(static_cast<char>(col.g * 255));
       bmp.put(static_cast<char>(col.r * 255));

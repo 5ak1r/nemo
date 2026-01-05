@@ -1,4 +1,5 @@
 #include "src/draw/draw.hpp"
+#include "src/math/hessenberg.hpp"
 #include "src/math/lu_decomp.hpp"
 #include "src/math/matrix.hpp"
 #include "src/math/vector.hpp"
@@ -11,18 +12,18 @@ int main() {
 
 	model::Mesh mesh = model::OBJ::Read("resources/cube.obj");
 
-	std::vector<math::float3> imgRow(width, math::float3(0,0,0));
-	std::vector<std::vector<math::float3>> image(height, imgRow);
+	std::vector<math::double3> imgRow(width, math::double3(0,0,0));
+	std::vector<std::vector<math::double3>> image(height, imgRow);
 
 	for (int i = 0; i < mesh.vertices.size(); i += 3) {
-		//math::float2 a = mesh.vertices[mesh.triangles[i]];
-		//math::float2 b = mesh.vertices[mesh.triangles[i + 1]];
-		//math::float2 c = mesh.vertices[mesh.triangles[i + 2]];
+		//math::double2 a = mesh.vertices[mesh.triangles[i]];
+		//math::double2 b = mesh.vertices[mesh.triangles[i + 1]];
+		//math::double2 c = mesh.vertices[mesh.triangles[i + 2]];
 
-		for (float y = 0; y < height; y++) {
-			for (float x = 0; x < width; x++) {
+		for (double y = 0; y < height; y++) {
+		for (double x = 0; x < width; x++) {
 				//if (math::triangle::inTriangle(a, b, c, {x, y}))
-					image[x][y] = math::float3(0.0f, 0.0f, 1.0f);
+					image[x][y] = math::double3(0.0f, 0.0f, 1.0f);
 			}
 		}
 	}
@@ -54,8 +55,14 @@ int main() {
   std::cout << mat2.transpose() << std::endl;
   std::cout << mat3 * mat2 << "\n\n";
 
-  std::cout << mat3 << "\n" << math::matrix::subMatrixRow(mat3) << "\n\n";
-  for (auto m : mat3.row(0)) std::cout << m << " ";
-  for (auto m : mat3.row(1)) std::cout << m << " ";
-  std::cout << "\n\n";
+  auto vec1 = mat3.row(0);
+  auto vec2 = mat3.row(1);
+
+  std::cout << math::vector::Add(vec1, vec2) << std::endl;
+  std::cout << math::vector::Subtract(vec1, vec2) << std::endl;
+  std::cout << math::vector::Multiply(vec1, vec2) << std::endl;
+  std::cout << math::vector::Divide(vec1, vec2) << std::endl;
+
+  std::cout << math::vector::Multiply(vec1, 3.0) << std::endl;
+  std::cout << math::hessenberg::Omega(vec1) << std::endl;
 }

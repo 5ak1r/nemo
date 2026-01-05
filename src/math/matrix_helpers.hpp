@@ -13,7 +13,7 @@ namespace matrix {
 
 // LU Decomposition! Much faster :)
 template<typename T>
-auto determinant(const Matrix<T>& matrix) {
+auto Determinant(const Matrix<T>& matrix) {
   PLU<T> plu = DoolittleLU<T>(matrix);
   auto& U = plu.upper;
 
@@ -30,7 +30,7 @@ auto determinant(const Matrix<T>& matrix) {
 }
 
 template<typename T>
-Matrix<T> transpose(const Matrix<T>& matrix) {
+Matrix<T> Transpose(const Matrix<T>& matrix) {
   std::vector<T> transposed;
   transposed.reserve(matrix.size());
 
@@ -47,7 +47,7 @@ Matrix<T> transpose(const Matrix<T>& matrix) {
 }
 
 template<typename T>
-Matrix<T> adjugate(const Matrix<T>& matrix) {
+Matrix<T> Adjugate(const Matrix<T>& matrix) {
   if (!matrix.isSquare())
     throw std::invalid_argument("Cannot compute the cofactor of a non-square matrix");
 
@@ -69,7 +69,7 @@ Matrix<T> adjugate(const Matrix<T>& matrix) {
       }
     }
 
-    auto tempDet = determinant(temp);
+    auto tempDet = Determinant(temp);
     if ((iRow + iCol) % 2 != 0) tempDet = -tempDet;
 
     result(i) = tempDet;
@@ -79,32 +79,32 @@ Matrix<T> adjugate(const Matrix<T>& matrix) {
 }
 
 template<typename T>
-Matrix<T> cofactors(const Matrix<T>& matrix) {
+Matrix<T> Cofactors(const Matrix<T>& matrix) {
   if (!matrix.isSquare())
     throw std::invalid_argument("Cannot compute the adjugate of a non-square matrix");
 
-  return transpose(adjugate(matrix));
+  return Transpose(Adjugate(matrix));
 }
 
 template<typename T>
-auto inverse(const Matrix<T>& matrix) {
+auto Inverse(const Matrix<T>& matrix) {
   if (!matrix.isSquare())
     throw std::invalid_argument("Cannot compute the inverse of a non-square matrix");
 
-  auto det = determinant(matrix);
+  auto det = Determinant(matrix);
 
   if (det == 0)
     throw std::invalid_argument("Cannot compute the inverse of a matrix with 0 determinant");
 
   auto det_recip = 1.0 / det;
-  auto inverse = det_recip * adjugate(matrix);
+  auto inverse = det_recip * Adjugate(matrix);
 
   return inverse;
 }
 
 // modified from https://www.geeksforgeeks.org/cpp/cpp-matrix-multiplication/
 template<typename T1, typename T2>
-auto multiply(const Matrix<T1>& a, const Matrix<T2>& b) {
+auto Multiply(const Matrix<T1>& a, const Matrix<T2>& b) {
   using T3 = std::common_type_t<T1, T2>;
 
   std::vector<T3> result;
@@ -126,7 +126,7 @@ auto multiply(const Matrix<T1>& a, const Matrix<T2>& b) {
 }
 
 template<typename T>
-Matrix<T> subMatrixRow(const Matrix<T>& matrix) {
+Matrix<T> SubMatrixRow(const Matrix<T>& matrix) {
   Matrix<T> result(matrix.rows() - 1, matrix.cols());
 
   for (int i = matrix.cols(); i < matrix.size(); i++)

@@ -8,6 +8,8 @@
 
 #include "mesh.hpp"
 #include "mesh_builder.hpp"
+#include "../math/double2.hpp"
+#include "../math/double3.hpp"
 #include "../utils/file.hpp"
 #include "../utils/string.hpp"
 
