@@ -1,6 +1,7 @@
 #include "src/draw/draw.hpp"
 #include "src/math/lu_decomp.hpp"
 #include "src/math/matrix.hpp"
+#include "src/math/vector.hpp"
 #include "src/model/mesh.hpp"
 #include "src/model/obj.hpp"
 
@@ -53,4 +54,8 @@ int main() {
   std::cout << mat2.transpose() << std::endl;
   std::cout << mat3 * mat2 << "\n\n";
 
+  std::cout << mat3 << "\n" << math::matrix::subMatrixRow(mat3) << "\n\n";
+  for (auto m : mat3.row(0)) std::cout << m << " ";
+  for (auto m : mat3.row(1)) std::cout << m << " ";
+  std::cout << "\n\n";
 }

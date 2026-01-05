@@ -1,19 +1,10 @@
-#ifndef MATH_H
-#define MATH_H
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
 
 #include "float2.hpp"
+#include "vector.hpp"
 
 namespace math {
-namespace vector {
-inline float Dot(const float2& a, const float2& b) {
-  return a.x * b.x + a.y * b.y;
-}
-
-inline float2 Perpendicular(const float2& a) {
-  return { a.y, -a.x };
-}
-}
-
 namespace triangle {
 // check if a point is on the right side (inside the triangle) of a vector a -> b
 // dot product gives forwards/backwards, so we rotate one of the points 90 degrees clockwise to obtain left/right

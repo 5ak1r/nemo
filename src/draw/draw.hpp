@@ -9,7 +9,8 @@
 
 #include "../math/float2.hpp"
 #include "../math/float3.hpp"
-#include "../math/math.hpp"
+#include "../math/vector.hpp"
+#include "../math/triangle.hpp"
 
 #include "../utils/binary.hpp"
 

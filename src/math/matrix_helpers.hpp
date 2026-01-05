@@ -115,7 +115,7 @@ auto multiply(const Matrix<T1>& a, const Matrix<T2>& b) {
       T3 sum = T3{};
 
       for (int k = 0; k < a.cols(); k++) {
-        sum += a(i, k) * b(k, j);
+        sum += static_cast<T3>(a(i, k)) * static_cast<T3>(b(k, j));
       }
 
       result.push_back(sum);
@@ -123,6 +123,16 @@ auto multiply(const Matrix<T1>& a, const Matrix<T2>& b) {
   }
 
   return Matrix<T3>(a.rows(), b.cols(), std::move(result));
+}
+
+template<typename T>
+Matrix<T> subMatrixRow(const Matrix<T>& matrix) {
+  Matrix<T> result(matrix.rows() - 1, matrix.cols());
+
+  for (int i = matrix.cols(); i < matrix.size(); i++)
+    result(i - matrix.cols()) = matrix(i);
+
+  return result;
 }
 
 }

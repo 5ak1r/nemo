@@ -11,8 +11,6 @@
 #include "matrix_helpers.hpp"
 
 /*
-- optimise determinant perchance
-- inverse
 - eigenvalues
 */
 
@@ -49,6 +47,24 @@ public:
   }
 
   // getters
+  std::vector<T> row(int idx) const {
+    std::vector<T> result;
+
+    for (int c = 0; c < mCols; c++)
+      result.push_back(mData[idx * mCols + c]);
+
+    return result;
+  }
+
+  std::vector<T> col(int idx) const {
+    std::vector<T> result;
+
+    for (int r = 0; r < mRows; r++)
+      result.push_back(mData[r * mCols + idx]);
+
+    return result;
+  }
+
   int rows() const { return mRows; }
   int cols() const { return mCols; }
   int size() const { return mSize; }
