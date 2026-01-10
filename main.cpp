@@ -77,4 +77,5 @@ int main() {
 
   std::cout << math::hessenberg::Omega(math::matrix::RemoveMatrixRow(mat4, 0).getCol(0)) << std::endl;
   std::cout << math::hessenberg::HouseholderMatrix(mat4) << std::endl;
+  std::cout << math::hessenberg::BlockMatrix(mat4) << std::endl;
 }

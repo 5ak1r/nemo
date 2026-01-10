@@ -8,6 +8,7 @@
 #include "matrix.hpp"
 #include "vector.hpp"
 
+// https://en.wikipedia.org/wiki/Hessenberg_matrix
 namespace math {
 namespace hessenberg {
 
@@ -50,6 +51,23 @@ auto HouseholderMatrix(const Matrix<T>& mat) {
   return result;
 }
 
+template<typename T>
+auto BlockMatrix(const Matrix<T>& mat) {
+  if (!mat.isSquare())
+    throw std::invalid_argument("Cannot compute the block matrix of a non-square matrix");
+
+  Matrix<T> block(mat.rows() + 1, mat.cols() + 1);
+
+  block(0) = T{1};
+
+  for (int i = 0; i < mat.rows(); i++) {
+    for (int j = 0; j < mat.cols(); j++) {
+      block(i + 1, j + 1) = mat(i, j);
+    }
+  }
+
+  return block;
+}
 
 
 }
