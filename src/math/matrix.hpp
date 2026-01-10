@@ -71,8 +71,31 @@ public:
   std::vector<T> data() const { return mData; }
   bool isSquare() const { return mRows == mCols; }
 
-  int getRow(int idx) const { return idx / mCols; }
-  int getCol(int idx) const { return idx % mCols; }
+  std::vector<T> getRow(int idx) const {
+    if (idx < 0 || idx >= mRows)
+      throw std::invalid_argument("Row index out of bounds");
+
+    int start = idx * mCols;
+
+    return std::vector<T>(mData.begin() + start, mData.begin() + start + mCols);
+  }
+
+  std::vector<T> getCol(int idx) const {
+    if (idx < 0 || idx >= mCols)
+      throw std::invalid_argument("Column index out of bounds");
+
+    std::vector<T> result;
+    result.reserve(mRows);
+
+    for (int row = 0; row < mRows; row++) {
+      result.push_back(mData[row * mCols + idx]);
+    }
+
+    return result;
+  }
+
+  int whichRow(int idx) const { return idx / mCols; }
+  int whichCol(int idx) const { return idx % mCols; }
 
   // helpers
   void swapRows(int r1, int r2) {
@@ -216,13 +239,13 @@ auto operator-(const Matrix<T1>& a, const Matrix<T2>& b) {
 }
 
 template<typename T1, typename T2>
-auto operator*(const T1& scalar, const Matrix<T2>& matrix) {
+auto operator*(const T1& scalar, const Matrix<T2>& mat) {
   using T3 = std::common_type_t<T1, T2>;
 
-  Matrix<T3> result(matrix.rows(), matrix.cols());
+  Matrix<T3> result(mat.rows(), mat.cols());
 
-  for (int i = 0; i < matrix.size(); i++) {
-    result(i) = static_cast<T3>(scalar) * static_cast<T3>(matrix(i));
+  for (int i = 0; i < mat.size(); i++) {
+    result(i) = static_cast<T3>(scalar) * static_cast<T3>(mat(i));
   }
 
   return result;
@@ -254,19 +277,19 @@ bool operator==(const Matrix<T1>& a, const Matrix<T2>& b) {
 }
 
 template<typename T>
-std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
+std::ostream& operator<<(std::ostream& os, const Matrix<T>& mat) {
   int width = 0;
   int precision = 6;
 
-  for (int i = 0; i < matrix.size(); i++) {
+  for (int i = 0; i < mat.size(); i++) {
     std::ostringstream oss;
-    oss << std::fixed << std::setprecision(precision) << matrix(i);
+    oss << std::fixed << std::setprecision(precision) << mat(i);
     width = std::max(width, static_cast<int>(oss.str().length()));
   }
 
-  for (int i = 0; i < matrix.rows(); i++) {
-    for (int j = 0; j < matrix.cols(); j++) {
-      os << std::fixed << std::setw(width + 1) << std::setprecision(precision) << matrix(i, j);
+  for (int i = 0; i < mat.rows(); i++) {
+    for (int j = 0; j < mat.cols(); j++) {
+      os << std::fixed << std::setw(width + 1) << std::setprecision(precision) << mat(i, j);
     }
     os << "\n";
   }

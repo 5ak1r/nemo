@@ -23,18 +23,20 @@ inline double Dot(const double3& a, const double3& b) {
 
 // version that works with matrix rows and columns
 template<typename T>
-double Dot(const std::vector<T>& vector) {
+auto Dot(const std::vector<T>& vec) {
   static_assert(std::is_arithmetic<T>::value, "Not an arithmetic data type");
 
-  double result = 0.0;
-  for (auto v : vector) result += v * v;
+  using T3 = std::common_type_t<T, double>;
+
+  T3 result = T3{};
+  for (auto v : vec) result += static_cast<T3>(v) * static_cast<T3>(v);
 
   return result;
 }
 
 template<typename T>
-inline double Norm(const T& vector) {
-  return std::sqrt(Dot(vector));
+auto Norm(const T& vec) {
+  return std::sqrt(Dot(vec));
 }
 
 inline double2 Perpendicular(const double2& a) {

@@ -65,4 +65,16 @@ int main() {
 
   std::cout << math::vector::Multiply(vec1, 3.0) << std::endl;
   std::cout << math::hessenberg::Omega(vec1) << std::endl;
+
+  std::cout << mat3 << std::endl;
+  std::cout << math::matrix::RemoveMatrixRow(mat3, 0) << std::endl;
+  std::cout << math::matrix::RemoveMatrixCol(mat3, 0) << std::endl;
+  std::cout << math::hessenberg::HouseholderMatrix(mat3) << std::endl;
+
+  math::Matrix<float> mat4(3, 3, { 2, 2, 3, 3, 2, 1, 2, 6, 7 });
+  std::cout << math::matrix::RemoveMatrixRow(mat4, 0) << std::endl;
+  std::cout << math::matrix::RemoveMatrixCol(mat4, 0) << std::endl;
+
+  std::cout << math::hessenberg::Omega(math::matrix::RemoveMatrixRow(mat4, 0).getCol(0)) << std::endl;
+  std::cout << math::hessenberg::HouseholderMatrix(mat4) << std::endl;
 }

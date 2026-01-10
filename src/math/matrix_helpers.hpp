@@ -13,14 +13,14 @@ namespace matrix {
 
 // LU Decomposition! Much faster :)
 template<typename T>
-auto Determinant(const Matrix<T>& matrix) {
-  PLU<T> plu = DoolittleLU<T>(matrix);
+auto Determinant(const Matrix<T>& mat) {
+  PLU<T> plu = DoolittleLU<T>(mat);
   auto& U = plu.upper;
 
   using T3 = std::common_type_t<T, float>;
 
   T3 res = T3{1};
-  for (int i = 0; i < matrix.rows(); i++) {
+  for (int i = 0; i < mat.rows(); i++) {
     res *= U(i, i);
   }
 
@@ -30,42 +30,42 @@ auto Determinant(const Matrix<T>& matrix) {
 }
 
 template<typename T>
-Matrix<T> Transpose(const Matrix<T>& matrix) {
+Matrix<T> Transpose(const Matrix<T>& mat) {
   std::vector<T> transposed;
-  transposed.reserve(matrix.size());
+  transposed.reserve(mat.size());
 
-  if (matrix.rows() == 1 || matrix.cols() == 1)
-    return Matrix<T>(matrix.cols(), matrix.rows(), matrix.data());
+  if (mat.rows() == 1 || mat.cols() == 1)
+    return Matrix<T>(mat.cols(), mat.rows(), mat.data());
 
-  for (int i = 0; i < matrix.cols(); i++) {
-    for (int j = 0; j < matrix.rows(); j++) {
-      transposed.push_back(matrix(j, i));
+  for (int i = 0; i < mat.cols(); i++) {
+    for (int j = 0; j < mat.rows(); j++) {
+      transposed.push_back(mat(j, i));
     }
   }
 
-  return Matrix<T>(matrix.cols(), matrix.rows(), transposed);
+  return Matrix<T>(mat.cols(), mat.rows(), transposed);
 }
 
 template<typename T>
-Matrix<T> Adjugate(const Matrix<T>& matrix) {
-  if (!matrix.isSquare())
+Matrix<T> Adjugate(const Matrix<T>& mat) {
+  if (!mat.isSquare())
     throw std::invalid_argument("Cannot compute the cofactor of a non-square matrix");
 
-  Matrix<T> result(matrix.rows(), matrix.cols());
+  Matrix<T> result(mat.rows(), mat.cols());
 
-  for (int i = 0; i < matrix.size(); i++) {
-    Matrix<T> temp(matrix.rows() - 1, matrix.cols() - 1);
+  for (int i = 0; i < mat.size(); i++) {
+    Matrix<T> temp(mat.rows() - 1, mat.cols() - 1);
     int pos = 0;
 
-    int iRow = matrix.getRow(i);
-    int iCol = matrix.getCol(i);
+    int iRow = mat.whichRow(i);
+    int iCol = mat.whichCol(i);
 
-    for (int j = 0; j < matrix.size(); j++) {
-      int jRow = matrix.getRow(j);
-      int jCol = matrix.getCol(j);
+    for (int j = 0; j < mat.size(); j++) {
+      int jRow = mat.whichRow(j);
+      int jCol = mat.whichCol(j);
 
       if (iRow != jRow && iCol != jCol) {
-        temp(pos++) = matrix(j);
+        temp(pos++) = mat(j);
       }
     }
 
@@ -79,25 +79,25 @@ Matrix<T> Adjugate(const Matrix<T>& matrix) {
 }
 
 template<typename T>
-Matrix<T> Cofactors(const Matrix<T>& matrix) {
-  if (!matrix.isSquare())
+Matrix<T> Cofactors(const Matrix<T>& mat) {
+  if (!mat.isSquare())
     throw std::invalid_argument("Cannot compute the adjugate of a non-square matrix");
 
-  return Transpose(Adjugate(matrix));
+  return Transpose(Adjugate(mat));
 }
 
 template<typename T>
-auto Inverse(const Matrix<T>& matrix) {
-  if (!matrix.isSquare())
+auto Inverse(const Matrix<T>& mat) {
+  if (!mat.isSquare())
     throw std::invalid_argument("Cannot compute the inverse of a non-square matrix");
 
-  auto det = Determinant(matrix);
+  auto det = Determinant(mat);
 
   if (det == 0)
     throw std::invalid_argument("Cannot compute the inverse of a matrix with 0 determinant");
 
   auto det_recip = 1.0 / det;
-  auto inverse = det_recip * Adjugate(matrix);
+  auto inverse = det_recip * Adjugate(mat);
 
   return inverse;
 }
@@ -126,13 +126,38 @@ auto Multiply(const Matrix<T1>& a, const Matrix<T2>& b) {
 }
 
 template<typename T>
-Matrix<T> SubMatrixRow(const Matrix<T>& matrix) {
-  Matrix<T> result(matrix.rows() - 1, matrix.cols());
+Matrix<T> RemoveMatrixRow(const Matrix<T>& mat, int idx) {
+  if (idx < 0 || idx > mat.rows())
+    throw std::invalid_argument("Row index out of bounds");
 
-  for (int i = matrix.cols(); i < matrix.size(); i++)
-    result(i - matrix.cols()) = matrix(i);
+  std::vector<T> result;
+  result.reserve((mat.rows() - 1) * mat.cols());
 
-  return result;
+  std::vector<T> data = mat.data();
+
+  // insert everything up to the row, and then skip the row and insert and rest
+  result.insert(result.end(), data.begin(), data.begin() + idx * mat.cols());
+  result.insert(result.end(), data.begin() + (idx + 1) * mat.cols(), data.end());
+
+  return Matrix<T>(mat.rows() - 1, mat.cols(), result);
+}
+
+template<typename T>
+Matrix<T> RemoveMatrixCol(const Matrix<T>& mat, int idx) {
+  if (idx < 0 || idx > mat.cols())
+    throw std::invalid_argument("Column index out of bounds");
+
+  std::vector<T> result;
+  result.reserve(mat.rows() * (mat.cols() - 1));
+
+  for (int row = 0; row < mat.rows(); row++) {
+    for (int col = 0; col < mat.cols(); col++) {
+      if (col == idx) continue;
+      result.push_back(mat(row, col));
+    }
+  }
+
+  return Matrix<T>(mat.rows(), mat.cols() - 1, result);
 }
 
 }

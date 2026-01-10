@@ -21,19 +21,19 @@ struct PLU {
 
 // modified from https://en.wikipedia.org/wiki/LU_decomposition
 template<typename T>
-PLU<T> DoolittleLU(const Matrix<T>& matrix) {
-  if (!matrix.isSquare())
+PLU<T> DoolittleLU(const Matrix<T>& mat) {
+  if (!mat.isSquare())
     throw std::invalid_argument("Cannot compute the LU decomposition of a non-square matrix");
 
-  int rc = matrix.rows(); // rows = colums for square matrices
+  int rc = mat.rows(); // rows = colums for square matrices
   int swaps = 0;
   Matrix<T> pivot = Matrix<T>::identity(rc);
 
   using T3 = std::common_type_t<T, double>;
-  Matrix<T3> result(matrix.rows(), matrix.cols());
+  Matrix<T3> result(mat.rows(), mat.cols());
 
-  for (int i = 0; i < matrix.size(); i++) {
-    result(i) = (double)matrix(i);
+  for (int i = 0; i < mat.size(); i++) {
+    result(i) = (double)mat(i);
   }
 
   for (int i = 0; i < rc; i++) {
