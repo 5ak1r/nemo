@@ -39,43 +39,9 @@ int main() {
     -9,  5,  3, 12, -1,  4
   };
   math::Matrix<int> mat1 = math::Matrix<int>(6, 6, data1 );
+  math::Matrix<int> mat2 = math::matrix::RemoveMatrixRow(math::matrix::RemoveMatrixCol(mat1, 0), 0);
+  math::Matrix<int> mat3 = math::matrix::RemoveMatrixRow(math::matrix::RemoveMatrixCol(mat2, 0), 0);
+  math::Matrix<int> mat4 = math::matrix::RemoveMatrixRow(math::matrix::RemoveMatrixCol(mat3, 0), 0);
 
-  std::cout << mat1.cofactors() << "\n\n";
-  std::cout << mat1.adjugate() << "\n\n";
-
-  std::cout << mat1.inverse() << "\n\n";
-  std::cout << mat1.inverse() * mat1 << "\n\n";
-
-  std::cout << mat1 * mat1 << "\n\n";
-
-  math::Matrix<int> mat2 = math::Matrix<int>(2, 3, { 1, 1, 1, 2, 2, 2 });
-  math::Matrix<int> mat3 = math::Matrix<int>(2, 2, { 1, 1, 2, 2 });
-
-  std::cout << mat2 * mat2.transpose() << std::endl;
-  std::cout << mat2.transpose() << std::endl;
-  std::cout << mat3 * mat2 << "\n\n";
-
-  auto vec1 = mat3.row(0);
-  auto vec2 = mat3.row(1);
-
-  std::cout << math::vector::Add(vec1, vec2) << std::endl;
-  std::cout << math::vector::Subtract(vec1, vec2) << std::endl;
-  std::cout << math::vector::Multiply(vec1, vec2) << std::endl;
-  std::cout << math::vector::Divide(vec1, vec2) << std::endl;
-
-  std::cout << math::vector::Multiply(vec1, 3.0) << std::endl;
-  std::cout << math::hessenberg::Omega(vec1) << std::endl;
-
-  std::cout << mat3 << std::endl;
-  std::cout << math::matrix::RemoveMatrixRow(mat3, 0) << std::endl;
-  std::cout << math::matrix::RemoveMatrixCol(mat3, 0) << std::endl;
-  std::cout << math::hessenberg::HouseholderMatrix(mat3) << std::endl;
-
-  math::Matrix<float> mat4(3, 3, { 2, 2, 3, 3, 2, 1, 2, 6, 7 });
-  std::cout << math::matrix::RemoveMatrixRow(mat4, 0) << std::endl;
-  std::cout << math::matrix::RemoveMatrixCol(mat4, 0) << std::endl;
-
-  std::cout << math::hessenberg::Omega(math::matrix::RemoveMatrixRow(mat4, 0).getCol(0)) << std::endl;
-  std::cout << math::hessenberg::HouseholderMatrix(mat4) << std::endl;
-  std::cout << math::hessenberg::BlockMatrix(mat4) << std::endl;
+  math::Matrix<int> mat5 = math::Matrix<int>(4, 4, {544, 2, 3, 4, 3, 222, 223, 444, 23, 2, 3, 4, 123123, 123, 4, 7});
 }

@@ -36,6 +36,12 @@ public:
     mData = data;
   }
 
+  // allow conversion of valid types
+  template<typename U>
+  Matrix(const Matrix<U>& b) : mRows(b.rows()), mCols(b.cols()), mSize(mRows * mCols), mData(mSize) {
+    for (int i = 0; i < mSize; i++) mData[i] = static_cast<T>(b.data()[i]);
+  }
+
   static Matrix identity(int n) {
     Matrix I(n, n);
 
@@ -71,7 +77,7 @@ public:
   std::vector<T> data() const { return mData; }
   bool isSquare() const { return mRows == mCols; }
 
-  std::vector<T> getRow(int idx) const {
+  std::vector<T> getRow(const int& idx) const {
     if (idx < 0 || idx >= mRows)
       throw std::invalid_argument("Row index out of bounds");
 
@@ -80,7 +86,7 @@ public:
     return std::vector<T>(mData.begin() + start, mData.begin() + start + mCols);
   }
 
-  std::vector<T> getCol(int idx) const {
+  std::vector<T> getCol(const int& idx) const {
     if (idx < 0 || idx >= mCols)
       throw std::invalid_argument("Column index out of bounds");
 
@@ -98,7 +104,7 @@ public:
   int whichCol(int idx) const { return idx % mCols; }
 
   // helpers
-  void swapRows(int r1, int r2) {
+  void swapRows(const int& r1, const int& r2) {
     if (r1 == r2) return;
 
     if (r1 < 0 || r1 >= mRows || r2 < 0 || r2 >= mRows)

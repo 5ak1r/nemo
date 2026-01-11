@@ -13,34 +13,29 @@ namespace math {
 namespace hessenberg {
 
 template<typename T>
-auto Omega(const std::vector<T>& vec) {
+auto Omega(const std::vector<T>& aPrime) {
   static_assert(std::is_arithmetic<T>::value, "Not an arithmetic data type");
 
   using T3 = std::common_type_t<T, double>;
 
-  double norm = vector::Norm(vec);
-  std::vector<T3> e = vector::StandardBasis(0, vec.size());
+  double norm = vector::Norm(aPrime);
+  std::vector<T3> e = vector::StandardBasis(0, aPrime.size());
   std::vector<T3> eNorm = vector::Multiply(e, norm);
 
-  if (vec[0] == T{})
-    return vector::Subtract(eNorm, vec);
+  T sign = aPrime[0] <= T{} ? T{-1} : T{1};
 
-  return vector::Add(eNorm, vector::Multiply(vec[0] / std::abs(vec[0]), vec));
+  return vector::Add(eNorm, vector::Multiply(sign, aPrime));
 }
 
 template<typename T>
-auto HouseholderMatrix(const Matrix<T>& mat) {
-  if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute householder matrix from a non-square matrix");
-
+auto HouseholderMatrix(const std::vector<T>& aPrime) {
   using T3 = std::common_type_t<T, double>;
 
-  int size = mat.rows() - 1;
+  int size = aPrime.size();
 
-  Matrix<T> I = Matrix<T>::identity(size);
-  std::vector<T> A = mat.rows() == 2 ? std::vector<T>(1, mat(2)) : matrix::RemoveMatrixRow(mat, 0).getCol(0);
+  Matrix<T3> I = Matrix<T>::identity(size);
 
-  Matrix<T3> w(size, 1, static_cast<std::vector<T3>>(Omega(A)));
+  Matrix<T3> w = Matrix<T3>(aPrime.size(), 1, Omega(aPrime));
   Matrix<T3> wT = w.transpose();
 
   T3 wNorm = static_cast<T3>(vector::Norm(w.data()));
@@ -52,23 +47,27 @@ auto HouseholderMatrix(const Matrix<T>& mat) {
 }
 
 template<typename T>
-auto BlockMatrix(const Matrix<T>& mat) {
+auto BlockMatrix(const Matrix<T>& mat, const int& amount) {
   if (!mat.isSquare())
     throw std::invalid_argument("Cannot compute the block matrix of a non-square matrix");
 
-  Matrix<T> block(mat.rows() + 1, mat.cols() + 1);
+  Matrix<T> block(mat.rows() + amount, mat.cols() + amount);
 
-  block(0) = T{1};
+  for (int i = 0; i < amount; i++) block(i, i) = T{1};
 
   for (int i = 0; i < mat.rows(); i++) {
     for (int j = 0; j < mat.cols(); j++) {
-      block(i + 1, j + 1) = mat(i, j);
+      block(i + amount, j + amount) = mat(i, j);
     }
   }
 
   return block;
 }
 
+template<typename T>
+auto UpperHessenbergMatrix(const Matrix<T>& mat) {
+
+}
 
 }
 }

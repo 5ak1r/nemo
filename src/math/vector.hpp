@@ -43,7 +43,7 @@ inline double2 Perpendicular(const double2& a) {
   return { a.y, -a.x };
 }
 
-inline std::vector<double> StandardBasis(int pos, int size) {
+inline std::vector<double> StandardBasis(const int& pos, const int& size) {
   if (pos >= size)
     throw std::invalid_argument("Position cannot be greater than or equal to size");
 
