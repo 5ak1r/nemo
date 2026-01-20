@@ -22,6 +22,6 @@ struct Mesh {
   std::vector<int> triangles;
 };
 
-}
+} // namespace model
 
-#endif
+#endif // MODEL_H

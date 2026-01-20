@@ -15,11 +15,11 @@ int MeshBuilder::getVIndex(const vKey &key) {
   );
 
   int index = mMesh.vertices.size();
-  
+
   mMesh.vertices.push_back(v);
   mMap[key] = index;
-  
+
   return index;
 }
 
-}
+} // namespace model

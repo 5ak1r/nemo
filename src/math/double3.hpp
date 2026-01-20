@@ -31,6 +31,6 @@ inline double3 operator/(const double3& a, const double3& b) {
   return double3(a.x / b.x, a.y / b.y, a.z / b.z);
 }
 
-}
+} // namespace math
 
-#endif
+#endif // DOUBLE3_H

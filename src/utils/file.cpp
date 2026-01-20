@@ -1,4 +1,3 @@
-
 #include "file.hpp"
 
 namespace utils {
@@ -15,5 +14,5 @@ bool Read(std::ifstream& file, const std::string& name) {
   return true;
 }
 
-}
-}
+} // namespace file
+} // namespace utils

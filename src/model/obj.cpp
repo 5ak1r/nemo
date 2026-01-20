@@ -67,5 +67,5 @@ Mesh Read(const std::string& filename) {
   return mesh;
 }
 
-}
-}
+} // namespace OBJ
+} // namespace model

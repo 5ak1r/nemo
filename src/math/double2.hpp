@@ -29,6 +29,6 @@ inline double2 operator/(const double2& a, const double2& b) {
   return double2(a.x / b.x, a.y / b.y);
 }
 
-}
+} // namespace math
 
-#endif
+#endif // DOUBLE2_H

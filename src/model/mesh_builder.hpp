@@ -39,7 +39,8 @@ private:
   Mesh& mMesh;
   std::unordered_map<vKey, int, vHash> mMap;
 };
-}
+
+} // namespace model
 
 
-#endif
+#endif // MESH_BUILDER_H

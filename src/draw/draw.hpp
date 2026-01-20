@@ -22,4 +22,4 @@ void Write(const std::vector<std::vector<math::double3>>& image, const std::stri
 }
 }
 
-#endif
+#endif // DRAW_H

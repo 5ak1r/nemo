@@ -17,5 +17,5 @@ std::vector<std::string> Split(const std::string& line, const std::string& delim
   return tokens;
 }
 
-}
-}
+} // namespace string
+} // namespace utils

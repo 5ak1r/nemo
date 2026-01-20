@@ -18,7 +18,7 @@ namespace OBJ {
 
 Mesh Read(const std::string& filename);
 
-}
-}
+} // namespace OBJ
+} // namespace model
 
-#endif
+#endif // OBJ_H

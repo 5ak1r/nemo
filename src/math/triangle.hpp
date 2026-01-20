@@ -25,7 +25,7 @@ inline bool InTriangle(const double2& a, const double2& b, const double2& c, con
   return ab == bc && bc == ca;
 }
 
-}
-}
+} // namespace triangle
+} // namespace math
 
-#endif
+#endif // TRIANGLE_H

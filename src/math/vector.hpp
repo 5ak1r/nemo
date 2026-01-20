@@ -22,20 +22,14 @@ inline double Dot(const double3& a, const double3& b) {
 }
 
 // version that works with matrix rows and columns
-template<typename T>
-auto Dot(const std::vector<T>& vec) {
-  static_assert(std::is_arithmetic<T>::value, "Not an arithmetic data type");
-
-  using T3 = std::common_type_t<T, double>;
-
-  T3 result = T3{};
-  for (auto v : vec) result += static_cast<T3>(v) * static_cast<T3>(v);
+inline double Dot(const std::vector<double>& vec) {
+  double result = 0.0;
+  for (auto v : vec) result += v * v;
 
   return result;
 }
 
-template<typename T>
-auto Norm(const T& vec) {
+inline double Norm(const std::vector<double>& vec) {
   return std::sqrt(Dot(vec));
 }
 
@@ -112,8 +106,8 @@ auto Divide(const std::vector<T1>& a, const std::vector<T2>& b) {
   return Operation(a, b, [](T1 x, T2 y){ return static_cast<double>(x) / y; });
 }
 
-}
-}
+} // namespace vector
+} // namespace math
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
@@ -124,4 +118,4 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
   return os;
 }
 
-#endif
+#endif // VECTOR_H

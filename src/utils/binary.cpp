@@ -23,5 +23,5 @@ void WriteLE(std::ofstream& out, uint32_t value) {
   out.write(bytes, 4);
 }
 
-}
-}
+} // namespace binary
+} // namespace utils
