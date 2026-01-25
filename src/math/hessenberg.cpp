@@ -1,4 +1,5 @@
 #include "hessenberg.hpp"
+#include "matrix_helpers.hpp"
 
 namespace math {
 namespace hessenberg {
@@ -13,12 +14,14 @@ std::vector<double> Omega(const std::vector<double>& aPrime) {
   return vector::Add(eNorm, vector::Multiply(sign, aPrime));
 }
 
-Matrix HouseholderMatrix(const std::vector<double>& aPrime) {
-  int size = aPrime.size();
+Matrix HouseholderMatrix(const Matrix& mat) {
+  Matrix noRow = matrix::RemoveMatrixRow(mat, 0);
+  const std::vector<double>& aPrime = noRow.getCol(0);
 
+  int size = aPrime.size();
   Matrix I = Matrix::identity(size);
 
-  Matrix w = Matrix(aPrime.size(), 1, Omega(aPrime));
+  Matrix w = Matrix(size, 1, Omega(aPrime));
   Matrix wT = w.transpose();
 
   double wNorm = vector::Norm(w.data());
@@ -44,6 +47,10 @@ Matrix BlockMatrix(const Matrix& mat, const int& amount) {
   }
 
   return block;
+}
+
+Matrix UpperHessenbergMatrix(const Matrix& mat) {
+
 }
 
 } // namespace hessenberg
