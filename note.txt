@@ -1,0 +1,17 @@
+Matrix UpperHessenbergMatrix(const Matrix& mat) {
+  Matrix A = mat; // do not modify the original
+
+  for (int i = 0; i < mat.rows() - 2; i++) {
+    std::vector<double> col = mat.getCol(i);
+    col.erase(col.begin(), col.begin() + i + 1);
+
+    Matrix U = BlockMatrix(HouseholderMatrix(col), i + 1);
+
+    std::cout << U << std::endl;
+    std::cout << A << std::endl;
+    A = U.transpose() * (A * U);
+    std::cout << A << std::endl;
+  }
+
+  return A;
+}

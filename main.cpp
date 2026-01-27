@@ -56,14 +56,5 @@ int main() {
 
   Matrix mat5 = Matrix(4, 4, {544, 2, 3, 4, 3, 222, 223, 444, 23, 2, 3, 4, 123123, 123, 4, 7});
 
-  Matrix noRow = matrix::RemoveMatrixRow(mat2, 0);
-  const std::vector<double>& aPrime = noRow.getCol(0);
-
-  std::cout << aPrime << std::endl;
-
-  Matrix w = Matrix(aPrime.size(), 1, hessenberg::Omega(aPrime));
-  Matrix firstHouseholder = hessenberg::HouseholderMatrix(mat2);
-
-  std::cout << firstHouseholder << std::endl;
-  std::cout << hessenberg::BlockMatrix(firstHouseholder, 1) << std::endl;
+  std::cout << hessenberg::UpperHessenbergMatrix(mat2) << std::endl;
 }

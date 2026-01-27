@@ -1,6 +1,8 @@
 #include "hessenberg.hpp"
 #include "matrix_helpers.hpp"
 
+#include <iostream>
+#include <ostream>
 namespace math {
 namespace hessenberg {
 
@@ -14,10 +16,7 @@ std::vector<double> Omega(const std::vector<double>& aPrime) {
   return vector::Add(eNorm, vector::Multiply(sign, aPrime));
 }
 
-Matrix HouseholderMatrix(const Matrix& mat) {
-  Matrix noRow = matrix::RemoveMatrixRow(mat, 0);
-  const std::vector<double>& aPrime = noRow.getCol(0);
-
+Matrix HouseholderMatrix(const std::vector<double>& aPrime) {
   int size = aPrime.size();
   Matrix I = Matrix::identity(size);
 
@@ -50,7 +49,17 @@ Matrix BlockMatrix(const Matrix& mat, const int& amount) {
 }
 
 Matrix UpperHessenbergMatrix(const Matrix& mat) {
+  Matrix A = mat; // do not modify the original
 
+  for (int i = 0; i < mat.rows() - 2; i++) {
+    std::vector<double> col = A.getCol(i);
+    col.erase(col.begin(), col.begin() + i + 1);
+
+    Matrix U = BlockMatrix(HouseholderMatrix(col), i + 1);
+    A = U.transpose() * (A * U);
+  }
+
+  return A;
 }
 
 } // namespace hessenberg
