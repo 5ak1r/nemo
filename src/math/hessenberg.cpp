@@ -54,7 +54,7 @@ Matrix UpperHessenbergMatrix(const Matrix& mat) {
     col.erase(col.begin(), col.begin() + i + 1);
 
     Matrix U = BlockMatrix(HouseholderMatrix(col), i + 1);
-    A = U.transpose() * (A * U);
+    A = U.transpose() * A * U;
   }
 
   return A;
