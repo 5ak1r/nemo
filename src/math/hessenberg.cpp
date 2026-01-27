@@ -1,8 +1,6 @@
 #include "hessenberg.hpp"
 #include "matrix_helpers.hpp"
 
-#include <iostream>
-#include <ostream>
 namespace math {
 namespace hessenberg {
 
