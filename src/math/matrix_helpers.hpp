@@ -1,6 +1,7 @@
 #ifndef MATRIX_HELPERS_H
 #define MATRIX_HELPERS_H
 
+#include <complex>
 #include <stdexcept>
 #include <vector>
 
@@ -19,6 +20,7 @@ Matrix Transpose(const Matrix& mat);
 Matrix Adjugate(const Matrix& mat);
 Matrix Cofactors(const Matrix& mat);
 Matrix Inverse(const Matrix& mat);
+std::vector<std::complex<double>> Eigenvalues(const Matrix& mat);
 Matrix Multiply(const Matrix& a, const Matrix& b);
 Matrix RemoveMatrixRow(const Matrix& mat, int idx);
 Matrix RemoveMatrixCol(const Matrix& mat, int idx);

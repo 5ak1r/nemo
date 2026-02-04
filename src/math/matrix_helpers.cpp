@@ -1,4 +1,5 @@
 #include "matrix_helpers.hpp"
+#include "qr_algorithm.hpp"
 
 namespace math {
 namespace matrix {
@@ -85,6 +86,10 @@ Matrix Inverse(const Matrix& mat) {
   Matrix inverse = det_recip * Adjugate(mat);
 
   return inverse;
+}
+
+std::vector<std::complex<double>> Eigenvalues(const Matrix &mat) {
+  return qr::QRAlgorithm(mat);
 }
 
 // modified from https://www.geeksforgeeks.org/cpp/cpp-matrix-multiplication/

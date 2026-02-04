@@ -3,6 +3,7 @@
 #include "src/math/lu_decomp.hpp"
 #include "src/math/matrix.hpp"
 #include "src/math/matrix_helpers.hpp"
+#include "src/math/qr_algorithm.hpp"
 #include "src/math/vector.hpp"
 #include "src/model/mesh.hpp"
 #include "src/model/obj.hpp"
@@ -32,7 +33,7 @@ int main() {
 
 		for (double y = 0; y < height; y++) {
 		  for (double x = 0; x < width; x++) {
-				if (triangle::InTriangle(a, b, c, {x, y}))
+				if (triangle::InTriangle(a, b, c, { x, y }))
 					image[x].push_back(double3(0.0, 0.0, 1.0));
 				else image[x].push_back(double3(0.0, 0.0, 0.0));
 			}
@@ -54,7 +55,13 @@ int main() {
   Matrix mat3 = RemoveMatrixRow(RemoveMatrixCol(mat2, 0), 0);
   Matrix mat4 = RemoveMatrixRow(RemoveMatrixCol(mat3, 0), 0);
 
-  Matrix mat5 = Matrix(4, 4, {544, 2, 3, 4, 3, 222, 223, 444, 23, 2, 3, 4, 123123, 123, 4, 7});
+  Matrix mat5 = Matrix(4, 4, { 544, 2, 3, 4, 3, 222, 223, 444, 23, 2, 3, 4, 123123, 123, 4, 7 });
 
-  std::cout << hessenberg::UpperHessenbergMatrix(mat2) << std::endl;
+  Matrix hess = hessenberg::UpperHessenbergMatrix(mat1);
+
+  Matrix mat6 = Matrix(5, 5, { 3, -7, 12, 4, 9, -5, 8, 1, -6, 10, 14, 2, -9, 7, -3, 6, 11, -4, 0, 5, -8,  9, 13, -2, 1 });
+
+  std::cout << mat5.eigenvalues() << std::endl;
+  std::cout << mat1.eigenvalues() << std::endl;
+  std::cout << mat6.eigenvalues() << std::endl;
 }

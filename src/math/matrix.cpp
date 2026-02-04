@@ -1,6 +1,9 @@
 #include "matrix.hpp"
-#include "matrix_helpers.hpp"
+
+// avoid circular includes
 #include "lu_decomp.hpp"
+#include "matrix_helpers.hpp"
+#include "qr_algorithm.hpp"
 
 namespace math {
 
@@ -112,6 +115,10 @@ Matrix Matrix::inverse() const {
 
 Matrix Matrix::transpose() const {
   return matrix::Transpose(*this);
+}
+
+std::vector<std::complex<double>> Matrix::eigenvalues() const {
+  return matrix::Eigenvalues(*this);
 }
 
 // operator overloads

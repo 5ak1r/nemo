@@ -1,12 +1,9 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <complex>
 #include <iomanip>
 #include <vector>
-
-/*
-- eigenvalues
-*/
 
 namespace math {
 
@@ -39,6 +36,7 @@ public:
   double determinant() const;
   Matrix inverse() const;
   Matrix transpose() const;
+  std::vector<std::complex<double>> eigenvalues() const;
 
   double& operator()(int i, int j);
   double operator()(int i, int j) const;
