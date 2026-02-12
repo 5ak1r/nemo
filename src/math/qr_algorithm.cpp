@@ -36,7 +36,7 @@ std::pair<double, double> GivensRotation(const double& x, const double& y) {
   return { c, s };
 }
 
-//https://www.math.ucla.edu/~yanovsky/Teaching/Math151B/handouts/GramSchmidt.pdf this one works!
+// https://www.math.ucla.edu/~yanovsky/Teaching/Math151B/handouts/GramSchmidt.pdf this one works!
 std::pair<Matrix, Matrix> QRDecomposition(const Matrix& mat) {
   int n = mat.rows();
 
@@ -80,7 +80,20 @@ std::pair<Matrix, Matrix> QRDecomposition(const Matrix& mat) {
   return { Q, R };
 }
 
-std::vector<std::complex<double>> QRAlgorithm(const Matrix& mat) {
+Matrix QRAlgorithm(const Matrix& mat) {
+  if (!mat.isSquare())
+    throw std::invalid_argument("Must be a Square Matrix");
+
+  Matrix A = mat;
+
+  int maxIterations = 1000;
+
+  for (int i = 0; i < maxIterations; i++) {
+    std::pair<Matrix, Matrix> QR = QRDecomposition(A);
+    A = QR.second * QR.first;
+  }
+
+  return A;
 }
 
 } // namespace qr

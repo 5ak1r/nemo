@@ -1,5 +1,7 @@
 #include "matrix_helpers.hpp"
 #include "qr_algorithm.hpp"
+#include <limits>
+#include <stdexcept>
 
 namespace math {
 namespace matrix {
@@ -89,7 +91,45 @@ Matrix Inverse(const Matrix& mat) {
 }
 
 std::vector<std::complex<double>> Eigenvalues(const Matrix &mat) {
-  return qr::QRAlgorithm(mat);
+  if (!mat.isSquare())
+    throw std::invalid_argument("Cannot compute the eigenvalues of a non-square matrix");
+
+  int n = mat.rows();
+
+  std::vector<std::complex<double>> eigenvalues;
+  eigenvalues.reserve(n);
+
+  Matrix QR = qr::QRAlgorithm(mat);
+
+  int i = 0;
+  while(i < n) {
+    if (i == n - 1 || std::abs(QR(i + 1, i)) < std::numeric_limits<double>::epsilon()) {
+      eigenvalues.push_back(QR(i, i));
+      i += 1;
+    } else {
+      // https://people.math.harvard.edu/~knill/teaching/math21b2004/exhibits/2dmatrices/index.html
+      double a = QR(i, i);
+      double b = QR(i, i + 1);
+      double c = QR(i + 1, i);
+      double d = QR(i + 1, i + 1);
+
+      double trace = a + d;
+      double det = a * d - b * c;
+
+      std::complex<double> value = (trace * trace) / 4 - det;
+      std::complex<double> sqrVal = std::sqrt(value);
+
+      std::complex<double> eValPos = {trace / 2, sqrVal.imag()};
+      std::complex<double> eValNeg = {trace / 2, -sqrVal.imag()};
+
+      eigenvalues.push_back(eValPos);
+      eigenvalues.push_back(eValNeg);
+
+      i += 2; // skip the next diagonal as it's part of this 2x2;
+    }
+  }
+
+  return eigenvalues;
 }
 
 // modified from https://www.geeksforgeeks.org/cpp/cpp-matrix-multiplication/
