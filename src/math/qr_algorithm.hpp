@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <complex>
+#include <limits>
 #include <utility>
 #include <vector>
 
@@ -17,7 +18,7 @@ namespace qr {
 
 double WilkinsonShift(const Matrix& mat);
 std::pair<double, double> GivensRotation(const double& x, const double& y);
-Matrix QRStep(const Matrix& mat);
+std::pair<Matrix, Matrix> QRDecomposition(const Matrix& mat);
 std::vector<std::complex<double>> QRAlgorithm(const Matrix& mat);
 
 } // namespace QR

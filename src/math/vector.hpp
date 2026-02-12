@@ -29,6 +29,16 @@ inline double Dot(const std::vector<double>& vec) {
   return result;
 }
 
+inline double Dot(const std::vector<double>& vec1, const std::vector<double>& vec2) {
+  if (vec1.size() != vec2.size())
+    throw std::invalid_argument("Vectors must be the same size to compute the dot product");
+
+  double result = 0.0;
+  for (int i = 0; i < vec1.size(); i++) result += vec1[i] * vec2[i];
+
+  return result;
+}
+
 inline double Norm(const std::vector<double>& vec) {
   return std::sqrt(Dot(vec));
 }

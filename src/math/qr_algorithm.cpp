@@ -1,4 +1,6 @@
 #include "qr_algorithm.hpp"
+#include "vector.hpp"
+#include <vector>
 
 namespace math {
 namespace qr {
@@ -34,11 +36,51 @@ std::pair<double, double> GivensRotation(const double& x, const double& y) {
   return { c, s };
 }
 
-Matrix QRStep(const Matrix& mat) {
+//https://www.math.ucla.edu/~yanovsky/Teaching/Math151B/handouts/GramSchmidt.pdf this one works!
+std::pair<Matrix, Matrix> QRDecomposition(const Matrix& mat) {
+  int n = mat.rows();
+
+  std::vector<std::vector<double>> es;
+  double dot = 0.0;
+
+  for (int j = 0; j < n; j++) {
+    std::vector<double> a = mat.getCol(j);
+    std::vector<double> u = a;
+
+    for (int i = 0; i < j; i++) {
+      double dot = vector::Dot(a, es[i]);
+      for (int k = 0; k < n; k++)
+        u[k] -= dot * es[i][k];
+    }
+
+    double uNorm = vector::Norm(u);
+
+    std::vector<double> e;
+    for (int k = 0; k < n; k++)
+      e.push_back(u[k] / uNorm);
+
+    es.push_back(e);
+  }
+
+  Matrix Q(n, n);
+  Matrix R(n, n);
+
+  for (int j = 0; j < n; j++) {
+    for (int i = 0; i < n; i++) {
+      Q(i, j) = es[j][i];
+    }
+  }
+
+  for (int j = 0; j < n; j++) {
+    for (int i = 0; i <= j; i++) {
+      R(i, j) = vector::Dot(mat.getCol(j), es[i]);
+    }
+  }
+
+  return { Q, R };
 }
 
 std::vector<std::complex<double>> QRAlgorithm(const Matrix& mat) {
-
 }
 
 } // namespace qr

@@ -61,7 +61,5 @@ int main() {
 
   Matrix mat6 = Matrix(5, 5, { 3, -7, 12, 4, 9, -5, 8, 1, -6, 10, 14, 2, -9, 7, -3, 6, 11, -4, 0, 5, -8,  9, 13, -2, 1 });
 
-  std::cout << mat5.eigenvalues() << std::endl;
-  std::cout << mat1.eigenvalues() << std::endl;
-  std::cout << mat6.eigenvalues() << std::endl;
+  std::cout << qr::QRDecomposition(mat1) << std::endl;
 }
