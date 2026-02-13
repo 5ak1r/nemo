@@ -10,8 +10,8 @@ void Write(const std::vector<std::vector<math::double3>>& image, const std::stri
       throw std::runtime_error("failed to open file");
   }
 
-  uint32_t width = image.size();
-  uint32_t height = image[0].size();
+  uint32_t width = image[0].size();
+  uint32_t height = image.size();
   uint32_t byteCounts[3] = {14, 40, width * height * 4};
 
   // thanks sebastian lague
@@ -34,9 +34,9 @@ void Write(const std::vector<std::vector<math::double3>>& image, const std::stri
   bmp.write(zeros, 16); // print resolution and palette info
 
   // draw using the data
-  for (int y = 0; y < image[0].size(); y++) {
-    for (int x = 0; x < image.size(); x++) {
-      math::double3 col = image[x][y];
+  for (int y = 0; y < image.size(); y++) {
+    for (int x = 0; x < image[0].size(); x++) {
+      math::double3 col = image[y][x];
       bmp.put(static_cast<char>(col.b * 255));
       bmp.put(static_cast<char>(col.g * 255));
       bmp.put(static_cast<char>(col.r * 255));
