@@ -24,7 +24,7 @@ void Write(const std::vector<std::vector<math::double3>>& image, const std::stri
   // DIP header
   utils::binary::WriteLE(bmp, byteCounts[1]); // DIP header size
   utils::binary::WriteLE(bmp, width); // image width
-  utils::binary::WriteLE(bmp, height); //image height
+  utils::binary::WriteLE(bmp, -height); //image height
   utils::binary::WriteLE(bmp, (uint16_t)1); // num color planes
   utils::binary::WriteLE(bmp, (uint16_t)32); // bits per pixel (RGBA)
   utils::binary::WriteLE(bmp, (uint32_t)0); // RGB format no compression
@@ -34,8 +34,8 @@ void Write(const std::vector<std::vector<math::double3>>& image, const std::stri
   bmp.write(zeros, 16); // print resolution and palette info
 
   // draw using the data
-  for (int y = 0; y < image.size(); y++) {
-    for (int x = 0; x < image[0].size(); x++) {
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
       math::double3 col = image[y][x];
       bmp.put(static_cast<char>(col.b * 255));
       bmp.put(static_cast<char>(col.g * 255));
