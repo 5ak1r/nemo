@@ -1,12 +1,15 @@
 #ifndef DOUBLE3_H
 #define DOUBLE3_H
 
+#include "double2.hpp"
+
 namespace math {
 
 union double3 {
   struct { double x, y, z; };
   struct { double r, g, b; };
 
+  double3() : x(0.0), y(0.0), z(0.0) {}
   double3(double a, double b, double c) : x(a), y(b), z(c) {}
 
 };
@@ -29,6 +32,23 @@ inline double3 operator*(const double3& a, const double3& b) {
 
 inline double3 operator/(const double3& a, const double3& b) {
   return double3(a.x / b.x, a.y / b.y, a.z / b.z);
+}
+
+inline double3 operator*(const double& scalar, const double3& a) {
+  return double3(scalar * a.x, scalar * a.y, scalar * a.z);
+}
+
+inline double3 operator/(const double3& a, const double& scalar) {
+  return double3(a.x / scalar, a.y / scalar, a.z / scalar);
+}
+
+inline double2 WorldToScreen(const double3& point, const double2& pixels) {
+  double screenHeight = 5.0;
+  double pixelsPerWorldUnit = pixels.y / screenHeight;
+
+  double2 pixelOffset = pixelsPerWorldUnit * double2(point.x, point.y);
+
+  return pixels / 2.0 + pixelOffset;
 }
 
 } // namespace math

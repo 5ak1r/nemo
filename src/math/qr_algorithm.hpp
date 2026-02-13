@@ -24,4 +24,4 @@ Matrix QRAlgorithm(const Matrix& mat);
 } // namespace QR
 } // namespace math
 
-#endif
+#endif // QR_ALGORITHM_H
