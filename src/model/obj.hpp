@@ -16,6 +16,7 @@
 namespace model {
 namespace OBJ {
 
+int CheckNegative(int idx, int size);
 Mesh Read(const std::string& filename);
 
 } // namespace OBJ

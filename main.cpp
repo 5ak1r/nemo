@@ -1,5 +1,6 @@
 #include "src/draw/draw.hpp"
 #include "src/draw/rasterizer.hpp"
+#include "src/math/constants.hpp"
 #include "src/math/double3.hpp"
 #include "src/math/hessenberg.hpp"
 #include "src/math/lu_decomp.hpp"
@@ -24,14 +25,20 @@ int main() {
 
 	double2 pixels = {width, height};
 
-	Transform transform(0);
+	Transform transform(PI / 4);
 
 	for (int i = 0; i < mesh.triangles.size(); i += 3) {
 	  double2 a = WorldToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels);
 		double2 b = WorldToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels);
 		double2 c = WorldToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels);
 
-		double3 color = {1.0,1.0,0.0};
+		int triIndex = i / 3;
+		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
+    double g = std::fmod(triIndex * 0.3819660113, 1.0); // 1 − 1/φ
+    double d = std::fmod(triIndex * 0.7071067811, 1.0); // 1 / √2
+
+    double3 color = {r, g, d};
+
 		draw::rasterizer::RasterizeTriangle(a, b, c, image, width, height, color);
 	}
 

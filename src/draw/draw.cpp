@@ -44,6 +44,7 @@ void Write(const std::vector<std::vector<math::double3>>& image, const std::stri
     }
   }
 
+  bmp.close();
 }
 
 } // namespace BMP
