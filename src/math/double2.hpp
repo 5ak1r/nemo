@@ -1,6 +1,8 @@
 #ifndef DOUBLE2_H
 #define DOUBLE2_H
 
+#include <ostream>
+
 namespace math {
 
 struct double2 {
@@ -36,6 +38,12 @@ inline double2 operator*(const double& scalar, const double2& a) {
 
 inline double2 operator/(const double2& a, const double& scalar) {
   return double2(a.x / scalar, a.y / scalar);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const double2& a) {
+  os << "{ " << a.x << ", " << a.y << " }";
+
+  return os;
 }
 
 } // namespace math

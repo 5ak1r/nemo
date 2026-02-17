@@ -1,7 +1,7 @@
 #ifndef DOUBLE3_H
 #define DOUBLE3_H
 
-#include "double2.hpp"
+#include <ostream>
 
 namespace math {
 
@@ -42,13 +42,10 @@ inline double3 operator/(const double3& a, const double& scalar) {
   return double3(a.x / scalar, a.y / scalar, a.z / scalar);
 }
 
-inline double2 WorldToScreen(const double3& point, const double2& pixels) {
-  double screenHeight = 5.0;
-  double pixelsPerWorldUnit = pixels.y / screenHeight;
+inline std::ostream& operator<<(std::ostream& os, const double3& a) {
+  os << "{ " << a.x << ", " << a.y << ", " << a.z << " }";
 
-  double2 pixelOffset = pixelsPerWorldUnit * double2(point.x, point.y);
-
-  return pixels / 2.0 + pixelOffset;
+  return os;
 }
 
 } // namespace math

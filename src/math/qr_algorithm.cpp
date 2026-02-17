@@ -1,6 +1,5 @@
 #include "qr_algorithm.hpp"
 #include "vector.hpp"
-#include <vector>
 
 namespace math {
 namespace qr {

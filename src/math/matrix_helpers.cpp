@@ -1,7 +1,5 @@
 #include "matrix_helpers.hpp"
 #include "qr_algorithm.hpp"
-#include <limits>
-#include <stdexcept>
 
 namespace math {
 namespace matrix {
