@@ -15,4 +15,4 @@ run:
 	make && ./main.out
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) *.bmp

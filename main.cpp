@@ -20,19 +20,20 @@ int main() {
   const int width = 2560;
 	const int height = 1600;
 
-	model::Mesh mesh = model::OBJ::Read("resources/cube.obj");
+	model::Mesh mesh = model::OBJ::Read("resources/fox.obj");
 
 	std::vector<std::vector<double3>> image(height, std::vector<double3>(width, {0.0, 0.0, 0.0}));
 
 	double2 pixels = {width, height};
 
 	for (int j = 0; j < 10; j++) {
-  	Transform transform(PI + (j * j * j) / 180.0, PI + (j * j * j) / 180.0);
+  	Transform transform(PI + j * (PI / 18), PI / 2 + j * (PI / 18), {0.0, 0.0, 20.0});
+    double fov = PI / 3;
 
   	for (int i = 0; i < mesh.triangles.size(); i += 3) {
-  	  double2 a = WorldToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels);
-  		double2 b = WorldToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels);
-  		double2 c = WorldToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels);
+  	  double2 a = WorldToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels, fov);
+  		double2 b = WorldToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels, fov);
+  		double2 c = WorldToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels, fov);
 
   		int triIndex = i / 3;
   		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
