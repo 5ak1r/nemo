@@ -2,8 +2,16 @@
 
 namespace math {
 
+double Transform::Pitch() const {
+  return pitch;
+}
+
 double Transform::Yaw() const {
   return yaw;
+}
+
+void Transform::setPitch(double p) {
+  pitch = p;
 }
 
 void Transform::setYaw(double y) {
@@ -11,22 +19,23 @@ void Transform::setYaw(double y) {
 }
 
 double3 Transform::ToWorldPoint(const double3& p) const {
-  hats h = GetBasisVectors();
+  Matrix h = GetBasisMatrix();
 
   return TransformVector(h, p);
 }
 
-hats Transform::GetBasisVectors() const {
-  hats h;
-  h.ihat = {std::cos(yaw), 0.0, std::sin(yaw)};
-  h.jhat = {0.0, 1.0, 0.0};
-  h.khat = {-std::sin(yaw), 0.0, std::cos(yaw)};
+Matrix Transform::GetBasisMatrix() const {
+  Matrix mYaw(3, 3, {std::cos(yaw), 0.0, std::sin(yaw), 0.0, 1.0, 0.0, -std::sin(yaw), 0.0, std::cos(yaw)});
+  Matrix mPitch(3, 3, {1, 0, 0, 0, std::cos(pitch), -std::sin(pitch), 0, std::sin(pitch), std::cos(pitch)});
 
-  return h;
+  return mPitch * mYaw;
 }
 
-double3 Transform::TransformVector(hats h, double3 v) {
-  return v.x * h.ihat + v.y * h.jhat + v.z * h.khat;
+double3 Transform::TransformVector(const Matrix& m, const double3& v) {
+  Matrix vTemp(v);
+  Matrix result = m * vTemp;
+
+  return {result(0), result(1), result(2)};
 }
 
 double2 WorldToScreen(const double3& point, const Transform& transform, const double2& pixels) {

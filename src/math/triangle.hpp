@@ -22,7 +22,7 @@ inline bool InTriangle(const double2& a, const double2& b, const double2& c, con
   bool bc = RightSide(b, c, p);
   bool ca = RightSide(c, a, p);
 
-  return ab == bc && bc == ca;
+  return ab && bc && ca;
 }
 
 } // namespace triangle

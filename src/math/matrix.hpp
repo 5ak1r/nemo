@@ -5,10 +5,15 @@
 #include <iomanip>
 #include <vector>
 
+#include "double2.hpp"
+#include "double3.hpp"
+
 namespace math {
 
 class Matrix {
 public:
+  Matrix(double2 a);
+  Matrix(double3 a);
   Matrix(int rows, int cols);
   Matrix(int rows, int cols, std::vector<double> data);
 

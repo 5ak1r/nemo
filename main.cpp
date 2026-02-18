@@ -11,6 +11,7 @@
 #include "src/math/vector.hpp"
 #include "src/model/mesh.hpp"
 #include "src/model/obj.hpp"
+#include <string>
 
 using namespace math;
 using namespace math::matrix;
@@ -25,22 +26,28 @@ int main() {
 
 	double2 pixels = {width, height};
 
-	Transform transform(PI / 4);
+	for (int j = 0; j < 10; j++) {
+  	Transform transform(PI + (j * j * j) / 180.0, PI + (j * j * j) / 180.0);
 
-	for (int i = 0; i < mesh.triangles.size(); i += 3) {
-	  double2 a = WorldToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels);
-		double2 b = WorldToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels);
-		double2 c = WorldToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels);
+  	for (int i = 0; i < mesh.triangles.size(); i += 3) {
+  	  double2 a = WorldToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels);
+  		double2 b = WorldToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels);
+  		double2 c = WorldToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels);
 
-		int triIndex = i / 3;
-		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
-    double g = std::fmod(triIndex * 0.3819660113, 1.0); // 1 − 1/φ
-    double d = std::fmod(triIndex * 0.7071067811, 1.0); // 1 / √2
+  		int triIndex = i / 3;
+  		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
+      double g = std::fmod(triIndex * 0.3819660113, 1.0); // 1 − 1/φ
+      double d = std::fmod(triIndex * 0.7071067811, 1.0); // 1 / √2
 
-    double3 color = {r, g, d};
+      double3 color = {r, g, d};
 
-		draw::rasterizer::RasterizeTriangle(a, b, c, image, width, height, color);
+  		draw::rasterizer::RasterizeTriangle(a, b, c, image, width, height, color);
+  	}
+
+    draw::BMP::Write(image, "test_" + std::to_string(j));
+
+    // reset the image
+    for (auto& row : image)
+      std::fill(row.begin(), row.end(), double3{0.0, 0.0, 0.0});
 	}
-
-  draw::BMP::Write(image, "test");
 }

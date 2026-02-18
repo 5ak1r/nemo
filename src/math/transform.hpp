@@ -5,32 +5,27 @@
 #include <iostream>
 #include "double2.hpp"
 #include "double3.hpp"
+#include "matrix.hpp"
 
 namespace math {
 
-struct hats {
-  double3 ihat;
-  double3 jhat;
-  double3 khat;
-
-  hats() : ihat(double3()), jhat(double3()), khat(double3()) {}
-  hats(double3 i, double3 j, double3 k) : ihat(i), jhat(j), khat(k) {}
-};
-
 class Transform {
 public:
-  Transform() : yaw(0.0) {}
-  Transform(double y) : yaw(y) {}
+  Transform() : pitch(0.0), yaw(0.0) {}
+  Transform(double p, double y) : pitch(p), yaw(y) {}
 
+  double Pitch() const;
   double Yaw() const;
+  void setPitch(double p);
   void setYaw(double y);
 
   double3 ToWorldPoint(const double3& p) const;
-  hats GetBasisVectors() const;
+  Matrix GetBasisMatrix() const;
 
-  static double3 TransformVector(hats h, double3 v);
+  static double3 TransformVector(const Matrix& m, const double3& v);
 
 private:
+  double pitch;
   double yaw;
 };
 
