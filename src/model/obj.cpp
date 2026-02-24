@@ -1,6 +1,4 @@
 #include "obj.hpp"
-#include <array>
-#include <stdexcept>
 
 namespace model {
 namespace OBJ {

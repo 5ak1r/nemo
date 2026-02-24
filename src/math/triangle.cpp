@@ -18,7 +18,8 @@ bool InTriangle(const double2& a, const double2& b, const double2& c, const doub
   bool inTriangle = ab >= 0 && bc >= 0 && ca >= 0;
 
   //barycentric coordinates
-  double invAreaSum = 1.0 / (ab + bc + ca);
+  double totalArea = ab + bc + ca;
+  double invAreaSum = 1.0 / totalArea;
 
   double weightA = bc * invAreaSum;
   double weightB = ca * invAreaSum;
@@ -26,7 +27,7 @@ bool InTriangle(const double2& a, const double2& b, const double2& c, const doub
 
   weights = {weightA, weightB, weightC};
 
-  return inTriangle;
+  return inTriangle && totalArea > 0.0;
 }
 
 } // namespace triangle

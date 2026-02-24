@@ -21,14 +21,14 @@ int main() {
   const int width = 2560;
 	const int height = 1600;
 
-	model::Mesh mesh = model::OBJ::Read("resources/fox.obj");
+	model::Mesh mesh = model::OBJ::Read("resources/suzanne.obj");
 
 	graphics::render::RenderTarget image(width, height);
 
 	double2 pixels = {width, height};
 
-	for (int j = 0; j < 10; j++) {
-  	Transform transform(PI + j * (PI / 18), PI / 2 + j * (PI / 18), {0.0, 0.0, 20.0});
+	for (int j = 0; j < 2; j++) {
+	  Transform transform(PI, 0, {0.0, 0.0, 6.0});
     double fov = PI / 3;
 
   	for (int i = 0; i < mesh.triangles.size(); i += 3) {

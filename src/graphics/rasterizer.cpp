@@ -23,17 +23,17 @@ void RasterizeTriangle(
   maxX = std::min(width - 1, maxX);
   maxY = std::min(height - 1, maxY);
 
-  for (int y = minY; y < maxY; y++) {
-    for (int x = minX; x < maxX; x++) {
+  for (int y = minY; y <= maxY; y++) {
+    for (int x = minX; x <= maxX; x++) {
       double3 weights;
 
-      if (triangle::InTriangle(a, b, c, {x + 0.5, y + 0.5}, weights)) {
+      if (triangle::InTriangle(a, b, c, {(double)x, (double)y}, weights)) {
         double3 depths = {a.z, b.z, c.z};
         double depth = vector::Dot(depths, weights);
 
         if (depth > image.getDepth(x, y)) continue;
 
-        image.setColor(x, y, color);
+        image.setColor(x, y, depth);
         image.setDepth(x, y, depth);
       }
     }
