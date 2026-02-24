@@ -23,7 +23,7 @@ double WilkinsonShift(const Matrix& mat) {
 }
 
 // https://en.wikipedia.org/wiki/Givens_rotation
-std::pair<double, double> GivensRotation(const double& x, const double& y) {
+std::pair<double, double> GivensRotation(double x, double y) {
   if (y == 0)
     return { 1.0, 0.0 };
 

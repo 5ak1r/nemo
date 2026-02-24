@@ -3,13 +3,17 @@
 
 #include <ostream>
 
+#include "double3.hpp"
+
 namespace math {
 
 struct double2 {
   double x, y;
 
   double2() : x(0.0), y(0.0) {}
+  double2(double a) : x(a), y(a) {}
   double2(double a, double b): x(a), y(b) {}
+  double2(const double3& a) : x(a.x), y(a.y) {}
 };
 
 inline double2 operator-(const double2& a, const double2& b) {

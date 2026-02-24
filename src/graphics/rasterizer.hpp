@@ -4,26 +4,27 @@
 #include <algorithm>
 #include <vector>
 
+#include "render_target.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 #include "../math/triangle.hpp"
 
 using namespace math;
 
-namespace draw {
+namespace graphics {
 namespace rasterizer {
 
 void RasterizeTriangle(
-  const double2& a,
-  const double2& b,
-  const double2& c,
-  std::vector<std::vector<double3>>& image,
-  const int& width,
-  const int& height,
+  const double3& a,
+  const double3& b,
+  const double3& c,
+  render::RenderTarget& image,
+  int width,
+  int height,
   const double3& color);
 
 } // namespace rasterizer
-} // namespace draw
+} // namespace graphics
 
 
 #endif // RASTERIZER_H

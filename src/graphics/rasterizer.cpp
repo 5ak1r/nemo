@@ -1,15 +1,16 @@
 #include "rasterizer.hpp"
+#include "render_target.hpp"
 
-namespace draw {
+namespace graphics {
 namespace rasterizer {
 
 void RasterizeTriangle(
-  const double2& a,
-  const double2& b,
-  const double2& c,
-  std::vector<std::vector<double3>>& image,
-  const int& width,
-  const int& height,
+  const double3& a,
+  const double3& b,
+  const double3& c,
+  render::RenderTarget& image,
+  int width,
+  int height,
   const double3& color
 ) {
   int minX = std::floor(std::min({a.x, b.x, c.x}));
@@ -24,12 +25,20 @@ void RasterizeTriangle(
 
   for (int y = minY; y < maxY; y++) {
     for (int x = minX; x < maxX; x++) {
-      if (triangle::InTriangle(a, b, c, {x + 0.5, y + 0.5})) {
-        image[y][x] = color;
+      double3 weights;
+
+      if (triangle::InTriangle(a, b, c, {x + 0.5, y + 0.5}, weights)) {
+        double3 depths = {a.z, b.z, c.z};
+        double depth = vector::Dot(depths, weights);
+
+        if (depth > image.getDepth(x, y)) continue;
+
+        image.setColor(x, y, color);
+        image.setDepth(x, y, depth);
       }
     }
   }
 }
 
 } // namespace rasterizer
-} // namespace draw
+} // namespace graphics

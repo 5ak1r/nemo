@@ -46,15 +46,16 @@ double3 Transform::TransformVector(const Matrix& m, const double3& v) {
   return {result(0), result(1), result(2)};
 }
 
-double2 WorldToScreen(const double3& point, const Transform& transform, const double2& pixels, const double& fov) {
-  double3 pointWorld = transform.ToWorldPoint(point);
+double3 VertexToScreen(const double3& vertex, const Transform& transform, const double2& pixels, double fov) {
+  double3 vertexWorld = transform.ToWorldPoint(vertex);
 
   double screenHeight = std::tan(fov / 2) * 2;
-  double pixelsPerWorldUnit = pixels.y / screenHeight / pointWorld.z;
+  double pixelsPerWorldUnit = pixels.y / screenHeight / vertexWorld.z;
 
-  double2 pixelOffset = pixelsPerWorldUnit * double2(pointWorld.x, pointWorld.y);
+  double2 pixelOffset = pixelsPerWorldUnit * double2(vertexWorld.x, vertexWorld.y);
+  double2 vertexScreen = pixels / 2 + pixelOffset;
 
-  return pixels / 2.0 + pixelOffset;
+  return {vertexScreen.x, vertexScreen.y, vertexWorld.z};
 }
 
 } // namespace math

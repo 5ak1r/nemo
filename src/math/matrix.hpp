@@ -12,10 +12,10 @@ namespace math {
 
 class Matrix {
 public:
-  Matrix(double2 a);
-  Matrix(double3 a);
+  Matrix(const double2& a);
+  Matrix(const double3& a);
   Matrix(int rows, int cols);
-  Matrix(int rows, int cols, std::vector<double> data);
+  Matrix(int rows, int cols, const std::vector<double>& data);
 
   static Matrix identity(int n);
 

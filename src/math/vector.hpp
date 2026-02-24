@@ -47,7 +47,7 @@ inline double2 Perpendicular(const double2& a) {
   return { a.y, -a.x };
 }
 
-inline std::vector<double> StandardBasis(const int& pos, const int& size) {
+inline std::vector<double> StandardBasis(int pos, int size) {
   if (pos >= size)
     throw std::invalid_argument("Position cannot be greater than or equal to size");
 
@@ -94,7 +94,7 @@ auto Multiply(const std::vector<T1>& a, const std::vector<T2>& b) {
 }
 
 template<typename T1, typename T2>
-auto Multiply(const T1& scalar, const std::vector<T2>& vec) {
+auto Multiply(T1 scalar, const std::vector<T2>& vec) {
   using T3 = std::common_type_t<T1, T2>;
 
   std::vector<T3> result;
@@ -104,7 +104,7 @@ auto Multiply(const T1& scalar, const std::vector<T2>& vec) {
 }
 
 template<typename T1, typename T2>
-auto Multiply(const std::vector<T1>& vec, const T2& scalar) {
+auto Multiply(const std::vector<T1>& vec, T2 scalar) {
   return Multiply(scalar, vec);
 }
 

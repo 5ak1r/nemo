@@ -36,7 +36,7 @@ private:
   double3 position;
 };
 
-double2 WorldToScreen(const double3& point, const Transform& transform, const double2& pixels, const double& fov);
+double3 VertexToScreen(const double3& vertex, const Transform& transform, const double2& pixels, double fov);
 
 } // namespace math
 

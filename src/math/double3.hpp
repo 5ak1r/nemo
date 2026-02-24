@@ -10,6 +10,7 @@ union double3 {
   struct { double r, g, b; };
 
   double3() : x(0.0), y(0.0), z(0.0) {}
+  double3(double a) : x(a), y(a), z(a) {}
   double3(double a, double b, double c) : x(a), y(b), z(c) {}
 
 };

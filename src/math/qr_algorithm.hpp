@@ -17,7 +17,7 @@ namespace math {
 namespace qr {
 
 double WilkinsonShift(const Matrix& mat);
-std::pair<double, double> GivensRotation(const double& x, const double& y);
+std::pair<double, double> GivensRotation(double x, double y);
 std::pair<Matrix, Matrix> QRDecomposition(const Matrix& mat);
 Matrix QRAlgorithm(const Matrix& mat);
 

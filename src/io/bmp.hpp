@@ -1,11 +1,13 @@
-#ifndef DRAW_H
-#define DRAW_H
+#ifndef IO_H
+#define IO_H
 
 #include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include "../graphics/render_target.hpp"
 
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
@@ -14,12 +16,12 @@
 
 #include "../utils/binary.hpp"
 
-namespace draw {
-namespace BMP {
+namespace io {
+namespace bmp {
 
-void Write(const std::vector<std::vector<math::double3>>& image, const std::string& name);
+void Write(const graphics::render::RenderTarget& image, const std::string& name);
 
 }
 }
 
-#endif // DRAW_H
+#endif // IO_H

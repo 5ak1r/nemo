@@ -29,7 +29,7 @@ Matrix HouseholderMatrix(const std::vector<double>& aPrime) {
   return result;
 }
 
-Matrix BlockMatrix(const Matrix& mat, const int& amount) {
+Matrix BlockMatrix(const Matrix& mat, int amount) {
   if (!mat.isSquare())
     throw std::invalid_argument("Cannot compute the block matrix of a non-square matrix");
 

@@ -7,15 +7,15 @@
 
 namespace math {
 // easier multiplication
-Matrix::Matrix(double2 a) : mRows(2), mCols(1), mSize(2), mData({a.x, a.y}) {}
-Matrix::Matrix(double3 a) : mRows(3), mCols(1), mSize(3), mData({a.x, a.y, a.z}) {}
+Matrix::Matrix(const double2& a) : mRows(2), mCols(1), mSize(2), mData({a.x, a.y}) {}
+Matrix::Matrix(const double3& a) : mRows(3), mCols(1), mSize(3), mData({a.x, a.y, a.z}) {}
 
 Matrix::Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {
   if (mRows <= 0 || mCols <= 0)
     throw std::invalid_argument("Rows and Columns must be greater than zero");
 }
 
-Matrix::Matrix(int rows, int cols, std::vector<double> data) : mRows(rows), mCols(cols), mSize(rows * cols) {
+Matrix::Matrix(int rows, int cols, const std::vector<double>& data) : mRows(rows), mCols(cols), mSize(rows * cols) {
   if (mRows <= 0 || mCols <= 0)
     throw std::invalid_argument("Rows and Columns must be greater than zero");
   if (data.size() != mSize)

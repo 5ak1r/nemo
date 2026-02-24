@@ -1,5 +1,6 @@
-#include "src/draw/draw.hpp"
-#include "src/draw/rasterizer.hpp"
+#include "src/graphics/rasterizer.hpp"
+#include "src/graphics/render_target.hpp"
+#include "src/io/bmp.hpp"
 #include "src/math/constants.hpp"
 #include "src/math/double3.hpp"
 #include "src/math/hessenberg.hpp"
@@ -22,7 +23,7 @@ int main() {
 
 	model::Mesh mesh = model::OBJ::Read("resources/fox.obj");
 
-	std::vector<std::vector<double3>> image(height, std::vector<double3>(width, {0.0, 0.0, 0.0}));
+	graphics::render::RenderTarget image(width, height);
 
 	double2 pixels = {width, height};
 
@@ -31,9 +32,9 @@ int main() {
     double fov = PI / 3;
 
   	for (int i = 0; i < mesh.triangles.size(); i += 3) {
-  	  double2 a = WorldToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels, fov);
-  		double2 b = WorldToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels, fov);
-  		double2 c = WorldToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels, fov);
+  	  double3 a = VertexToScreen(mesh.vertices[mesh.triangles[i]].position, transform, pixels, fov);
+  		double3 b = VertexToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, pixels, fov);
+  		double3 c = VertexToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, pixels, fov);
 
   		int triIndex = i / 3;
   		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
@@ -42,13 +43,12 @@ int main() {
 
       double3 color = {r, g, d};
 
-  		draw::rasterizer::RasterizeTriangle(a, b, c, image, width, height, color);
+  		graphics::rasterizer::RasterizeTriangle(a, b, c, image, width, height, color);
   	}
 
-    draw::BMP::Write(image, "test_" + std::to_string(j));
+    io::bmp::Write(image, "test_" + std::to_string(j));
 
     // reset the image
-    for (auto& row : image)
-      std::fill(row.begin(), row.end(), double3{0.0, 0.0, 0.0});
+    image.resetBuffers();
 	}
 }

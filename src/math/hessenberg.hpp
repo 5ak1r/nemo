@@ -12,7 +12,7 @@ namespace hessenberg {
 
 std::vector<double> Omega(const std::vector<double>& aPrime);
 Matrix HouseholderMatrix(const std::vector<double>& aPrime);
-Matrix BlockMatrix(const Matrix& mat, const int& amount);
+Matrix BlockMatrix(const Matrix& mat, int amount);
 Matrix UpperHessenbergMatrix(const Matrix& mat);
 
 } // namespace hessenberg
