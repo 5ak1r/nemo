@@ -3,40 +3,37 @@
 namespace math {
 
 double Transform::Pitch() const {
-  return pitch;
+  return mPitch;
 }
 
 double Transform::Yaw() const {
-  return yaw;
+  return mYaw;
 }
 
 double3 Transform::Position() const {
-  return position;
+  return mPosition;
 }
 
-void Transform::setPitch(double p) {
-  pitch = p;
-}
-
-void Transform::setYaw(double y) {
-  yaw = y;
+void Transform::setRotation(double y, double p) {
+  mYaw = y;
+  mPitch = p;
 }
 
 void Transform::setPosition(double3 pos) {
-  position = pos;
+  mPosition = pos;
 }
 
 double3 Transform::ToWorldPoint(const double3& p) const {
   Matrix h = GetBasisMatrix();
 
-  return TransformVector(h, p) + position;
+  return TransformVector(h, p) + mPosition;
 }
 
 Matrix Transform::GetBasisMatrix() const {
-  Matrix mYaw(3, 3, {std::cos(yaw), 0.0, std::sin(yaw), 0.0, 1.0, 0.0, -std::sin(yaw), 0.0, std::cos(yaw)});
-  Matrix mPitch(3, 3, {1, 0, 0, 0, std::cos(pitch), -std::sin(pitch), 0, std::sin(pitch), std::cos(pitch)});
+  Matrix bYaw(3, 3, {std::cos(mYaw), 0.0, std::sin(mYaw), 0.0, 1.0, 0.0, -std::sin(mYaw), 0.0, std::cos(mYaw)});
+  Matrix bPitch(3, 3, {1, 0, 0, 0, std::cos(mPitch), -std::sin(mPitch), 0, std::sin(mPitch), std::cos(mPitch)});
 
-  return mPitch * mYaw;
+  return bPitch * bYaw;
 }
 
 double3 Transform::TransformVector(const Matrix& m, const double3& v) {

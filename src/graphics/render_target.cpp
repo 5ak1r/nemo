@@ -5,59 +5,59 @@ namespace graphics {
 namespace render {
 
 RenderTarget::RenderTarget(int w, int h)
-  : width(w),
-    height(h),
-    size(w * h),
-    colorBuffer(size),
-    depthBuffer(size, std::numeric_limits<double>::infinity()) {}
+  : mWidth(w),
+    mHeight(h),
+    mSize(w * h),
+    mColorBuffer(mSize),
+    mDepthBuffer(mSize, std::numeric_limits<double>::infinity()) {}
 
 int RenderTarget::getWidth() const {
-  return width;
+  return mWidth;
 }
 
 int RenderTarget::getHeight() const {
-  return height;
+  return mHeight;
 }
 
 int RenderTarget::getSize() const {
-  return size;
+  return mSize;
 }
 
 const std::vector<math::double3>& RenderTarget::getColorBuffer() const {
-  return colorBuffer;
+  return mColorBuffer;
 }
 
 const std::vector<double>& RenderTarget::getDepthBuffer() const {
-  return depthBuffer;
+  return mDepthBuffer;
 }
 
 const math::double3& RenderTarget::getColor(int pos) const {
-  return colorBuffer[pos];
+  return mColorBuffer[pos];
 }
 
 const math::double3& RenderTarget::getColor(int x, int y) const {
-  return colorBuffer[y * width + x];
+  return mColorBuffer[y * mWidth + x];
 }
 
 double RenderTarget::getDepth(int pos) const {
-  return depthBuffer[pos];
+  return mDepthBuffer[pos];
 }
 
 double RenderTarget::getDepth(int x, int y) const {
-  return depthBuffer[y * width + x];
+  return mDepthBuffer[y * mWidth + x];
 }
 
 void RenderTarget::setColor(int x, int y, const math::double3& value) {
-  colorBuffer[y * width + x] = value;
+  mColorBuffer[y * mWidth + x] = value;
 }
 
 void RenderTarget::setDepth(int x, int y, double value) {
-  depthBuffer[y * width + x] = value;
+  mDepthBuffer[y * mWidth + x] = value;
 }
 
 void RenderTarget::resetBuffers() {
-  std::fill(colorBuffer.begin(), colorBuffer.end(), math::double3{0.0, 0.0, 0.0});
-  std::fill(depthBuffer.begin(), depthBuffer.end(), std::numeric_limits<double>::infinity());
+  std::fill(mColorBuffer.begin(), mColorBuffer.end(), math::double3{0.0, 0.0, 0.0});
+  std::fill(mDepthBuffer.begin(), mDepthBuffer.end(), std::numeric_limits<double>::infinity());
 }
 
 } // namespace render

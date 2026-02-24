@@ -31,12 +31,12 @@ public:
   void resetBuffers();
 
 private:
-  const int width;
-  const int height;
-  const int size;
+  const int mWidth;
+  const int mHeight;
+  const int mSize;
 
-  std::vector<math::double3> colorBuffer;
-  std::vector<double> depthBuffer;
+  std::vector<math::double3> mColorBuffer;
+  std::vector<double> mDepthBuffer;
 };
 
 } // namespace render
