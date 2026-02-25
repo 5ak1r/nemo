@@ -33,7 +33,7 @@ void RasterizeTriangle(
 
         if (depth > image.getDepth(x, y)) continue;
 
-        image.setColor(x, y, depth);
+        image.setColor(x, y, color);
         image.setDepth(x, y, depth);
       }
     }
