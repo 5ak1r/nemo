@@ -45,7 +45,6 @@ double3 Transform::TransformVector(const Matrix& m, const double3& v) {
 
 double3 VertexToScreen(const double3& vertex, const Transform& transform, const double2& pixels, double fov) {
   double3 vertexWorld = transform.ToWorldPoint(vertex);
-
   double screenHeight = std::tan(fov / 2) * 2;
   double pixelsPerWorldUnit = pixels.y / screenHeight / vertexWorld.z;
 

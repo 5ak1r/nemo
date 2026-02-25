@@ -27,8 +27,8 @@ int main() {
 
 	double2 pixels = {width, height};
 
-	for (int j = 0; j < 2; j++) {
-	  Transform transform(PI, 0, {0.0, 0.0, 6.0});
+	for (int j = 0; j < 10; j++) {
+	  Transform transform(0, 0, {0.0, 0.0, 10.0});
     double fov = PI / 3;
 
   	for (int i = 0; i < mesh.triangles.size(); i += 3) {

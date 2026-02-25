@@ -63,7 +63,7 @@ Mesh Read(const std::string& filename) {
       meshBuilder.normals.push_back(normal);
     }
 
-    else if (lineType == "f" && lineSize > 4) {
+    else if (lineType == "f" && lineSize >= 4) {
       std::vector<vKey> face;
 
       for (int f = 1; f < lineSize; f++) {

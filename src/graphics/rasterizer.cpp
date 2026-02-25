@@ -27,7 +27,7 @@ void RasterizeTriangle(
     for (int x = minX; x <= maxX; x++) {
       double3 weights;
 
-      if (triangle::InTriangle(a, b, c, {(double)x, (double)y}, weights)) {
+      if (triangle::InTriangle(double2(a), double2(b), double2(c), {x + 0.5, y + 0.5}, weights)) {
         double3 depths = {a.z, b.z, c.z};
         double depth = vector::Dot(depths, weights);
 
