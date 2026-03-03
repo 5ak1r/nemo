@@ -7,7 +7,7 @@
     std::ofstream bmp(name + ".bmp", std::ios::binary);
 
     // extract important info from render target
-    const std::vector<math::double3>& data = image.getColorBuffer();
+    const std::vector<graphics::render::Color>& data = image.getColorBuffer();
     uint32_t width = image.getWidth();
     uint32_t height = image.getHeight();
 
@@ -39,10 +39,10 @@
     // draw using the data
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        math::double3 col = data[y * width + x];
-        bmp.put(static_cast<char>(col.b * 255));
-        bmp.put(static_cast<char>(col.g * 255));
-        bmp.put(static_cast<char>(col.r * 255));
+        graphics::render::Color col = data[y * width + x];
+        bmp.put(static_cast<char>(col.b));
+        bmp.put(static_cast<char>(col.g));
+        bmp.put(static_cast<char>(col.r));
         bmp.put(0);
       }
     }

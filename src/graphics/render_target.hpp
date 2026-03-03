@@ -1,13 +1,19 @@
 #ifndef RENDER_TARGET_H
 #define RENDER_TARGET_H
 
+#include <cstdint>
 #include <limits>
 #include <vector>
 
-#include "../math/double3.hpp"
-
 namespace graphics {
 namespace render {
+
+struct Color {
+  uint8_t r, g, b;
+
+  Color() : r(0.0), g(0.0), b(0.0) {}
+  Color(uint8_t x, uint8_t y, uint8_t z) : r(x), g(y), b(z) {}
+};
 
 class RenderTarget {
 public:
@@ -17,15 +23,15 @@ public:
   int getHeight() const;
   int getSize() const;
 
-  const std::vector<math::double3>& getColorBuffer() const;
+  const std::vector<Color>& getColorBuffer() const;
   const std::vector<double>& getDepthBuffer() const;
 
-  const math::double3& getColor(int pos) const;
-  const math::double3& getColor(int x, int y) const;
+  const Color& getColor(int pos) const;
+  const Color& getColor(int x, int y) const;
   double getDepth(int pos) const;
   double getDepth(int x, int y) const;
 
-  void setColor(int x, int y, const math::double3& value);
+  void setColor(int x, int y, const Color& value);
   void setDepth(int x, int y, double value);
 
   void resetBuffers();
@@ -35,12 +41,11 @@ private:
   const int mHeight;
   const int mSize;
 
-  std::vector<math::double3> mColorBuffer;
+  std::vector<Color> mColorBuffer;
   std::vector<double> mDepthBuffer;
 };
 
 } // namespace render
 } // namespace graphics
-
 
 #endif // RENDER_TARGET_H

@@ -19,7 +19,7 @@ void RasterizeTriangle(
   const double3& b,
   const double3& c,
   render::RenderTarget& image,
-  const double3& color);
+  const render::Color& color);
 
 } // namespace rasterizer
 } // namespace graphics

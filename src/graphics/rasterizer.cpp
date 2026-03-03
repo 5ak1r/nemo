@@ -9,7 +9,7 @@ void RasterizeTriangle(
   const double3& b,
   const double3& c,
   render::RenderTarget& image,
-  const double3& color
+  const render::Color& color
 ) {
   int minX = std::floor(std::min({a.x, b.x, c.x}));
   int minY = std::floor(std::min({a.y, b.y, c.y}));

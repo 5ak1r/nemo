@@ -1,5 +1,6 @@
 #include "src/graphics/rasterizer.hpp"
 #include "src/graphics/render.hpp"
+#include "src/graphics/window.hpp"
 #include "src/io/bmp.hpp"
 #include "src/math/constants.hpp"
 #include "src/math/matrix.hpp"
@@ -15,6 +16,14 @@ int main() {
 
 	const model::Mesh mesh = model::obj::Read("resources/suzanne.obj");
 	const model::Mesh mesh2 = model::obj::Read("resources/plane.obj");
+
+	graphics::window::InitGLFW();
+
+	graphics::window::Window window(800, 600, "test");
+	window.MakeCurrent();
+
+	graphics::window::InitGLAD();
+	glViewport(0, 0, window.getWidth(), window.getHeight());
 
 	graphics::render::RenderTarget image(width, height);
 

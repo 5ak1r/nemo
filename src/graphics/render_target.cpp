@@ -23,7 +23,7 @@ int RenderTarget::getSize() const {
   return mSize;
 }
 
-const std::vector<math::double3>& RenderTarget::getColorBuffer() const {
+const std::vector<Color>& RenderTarget::getColorBuffer() const {
   return mColorBuffer;
 }
 
@@ -31,11 +31,11 @@ const std::vector<double>& RenderTarget::getDepthBuffer() const {
   return mDepthBuffer;
 }
 
-const math::double3& RenderTarget::getColor(int pos) const {
+const Color& RenderTarget::getColor(int pos) const {
   return mColorBuffer[pos];
 }
 
-const math::double3& RenderTarget::getColor(int x, int y) const {
+const Color& RenderTarget::getColor(int x, int y) const {
   return mColorBuffer[y * mWidth + x];
 }
 
@@ -47,7 +47,7 @@ double RenderTarget::getDepth(int x, int y) const {
   return mDepthBuffer[y * mWidth + x];
 }
 
-void RenderTarget::setColor(int x, int y, const math::double3& value) {
+void RenderTarget::setColor(int x, int y, const Color& value) {
   mColorBuffer[y * mWidth + x] = value;
 }
 
@@ -56,7 +56,7 @@ void RenderTarget::setDepth(int x, int y, double value) {
 }
 
 void RenderTarget::resetBuffers() {
-  std::fill(mColorBuffer.begin(), mColorBuffer.end(), math::double3{0.0, 0.0, 0.0});
+  std::fill(mColorBuffer.begin(), mColorBuffer.end(), Color{0, 0, 0});
   std::fill(mDepthBuffer.begin(), mDepthBuffer.end(), std::numeric_limits<double>::infinity());
 }
 

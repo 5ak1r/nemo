@@ -17,7 +17,7 @@ void Render(RenderTarget& target, const model::Mesh& mesh, const math::Transform
     double g = std::fmod(triIndex * 0.3819660113, 1.0); // 1 − 1/φ
     double d = std::fmod(triIndex * 0.7071067811, 1.0); // 1 / √2
 
-    math::double3 color = {r, g, d};
+    Color color = {(uint8_t)(r * 255), (uint8_t)(g * 255), (uint8_t)(d * 255)}; // temporary until we add shaders/textures
 
 		rasterizer::RasterizeTriangle(a, b, c, target, color);
  	}
