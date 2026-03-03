@@ -1,7 +1,7 @@
 #include "obj.hpp"
 
 namespace model {
-namespace OBJ {
+namespace obj {
 
 int CheckNegative(int idx, int size) {
   if (idx == 0) throw std::invalid_argument("Cannot have 0 index in OBJ files.");

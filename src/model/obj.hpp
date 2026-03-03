@@ -14,7 +14,7 @@
 #include "../utils/string.hpp"
 
 namespace model {
-namespace OBJ {
+namespace obj {
 
 int CheckNegative(int idx, int size);
 Mesh Read(const std::string& filename);

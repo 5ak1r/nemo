@@ -13,8 +13,8 @@ int main() {
   const int width = 2560;
 	const int height = 1600;
 
-	model::Mesh mesh = model::OBJ::Read("resources/suzanne.obj");
-	model::Mesh mesh2 = model::OBJ::Read("resources/plane.obj");
+	model::Mesh mesh = model::obj::Read("resources/suzanne.obj");
+	model::Mesh mesh2 = model::obj::Read("resources/plane.obj");
 
 	graphics::render::RenderTarget image(width, height);
 
