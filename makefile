@@ -1,7 +1,7 @@
 CXX := g++
 
 SRC := main.cpp \
-  $(wildcard src/external/*.c*) \
+  $(wildcard external/*.c*) \
   $(wildcard src/graphics/*.cpp) \
   $(wildcard src/io/*.cpp) \
 	$(wildcard src/math/*.cpp) \
