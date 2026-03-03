@@ -9,8 +9,6 @@ void RasterizeTriangle(
   const double3& b,
   const double3& c,
   render::RenderTarget& image,
-  int width,
-  int height,
   const double3& color
 ) {
   int minX = std::floor(std::min({a.x, b.x, c.x}));
@@ -20,8 +18,8 @@ void RasterizeTriangle(
 
   minX = std::max(0, minX);
   minY = std::max(0, minY);
-  maxX = std::min(width - 1, maxX);
-  maxY = std::min(height - 1, maxY);
+  maxX = std::min(image.getWidth() - 1, maxX);
+  maxY = std::min(image.getHeight() - 1, maxY);
 
   for (int y = minY; y <= maxY; y++) {
     for (int x = minX; x <= maxX; x++) {
@@ -29,7 +27,7 @@ void RasterizeTriangle(
 
       if (triangle::InTriangle(double2(a), double2(b), double2(c), {x + 0.5, y + 0.5}, weights)) {
         double3 depths = {a.z, b.z, c.z};
-        double depth = vector::Dot(depths, weights);
+        double depth = 1.0 / vector::Dot(1.0 / depths, weights);
 
         if (depth > image.getDepth(x, y)) continue;
 

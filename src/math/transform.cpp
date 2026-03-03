@@ -2,12 +2,12 @@
 
 namespace math {
 
-double Transform::Pitch() const {
-  return mPitch;
-}
-
 double Transform::Yaw() const {
   return mYaw;
+}
+
+double Transform::Pitch() const {
+  return mPitch;
 }
 
 double3 Transform::Position() const {
@@ -21,6 +21,18 @@ void Transform::setRotation(double y, double p) {
 
 void Transform::setPosition(double3 pos) {
   mPosition = pos;
+}
+
+void Transform::addYaw(double amount) {
+  mYaw += amount;
+}
+
+void Transform::addPitch(double amount) {
+  mPitch += amount;
+}
+
+void Transform::addPosition(double3 amount) {
+  mPosition = mPosition + amount;
 }
 
 double3 Transform::ToWorldPoint(const double3& p) const {
@@ -43,13 +55,13 @@ double3 Transform::TransformVector(const Matrix& m, const double3& v) {
   return {result(0), result(1), result(2)};
 }
 
-double3 VertexToScreen(const double3& vertex, const Transform& transform, const double2& pixels, double fov) {
+double3 VertexToScreen(const double3& vertex, const Transform& transform, int width, int height, double fov) {
   double3 vertexWorld = transform.ToWorldPoint(vertex);
   double screenHeight = std::tan(fov / 2) * 2;
-  double pixelsPerWorldUnit = pixels.y / screenHeight / vertexWorld.z;
+  double pixelsPerWorldUnit = height / screenHeight / vertexWorld.z;
 
   double2 pixelOffset = pixelsPerWorldUnit * double2(vertexWorld.x, vertexWorld.y);
-  double2 vertexScreen = pixels / 2 + pixelOffset;
+  double2 vertexScreen = double2(width, height) / 2 + pixelOffset;
 
   return {vertexScreen.x, vertexScreen.y, vertexWorld.z};
 }

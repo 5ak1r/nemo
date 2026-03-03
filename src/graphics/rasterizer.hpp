@@ -19,8 +19,6 @@ void RasterizeTriangle(
   const double3& b,
   const double3& c,
   render::RenderTarget& image,
-  int width,
-  int height,
   const double3& color);
 
 } // namespace rasterizer

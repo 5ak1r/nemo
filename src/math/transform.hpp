@@ -11,17 +11,21 @@ namespace math {
 
 class Transform {
 public:
-  Transform() : mPitch(0.0), mYaw(0.0), mPosition({0.0, 0.0, 0.0}) {} // default
-  Transform(double p, double y) : mPitch(p), mYaw(y), mPosition({0.0, 0.0, 0.0}) {} // JUST rotation
-  Transform(double p, double y, double3 pos) : mPitch(p), mYaw(y), mPosition(pos) {} // rotation AND translation
-  Transform(double3 pos) : mPitch(0.0), mYaw(0.0), mPosition(pos) {} // JUST translation
+  Transform() : mYaw(0.0), mPitch(0.0), mPosition({0.0, 0.0, 0.0}) {} // default
+  Transform(const double2& yp) : mYaw(yp.x), mPitch(yp.y), mPosition({0.0, 0.0, 0.0}) {} // JUST rotation
+  Transform(const double2& yp, const double3& pos) : mYaw(yp.x), mPitch(yp.y), mPosition(pos) {} // rotation AND translation
+  Transform(const double3& pos) : mYaw(0.0), mPitch(0.0), mPosition(pos) {} // JUST translation
 
-  double Pitch() const;
   double Yaw() const;
+  double Pitch() const;
   double3 Position() const;
 
   void setRotation(double y, double p);
   void setPosition(double3 pos);
+
+  void addYaw(double amount);
+  void addPitch(double amount);
+  void addPosition(double3 amount);
 
   double3 ToWorldPoint(const double3& p) const;
   Matrix GetBasisMatrix() const;
@@ -35,7 +39,7 @@ private:
   double3 mPosition;
 };
 
-double3 VertexToScreen(const double3& vertex, const Transform& transform, const double2& pixels, double fov);
+double3 VertexToScreen(const double3& vertex, const Transform& transform, int width, int height, double fov);
 
 } // namespace math
 
