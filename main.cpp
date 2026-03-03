@@ -13,19 +13,17 @@ int main() {
   const int width = 2560;
 	const int height = 1600;
 
-	model::Mesh mesh = model::obj::Read("resources/suzanne.obj");
-	model::Mesh mesh2 = model::obj::Read("resources/plane.obj");
+	const model::Mesh mesh = model::obj::Read("resources/suzanne.obj");
+	const model::Mesh mesh2 = model::obj::Read("resources/plane.obj");
 
 	graphics::render::RenderTarget image(width, height);
-
-	double2 pixels = {width, height};
 
 	Transform transform({PI, 0}, {0.0, 0.0, 10.0});
 	Transform transform2({PI, 0}, {1.0, 0.2, 3.0});
 
-	for (int j = 0; j < 10; j++) {
-    double fov = PI / 3;
+	const double fov = PI / 3;
 
+	for (int j = 0; j < 10; j++) {
     graphics::render::Render(image, mesh, transform, fov);
     graphics::render::Render(image, mesh2, transform2, fov);
 
