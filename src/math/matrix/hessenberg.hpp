@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "matrix.hpp"
-#include "vector.hpp"
+#include "../vector.hpp"
 
 // https://en.wikipedia.org/wiki/Hessenberg_matrix
 namespace math {

@@ -5,7 +5,7 @@
 #include <iostream>
 #include "double2.hpp"
 #include "double3.hpp"
-#include "matrix.hpp"
+#include "matrix/matrix.hpp"
 
 namespace math {
 

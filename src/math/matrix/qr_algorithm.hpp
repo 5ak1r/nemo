@@ -11,7 +11,7 @@
 #include "hessenberg.hpp"
 #include "matrix.hpp"
 #include "matrix_helpers.hpp"
-#include "vector.hpp"
+#include "../vector.hpp"
 
 namespace math {
 namespace qr {

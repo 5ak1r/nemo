@@ -5,8 +5,8 @@
 #include <iomanip>
 #include <vector>
 
-#include "double2.hpp"
-#include "double3.hpp"
+#include "../double2.hpp"
+#include "../double3.hpp"
 
 namespace math {
 
