@@ -1,4 +1,5 @@
 #include "render.hpp"
+#include <GLFW/glfw3.h>
 
 namespace graphics {
 namespace render {
@@ -30,11 +31,22 @@ void RenderMainLoop(const window::Window& window, scene::Scene& scene) {
   GLFWwindow* windowPtr = window.getWindow();
   RenderTarget target(window.getWidth(), window.getHeight());
 
+  float lastTime = glfwGetTime();
+  int frameCount = 0;
+
   float lastFrame = 0.0f;
   while (!glfwWindowShouldClose(windowPtr)) {
-    float currentFrame = glfwGetTime();
-    float deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+    float currentTime = glfwGetTime();
+    frameCount++;
+
+    if (currentTime - lastTime >= 1.0f) {
+      std::cout << "FPS: " << frameCount << std::endl;
+      frameCount = 0;
+      lastTime = currentTime;
+    }
+
+    float deltaTime = currentTime - lastFrame;
+    lastFrame = currentTime;
 
     glfwPollEvents();
     ProcessInput(window, scene, deltaTime);
