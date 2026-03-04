@@ -1,14 +1,8 @@
-#include "src/graphics/rasterizer.hpp"
 #include "src/graphics/render.hpp"
 #include "src/graphics/scene.hpp"
 #include "src/graphics/window.hpp"
-#include "src/io/bmp.hpp"
 #include "src/math/constants.hpp"
-#include "src/math/matrix.hpp"
-#include "src/math/matrix_helpers.hpp"
 #include "src/model/obj.hpp"
-
-using namespace math::matrix;
 
 int main() {
   const int width = 2560;

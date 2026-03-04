@@ -40,7 +40,7 @@ void RenderMainLoop(const window::Window& window, scene::Scene& scene) {
     frameCount++;
 
     if (currentTime - lastTime >= 1.0f) {
-      std::cout << "FPS: " << frameCount << std::endl;
+      //std::cout << "FPS: " << frameCount << std::endl;
       frameCount = 0;
       lastTime = currentTime;
     }
