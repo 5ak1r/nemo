@@ -1,5 +1,6 @@
 #include "src/graphics/rasterizer.hpp"
 #include "src/graphics/render.hpp"
+#include "src/graphics/scene.hpp"
 #include "src/graphics/window.hpp"
 #include "src/io/bmp.hpp"
 #include "src/math/constants.hpp"
@@ -7,7 +8,6 @@
 #include "src/math/matrix_helpers.hpp"
 #include "src/model/obj.hpp"
 
-using namespace math;
 using namespace math::matrix;
 
 int main() {
@@ -19,29 +19,19 @@ int main() {
 
 	graphics::window::InitGLFW();
 
-	graphics::window::Window window(800, 600, "test");
+	graphics::window::Window window(width, height, "test");
 	window.MakeCurrent();
 
 	graphics::window::InitGLAD();
 	glViewport(0, 0, window.getWidth(), window.getHeight());
 
-	graphics::render::RenderTarget image(width, height);
+	math::Transform transform({math::constants::PI, 0}, {0.0, 0.0, 10.0});
+	math::Transform transform2({math::constants::PI, 0}, {1.0, 0.2, 3.0});
 
-	Transform transform({PI, 0}, {0.0, 0.0, 10.0});
-	Transform transform2({PI, 0}, {1.0, 0.2, 3.0});
+	graphics::scene::Scene scene;
+	scene.fov = math::constants::PI / 3;
+	scene.components.push_back({mesh, transform});
+	scene.components.push_back({mesh2, transform2});
 
-	const double fov = PI / 3;
-
-	for (int j = 0; j < 10; j++) {
-    graphics::render::Render(image, mesh, transform, fov);
-    graphics::render::Render(image, mesh2, transform2, fov);
-
-    transform.addYaw(PI / 18);
-    transform2.addYaw(PI / 18);
-
-    io::bmp::Write(image, "test_" + std::to_string(j));
-
-    // reset the image
-    image.resetBuffers();
-	}
+	graphics::render::RenderMainLoop(window, scene);
 }

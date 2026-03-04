@@ -2,9 +2,11 @@
 #define CONSTANTS_H
 
 namespace math {
+namespace constants {
 
-#define PI 3.1415926536
+constexpr double PI = 3.1415926536;
 
+} // namespace constants
 } // namespace math
 
 #endif // CONSTANTS_H

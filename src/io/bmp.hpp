@@ -1,5 +1,5 @@
-#ifndef IO_H
-#define IO_H
+#ifndef BMP_H
+#define BMP_H
 
 #include <cstdint>
 #include <fstream>

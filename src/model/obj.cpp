@@ -13,7 +13,7 @@ int CheckNegative(int idx, int size) {
 Mesh Read(const std::string& filename) {
   std::ifstream file;
 
-  if (!utils::file::Read(file, filename)) {
+  if (!io::file::Open(file, filename)) {
     throw std::invalid_argument("Not a valid OBJ file.");
   }
 

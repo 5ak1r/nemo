@@ -55,7 +55,7 @@ void RenderTarget::setDepth(int x, int y, double value) {
   mDepthBuffer[y * mWidth + x] = value;
 }
 
-void RenderTarget::resetBuffers() {
+void RenderTarget::clear() {
   std::fill(mColorBuffer.begin(), mColorBuffer.end(), Color{0, 0, 0});
   std::fill(mDepthBuffer.begin(), mDepthBuffer.end(), std::numeric_limits<double>::infinity());
 }

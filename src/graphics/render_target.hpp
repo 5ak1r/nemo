@@ -34,7 +34,7 @@ public:
   void setColor(int x, int y, const Color& value);
   void setDepth(int x, int y, double value);
 
-  void resetBuffers();
+  void clear();
 
 private:
   const int mWidth;
