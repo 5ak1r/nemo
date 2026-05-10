@@ -18,8 +18,8 @@ namespace render {
 const std::string vertShader = "src/graphics/shaders/vert.glsl";
 const std::string fragShader = "src/graphics/shaders/frag.glsl";
 
-void RenderMesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, double fov);
-void RenderMainLoop(const window::Window& window, scene::Scene& scene);
+void Mesh(RenderTarget& target, const model::Mesh& mesh, const graphics::Camera& camera, const math::Transform& transform, double fov);
+void MainLoop(const window::Window& window, scene::Scene& scene);
 
 void ProcessInput(const window::Window& window, scene::Scene& scene, float deltaTime);
 

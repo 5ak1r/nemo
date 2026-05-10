@@ -31,7 +31,7 @@ Matrix HouseholderMatrix(const std::vector<double>& aPrime) {
 
 Matrix BlockMatrix(const Matrix& mat, int amount) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute the block matrix of a non-square matrix");
+    throw std::invalid_argument("cannot compute the block matrix of a non-square matrix");
 
   Matrix block(mat.rows() + amount, mat.cols() + amount);
 

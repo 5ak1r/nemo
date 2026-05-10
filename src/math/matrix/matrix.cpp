@@ -12,14 +12,14 @@ Matrix::Matrix(const double3& a) : mRows(3), mCols(1), mSize(3), mData({a.x, a.y
 
 Matrix::Matrix(int rows, int cols) : mRows(rows), mCols(cols), mSize(rows * cols), mData(mSize) {
   if (mRows <= 0 || mCols <= 0)
-    throw std::invalid_argument("Rows and Columns must be greater than zero");
+    throw std::invalid_argument("rows and columns must be greater than zero");
 }
 
 Matrix::Matrix(int rows, int cols, const std::vector<double>& data) : mRows(rows), mCols(cols), mSize(rows * cols) {
   if (mRows <= 0 || mCols <= 0)
-    throw std::invalid_argument("Rows and Columns must be greater than zero");
+    throw std::invalid_argument("rows and columns must be greater than zero");
   if (data.size() != mSize)
-    throw std::invalid_argument("Data does not match row and column size");
+    throw std::invalid_argument("data does not match row and column size");
 
   mData = data;
 }
@@ -61,7 +61,7 @@ bool Matrix::isSquare() const { return mRows == mCols; }
 
 std::vector<double> Matrix::getRow(const int& idx) const {
   if (idx < 0 || idx >= mRows)
-    throw std::invalid_argument("Row index out of bounds");
+    throw std::invalid_argument("row index out of bounds");
 
   int start = idx * mCols;
 
@@ -70,7 +70,7 @@ std::vector<double> Matrix::getRow(const int& idx) const {
 
 std::vector<double> Matrix::getCol(const int& idx) const {
   if (idx < 0 || idx >= mCols)
-    throw std::invalid_argument("Column index out of bounds");
+    throw std::invalid_argument("column index out of bounds");
 
   std::vector<double> result;
   result.reserve(mRows);
@@ -90,7 +90,7 @@ void Matrix::swapRows(const int& r1, const int& r2) {
   if (r1 == r2) return;
 
   if (r1 < 0 || r1 >= mRows || r2 < 0 || r2 >= mRows)
-    throw std::out_of_range("Row index out of bounds");
+    throw std::out_of_range("row index out of bounds");
 
   for (int c = 0; c < mCols; c++)
     std::swap((*this)(r1, c), (*this)(r2, c));
@@ -98,7 +98,7 @@ void Matrix::swapRows(const int& r1, const int& r2) {
 
 Matrix Matrix::adjugate() const {
   if (!isSquare())
-    throw std::invalid_argument("Cannot compute the adjugate of a non-square matrix");
+    throw std::invalid_argument("cannot compute the adjugate of a non-square matrix");
 
   return matrix::Adjugate(*this);
 }
@@ -128,14 +128,14 @@ std::vector<std::complex<double>> Matrix::eigenvalues() const {
 // 2d indexing
 double& Matrix::operator()(int i, int j) {
   if (i < 0 || i >= mRows || j < 0 || j >= mCols)
-    throw std::out_of_range("Matrix index out of range");
+    throw std::out_of_range("matrix index out of range");
 
   return mData[i * mCols + j];
 }
 
 double Matrix::operator()(int i, int j) const {
   if (i < 0 || i >= mRows || j < 0 || j >= mCols)
-    throw std::out_of_range("Matrix index out of range");
+    throw std::out_of_range("matrix index out of range");
 
   return mData[i * mCols + j];
 }
@@ -143,21 +143,21 @@ double Matrix::operator()(int i, int j) const {
 // 1d indexing
 double& Matrix::operator()(int ij) {
   if (ij < 0 || ij >= mSize)
-    throw std::out_of_range("Matrix index out of range");
+    throw std::out_of_range("matrix index out of range");
 
   return mData[ij];
 }
 
 double Matrix::operator()(int ij) const {
   if (ij < 0 || ij >= mSize)
-    throw std::out_of_range("Matrix index out of range");
+    throw std::out_of_range("matrix index out of range");
 
   return mData[ij];
 }
 
 Matrix& Matrix::operator+=(const Matrix& other) {
   if (mRows != other.rows() || mCols != other.cols())
-    throw std::invalid_argument("Matrix dimensions must be equal");
+    throw std::invalid_argument("matrix dimensions must be equal");
 
   for (int i = 0; i < mSize; i++) mData[i] += other(i);
 
@@ -166,7 +166,7 @@ Matrix& Matrix::operator+=(const Matrix& other) {
 
 Matrix& Matrix::operator-=(const Matrix& other) {
   if (mRows != other.rows() || mCols != other.cols())
-    throw std::invalid_argument("Matrix dimensions must be equal");
+    throw std::invalid_argument("matrix dimensions must be equal");
 
   for (int i = 0; i < mSize; i++) mData[i] -= other(i);
 
@@ -175,7 +175,7 @@ Matrix& Matrix::operator-=(const Matrix& other) {
 
 Matrix& Matrix::operator*=(const Matrix& other) {
   if (mCols != other.rows())
-    throw std::invalid_argument("Other matrix column count must equal row count");
+    throw std::invalid_argument("other matrix column count must equal row count");
 
   *this = matrix::Multiply(*this, other);
   return *this;
@@ -184,7 +184,7 @@ Matrix& Matrix::operator*=(const Matrix& other) {
 // more operator overloads
 Matrix operator+(const Matrix& a, const Matrix& b) {
   if (a.rows() != b.rows() || a.cols() != b.cols())
-    throw std::invalid_argument("Matrix dimensions must be equal");
+    throw std::invalid_argument("matrix dimensions must be equal");
 
   Matrix result(a.rows(), a.cols());
 
@@ -197,7 +197,7 @@ Matrix operator+(const Matrix& a, const Matrix& b) {
 
 Matrix operator-(const Matrix& a, const Matrix& b) {
   if (a.rows() != b.rows() || a.cols() != b.cols())
-    throw std::invalid_argument("Matrix dimensions must be equal");
+    throw std::invalid_argument("matrix dimensions must be equal");
 
   Matrix result(a.rows(), b.cols());
 
@@ -210,7 +210,7 @@ Matrix operator-(const Matrix& a, const Matrix& b) {
 
 Matrix operator*(const Matrix& a, const Matrix& b) {
   if (a.cols() != b.rows())
-    throw std::invalid_argument("Other matrix column count must equal row count");
+    throw std::invalid_argument("other matrix column count must equal row count");
 
   Matrix res = matrix::Multiply(a, b);
   return res;

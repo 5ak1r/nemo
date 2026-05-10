@@ -6,14 +6,14 @@ namespace render {
 
 GLuint screenVAO, screenVBO, screenShader, screenTexture;
 
-void RenderMesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, double fov) {
+void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, const graphics::Camera& camera) {
   int width = target.getWidth();
   int height = target.getHeight();
 
   for (int i = 0; i < mesh.triangles.size(); i += 3) {
- 	  math::double3 a = VertexToScreen(mesh.vertices[mesh.triangles[i]].position, transform, width, height, fov);
- 		math::double3 b = VertexToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, width, height, fov);
- 		math::double3 c = VertexToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, width, height, fov);
+ 	  math::double3 a = VertexToScreen(mesh.vertices[mesh.triangles[i]].position, transform, camera, width, height);
+ 		math::double3 b = VertexToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, camera, width, height);
+ 		math::double3 c = VertexToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, camera, width, height);
 
  		int triIndex = i / 3;
  		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
@@ -26,7 +26,7 @@ void RenderMesh(RenderTarget& target, const model::Mesh& mesh, const math::Trans
  	}
 }
 
-void RenderMainLoop(const window::Window& window, scene::Scene& scene) {
+void MainLoop(const window::Window& window, scene::Scene& scene) {
   SetupScreen(window.getWidth(), window.getHeight());
   GLFWwindow* windowPtr = window.getWindow();
   RenderTarget target(window.getWidth(), window.getHeight());
@@ -53,7 +53,7 @@ void RenderMainLoop(const window::Window& window, scene::Scene& scene) {
 
     target.clear();
     for (auto& object : scene.components) {
-      RenderMesh(target, object.first, object.second, scene.fov);
+      Mesh(target, object.first, object.second, scene.camera);
     }
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -65,15 +65,19 @@ void RenderMainLoop(const window::Window& window, scene::Scene& scene) {
 void ProcessInput(const window::Window& window, scene::Scene& scene, float deltaTime) {
   GLFWwindow* windowPtr = window.getWindow();
 
+  for (auto& component : scene.components) component.second.addYaw(deltaTime);
+
   if (glfwGetKey(windowPtr, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(windowPtr, true);
-  else if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS) {
-    float rotationSpeed = math::constants::PI / 18;
 
-    for (auto& component : scene.components) {
-      component.second.addYaw(rotationSpeed * deltaTime);
-    }
-  }
+  if (glfwGetKey(windowPtr, GLFW_KEY_W) == GLFW_PRESS)
+    scene.camera.transform.addPosition({0, 0, scene.camera.speed * deltaTime});
+  if (glfwGetKey(windowPtr, GLFW_KEY_S) == GLFW_PRESS)
+    scene.camera.transform.addPosition({0, 0, -scene.camera.speed * deltaTime});
+  if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS)
+    scene.camera.transform.addPosition({-scene.camera.speed * deltaTime, 0, 0});
+  if (glfwGetKey(windowPtr, GLFW_KEY_D) == GLFW_PRESS)
+    scene.camera.transform.addPosition({scene.camera.speed * deltaTime, 0, 0});
 }
 
 void SetupScreen(int width, int height) {

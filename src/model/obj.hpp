@@ -1,6 +1,7 @@
 #ifndef OBJ_H
 #define OBJ_H
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <unordered_map>

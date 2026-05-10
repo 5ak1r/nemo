@@ -4,17 +4,20 @@ namespace model {
 namespace obj {
 
 int CheckNegative(int idx, int size) {
-  if (idx == 0) throw std::invalid_argument("Cannot have 0 index in OBJ files.");
+  if (idx == 0) throw std::invalid_argument("cannot have 0 index in OBJ files");
 
-  if (idx > 0) return idx - 1;
-  else return size + idx;
+  int result = (idx > 0) ? idx - 1 : idx + size;
+  if (result < 0 || result >= size)
+    throw std::out_of_range("index out of range");
+
+  return result;
 }
 
 Mesh Read(const std::string& filename) {
   std::ifstream file;
 
   if (!io::file::Open(file, filename)) {
-    throw std::invalid_argument("Not a valid OBJ file.");
+    throw std::invalid_argument("not a valid OBJ file");
   }
 
   Mesh mesh;
@@ -25,8 +28,8 @@ Mesh Read(const std::string& filename) {
     //skip comments, s (for now) and object name
     if (line.empty()) continue;
 
-    char first = line[0];
-    if(first == '#' || first == 'o' || first == 's') continue;
+    line.erase(std::remove(line.begin(), line.end(), '\r' ), line.end());
+    line.erase(std::remove(line.begin(), line.end(), '\n' ), line.end());
 
     std::vector<std::string> splitLine = utils::string::Split(line);
     if (splitLine.empty()) continue;
@@ -65,6 +68,7 @@ Mesh Read(const std::string& filename) {
 
     else if (lineType == "f" && lineSize >= 4) {
       std::vector<vKey> face;
+      face.reserve(lineSize - 1);
 
       for (int f = 1; f < lineSize; f++) {
         std::vector<std::string> data = utils::string::Split(splitLine[f], "/");

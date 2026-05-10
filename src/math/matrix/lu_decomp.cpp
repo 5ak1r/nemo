@@ -5,7 +5,7 @@ namespace math {
 // modified from https://en.wikipedia.org/wiki/LU_decomposition
 PLU DoolittleLU(const Matrix& mat) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute the LU decomposition of a non-square matrix");
+    throw std::invalid_argument("cannot compute the LU decomposition of a non-square matrix");
 
   int rc = mat.rows(); // rows = colums for square matrices
   int swaps = 0;
@@ -29,7 +29,7 @@ PLU DoolittleLU(const Matrix& mat) {
     }
 
     if (max < 1e-16) // account for floating point error
-      throw std::invalid_argument("Matrix is singular");
+      throw std::invalid_argument("matrix is singular");
 
     if (pivotIdx != i) {
       result.swapRows(i, pivotIdx);

@@ -4,6 +4,8 @@
 #include <utility>
 #include <vector>
 
+#include "camera.hpp"
+
 #include "../math/transform.hpp"
 #include "../model/mesh.hpp"
 
@@ -11,7 +13,7 @@ namespace graphics {
 namespace scene {
 
 struct Scene {
-  double fov;
+  Camera camera;
   std::vector<std::pair<model::Mesh, math::Transform>> components;
 };
 

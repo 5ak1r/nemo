@@ -80,7 +80,7 @@ std::pair<Matrix, Matrix> QRDecomposition(const Matrix& mat) {
 
 Matrix QRAlgorithm(const Matrix& mat) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Must be a Square Matrix");
+    throw std::invalid_argument("must be a Square Matrix");
 
   Matrix A = mat;
 

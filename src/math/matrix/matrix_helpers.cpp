@@ -37,7 +37,7 @@ Matrix Transpose(const Matrix& mat) {
 
 Matrix Adjugate(const Matrix& mat) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute the cofactor of a non-square matrix");
+    throw std::invalid_argument("cannot compute the cofactor of a non-square matrix");
 
   Matrix result(mat.rows(), mat.cols());
 
@@ -68,19 +68,19 @@ Matrix Adjugate(const Matrix& mat) {
 
 Matrix Cofactors(const Matrix& mat) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute the adjugate of a non-square matrix");
+    throw std::invalid_argument("cannot compute the adjugate of a non-square matrix");
 
   return Transpose(Adjugate(mat));
 }
 
 Matrix Inverse(const Matrix& mat) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute the inverse of a non-square matrix");
+    throw std::invalid_argument("cannot compute the inverse of a non-square matrix");
 
   double det = Determinant(mat);
 
   if (det == 0.0)
-    throw std::invalid_argument("Cannot compute the inverse of a matrix with 0 determinant");
+    throw std::invalid_argument("cannot compute the inverse of a matrix with 0 determinant");
 
   double det_recip = 1.0 / det;
   Matrix inverse = det_recip * Adjugate(mat);
@@ -90,7 +90,7 @@ Matrix Inverse(const Matrix& mat) {
 
 std::vector<std::complex<double>> Eigenvalues(const Matrix &mat) {
   if (!mat.isSquare())
-    throw std::invalid_argument("Cannot compute the eigenvalues of a non-square matrix");
+    throw std::invalid_argument("cannot compute the eigenvalues of a non-square matrix");
 
   int n = mat.rows();
 
@@ -152,7 +152,7 @@ Matrix Multiply(const Matrix& a, const Matrix& b) {
 
 Matrix RemoveMatrixRow(const Matrix& mat, int idx) {
   if (idx < 0 || idx > mat.rows())
-    throw std::invalid_argument("Row index out of bounds");
+    throw std::invalid_argument("row index out of bounds");
 
   std::vector<double> result;
   result.reserve((mat.rows() - 1) * mat.cols());
@@ -168,7 +168,7 @@ Matrix RemoveMatrixRow(const Matrix& mat, int idx) {
 
 Matrix RemoveMatrixCol(const Matrix& mat, int idx) {
   if (idx < 0 || idx > mat.cols())
-    throw std::invalid_argument("Column index out of bounds");
+    throw std::invalid_argument("column index out of bounds");
 
   std::vector<double> result;
   result.reserve(mat.rows() * (mat.cols() - 1));
