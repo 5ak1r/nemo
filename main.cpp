@@ -1,7 +1,7 @@
 #include "src/graphics/render.hpp"
 #include "src/graphics/scene.hpp"
 #include "src/graphics/window.hpp"
-#include "src/math/constants.hpp"
+#include "src/math/constants_conversions.hpp"
 #include "src/model/obj.hpp"
 
 int main() {
@@ -20,12 +20,12 @@ int main() {
 	graphics::window::InitGLAD();
 	glViewport(0, 0, window.getWidth(), window.getHeight());
 
-	math::Transform transform({math::constants::PI, 0}, {0.0, 0.0, 10.0});
-	math::Transform transform2({math::constants::PI, 0}, {1.0, 0.2, 3.0});
-	math::Transform transform3({math::constants::PI, 0}, {-2.0, 0.2, 2.0});
+	math::Transform transform({conversions::ToRadians(180), 0}, {0.0, 0.0, 10.0});
+	math::Transform transform2({conversions::ToRadians(180), 0}, {1.0, 0.2, 3.0});
+	math::Transform transform3({conversions::ToRadians(180), 0}, {-2.0, 0.2, 2.0});
 
 	graphics::scene::Scene scene;
-	scene.camera = graphics::Camera(math::constants::PI / 3);
+	scene.camera = graphics::Camera(conversions::ToRadians(60));
 	scene.components.push_back({mesh, transform});
 	scene.components.push_back({mesh2, transform2});
 	scene.components.push_back({mesh3, transform3});

@@ -6,7 +6,7 @@
 #include "scene.hpp"
 #include "window.hpp"
 #include "../io/file.hpp"
-#include "../math/constants.hpp"
+#include "../math/constants_conversions.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 #include "../math/transform.hpp"

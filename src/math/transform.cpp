@@ -15,9 +15,9 @@ double3 Transform::Position() const {
   return mPosition;
 }
 
-void Transform::setRotation(double y, double p) {
-  mPitch = y;
-  mYaw = p;
+void Transform::setRotation(double pitch, double yaw) {
+  mPitch = pitch;
+  mYaw = yaw;
 }
 
 void Transform::setPosition(double3 pos) {
@@ -47,8 +47,8 @@ double3 Transform::ToLocalPoint(const double3& p) const {
 }
 
 Matrix Transform::GetBasisMatrix() const {
-  Matrix bYaw(3, 3, {std::cos(mPitch), 0.0, std::sin(mPitch), 0.0, 1.0, 0.0, -std::sin(mPitch), 0.0, std::cos(mPitch)});
-  Matrix bPitch(3, 3, {1, 0, 0, 0, std::cos(mYaw), -std::sin(mYaw), 0, std::sin(mYaw), std::cos(mYaw)});
+  Matrix bPitch(3, 3, {std::cos(mPitch), 0.0, std::sin(mPitch), 0.0, 1.0, 0.0, -std::sin(mPitch), 0.0, std::cos(mPitch)});
+  Matrix bYaw(3, 3, {1, 0, 0, 0, std::cos(mYaw), -std::sin(mYaw), 0, std::sin(mYaw), std::cos(mYaw)});
 
   return bPitch * bYaw;
 }
