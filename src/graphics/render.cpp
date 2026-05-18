@@ -1,4 +1,5 @@
 #include "render.hpp"
+#include "render_target.hpp"
 #include <GLFW/glfw3.h>
 
 namespace graphics {
@@ -51,7 +52,8 @@ void MainLoop(const window::Window& window, scene::Scene& scene) {
     lastFrame = currentTime;
 
     glfwPollEvents();
-    ProcessInput(window, scene, deltaTime);
+    io::input::Update(window);
+    io::input::ProcessInput(window, scene, deltaTime);
 
     target.clear();
     for (auto& object : scene.components) {
@@ -62,24 +64,6 @@ void MainLoop(const window::Window& window, scene::Scene& scene) {
     DrawScreen(target);
     glfwSwapBuffers(windowPtr);
   }
-}
-
-void ProcessInput(const window::Window& window, scene::Scene& scene, float deltaTime) {
-  GLFWwindow* windowPtr = window.getWindow();
-
-  for (auto& component : scene.components) component.second.addYaw(deltaTime);
-
-  if (glfwGetKey(windowPtr, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(windowPtr, true);
-
-  if (glfwGetKey(windowPtr, GLFW_KEY_W) == GLFW_PRESS)
-    scene.camera.transform.addPosition({0, 0, scene.camera.speed * deltaTime});
-  if (glfwGetKey(windowPtr, GLFW_KEY_S) == GLFW_PRESS)
-    scene.camera.transform.addPosition({0, 0, -scene.camera.speed * deltaTime});
-  if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS)
-    scene.camera.transform.addPosition({-scene.camera.speed * deltaTime, 0, 0});
-  if (glfwGetKey(windowPtr, GLFW_KEY_D) == GLFW_PRESS)
-    scene.camera.transform.addPosition({scene.camera.speed * deltaTime, 0, 0});
 }
 
 void SetupScreen(int width, int height) {

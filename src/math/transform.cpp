@@ -47,8 +47,8 @@ double3 Transform::ToLocalPoint(const double3& p) const {
 }
 
 Matrix Transform::GetBasisMatrix() const {
-  Matrix bPitch(3, 3, {std::cos(mPitch), 0.0, std::sin(mPitch), 0.0, 1.0, 0.0, -std::sin(mPitch), 0.0, std::cos(mPitch)});
-  Matrix bYaw(3, 3, {1, 0, 0, 0, std::cos(mYaw), -std::sin(mYaw), 0, std::sin(mYaw), std::cos(mYaw)});
+  Matrix bPitch(3, 3, {1, 0, 0, 0, std::cos(mPitch), -std::sin(mPitch), 0, std::sin(mPitch), std::cos(mPitch)});
+  Matrix bYaw(3, 3, {std::cos(mYaw), 0.0, std::sin(mYaw), 0.0, 1.0, 0.0, -std::sin(mYaw), 0.0, std::cos(mYaw)});
 
   return bPitch * bYaw;
 }
@@ -62,9 +62,9 @@ double3 Transform::TransformVector(const Matrix& m, const double3& v) {
 
 double3 VertexToScreen(const double3& vertex, const Transform& transform, const graphics::Camera& camera, int width, int height) {
   double3 vertexWorld = transform.ToWorldPoint(vertex);
-  double3 vertexView = camera.transform.ToLocalPoint(vertexWorld);
+  double3 vertexView = camera.getTransform().ToLocalPoint(vertexWorld);
 
-  double screenHeight = std::tan(camera.fov / 2) * 2;
+  double screenHeight = std::tan(camera.getFov() / 2) * 2;
   double pixelsPerWorldUnit = height / screenHeight / vertexView.z;
 
   double2 pixelOffset = pixelsPerWorldUnit * double2(vertexView.x, vertexView.y);

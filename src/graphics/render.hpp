@@ -6,6 +6,7 @@
 #include "scene.hpp"
 #include "window.hpp"
 #include "../io/file.hpp"
+#include "../io/input.hpp"
 #include "../math/constants_conversions.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
@@ -20,8 +21,6 @@ const std::string fragShader = "src/graphics/shaders/frag.glsl";
 
 void Mesh(RenderTarget& target, const model::Mesh& mesh, const graphics::Camera& camera, const math::Transform& transform, double fov);
 void MainLoop(const window::Window& window, scene::Scene& scene);
-
-void ProcessInput(const window::Window& window, scene::Scene& scene, float deltaTime);
 
 void SetupScreen(int width, int height);
 void DrawScreen(const RenderTarget& target);

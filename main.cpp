@@ -20,9 +20,9 @@ int main() {
 	graphics::window::InitGLAD();
 	glViewport(0, 0, window.getWidth(), window.getHeight());
 
-	math::Transform transform({conversions::ToRadians(180), 0}, {0.0, 0.0, 10.0});
-	math::Transform transform2({conversions::ToRadians(180), 0}, {1.0, 0.2, 3.0});
-	math::Transform transform3({conversions::ToRadians(180), 0}, {-2.0, 0.2, 2.0});
+	math::Transform transform({0, conversions::ToRadians(180)}, {0.0, 0.0, 10.0});
+	math::Transform transform2({0, conversions::ToRadians(180)}, {1.0, 0.2, 3.0});
+	math::Transform transform3({0, conversions::ToRadians(180)}, {-2.0, 0.2, 2.0});
 
 	graphics::scene::Scene scene;
 	scene.camera = graphics::Camera(conversions::ToRadians(60));
