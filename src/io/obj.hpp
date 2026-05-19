@@ -7,18 +7,18 @@
 #include <unordered_map>
 #include <vector>
 
-#include "mesh.hpp"
-#include "mesh_builder.hpp"
 #include "../io/file.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
+#include "../model/mesh.hpp"
+#include "../model/mesh_builder.hpp"
 #include "../utils/string.hpp"
 
-namespace model {
+namespace io {
 namespace obj {
 
 int CheckNegative(int idx, int size);
-Mesh Read(const std::string& filename);
+model::Mesh Read(const std::string& filename);
 
 } // namespace OBJ
 } // namespace model

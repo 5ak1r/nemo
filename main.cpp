@@ -1,16 +1,16 @@
 #include "src/graphics/render.hpp"
 #include "src/graphics/scene.hpp"
 #include "src/graphics/window.hpp"
+#include "src/io/obj.hpp"
 #include "src/math/constants_conversions.hpp"
-#include "src/model/obj.hpp"
 
 int main() {
   const int width = 1920;
 	const int height = 1080;
 
-	const model::Mesh mesh = model::obj::Read("resources/suzanne.obj");
-	const model::Mesh mesh2 = model::obj::Read("resources/plane.obj");
-	const model::Mesh mesh3 = model::obj::Read("resources/cow.obj");
+	const model::Mesh mesh = io::obj::Read("resources/suzanne.obj");
+	const model::Mesh mesh2 = io::obj::Read("resources/plane.obj");
+	const model::Mesh mesh3 = io::obj::Read("resources/cow.obj");
 
 	graphics::window::InitGLFW();
 

@@ -1,6 +1,6 @@
 #include "obj.hpp"
 
-namespace model {
+namespace io {
 namespace obj {
 
 int CheckNegative(int idx, int size) {
@@ -13,15 +13,15 @@ int CheckNegative(int idx, int size) {
   return result;
 }
 
-Mesh Read(const std::string& filename) {
+model::Mesh Read(const std::string& filename) {
   std::ifstream file;
 
   if (!io::file::Open(file, filename)) {
     throw std::invalid_argument("not a valid OBJ file");
   }
 
-  Mesh mesh;
-  MeshBuilder meshBuilder(mesh);
+  model::Mesh mesh;
+  model::MeshBuilder meshBuilder(mesh);
 
   std::string line;
   while(std::getline(file, line)) {
@@ -67,7 +67,7 @@ Mesh Read(const std::string& filename) {
     }
 
     else if (lineType == "f" && lineSize >= 4) {
-      std::vector<vKey> face;
+      std::vector<model::vKey> face;
       face.reserve(lineSize - 1);
 
       for (int f = 1; f < lineSize; f++) {
@@ -75,7 +75,7 @@ Mesh Read(const std::string& filename) {
 
         const int dataSize = data.size();
 
-        vKey vtn = {-1, -1, -1};
+        model::vKey vtn = {-1, -1, -1};
 
         if (dataSize > 0 && !data[0].empty()) {
           int temp = std::stoi(data[0]);
