@@ -1,5 +1,4 @@
 #include "input.hpp"
-#include <GLFW/glfw3.h>
 
 namespace io {
 namespace input {
@@ -24,8 +23,9 @@ void Update(const graphics::window::Window& window) {
     first = false;
   }
 
-  mouseDelta = currentPos - prevPos;
+  mouseDelta = prevPos - currentPos;
   prevPos = currentPos;
+
 }
 
 math::double2 GetMouseDelta() { return mouseDelta; }
@@ -46,17 +46,25 @@ void ProcessInput(const graphics::window::Window& window, graphics::scene::Scene
   math::Transform& cameraTransform = scene.camera.getTransform();
 
   math::double2 mouseDelta = GetMouseDelta() / window.getWidth() * cameraSens;
+  cameraTransform.setRotation(
+    std::clamp(cameraTransform.getPitch() - mouseDelta.y, math::conversions::ToRadians(-85), math::conversions::ToRadians(85)),
+    cameraTransform.getYaw() - mouseDelta.x);
 
   float cameraSpeed = scene.camera.getSpeed();
+  math::double3 moveDelta(0.0);
 
-  if (glfwGetKey(windowPtr, GLFW_KEY_W) == GLFW_PRESS)
-    cameraTransform.addPosition({0, 0, cameraSpeed * deltaTime});
-  if (glfwGetKey(windowPtr, GLFW_KEY_S) == GLFW_PRESS)
-    cameraTransform.addPosition({0, 0, -cameraSpeed * deltaTime});
-  if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS)
-    cameraTransform.addPosition({-cameraSpeed * deltaTime, 0, 0});
-  if (glfwGetKey(windowPtr, GLFW_KEY_D) == GLFW_PRESS)
-    cameraTransform.addPosition({cameraSpeed * deltaTime, 0, 0});
+  math::Matrix cameraMatrix = cameraTransform.GetBasisMatrix();
+  math::double3 cameraRight = cameraMatrix.getCol(0);
+  math::double3 cameraUp = cameraMatrix.getCol(1);
+  math::double3 cameraFwd = cameraMatrix.getCol(2);
+
+  if (glfwGetKey(windowPtr, GLFW_KEY_W) == GLFW_PRESS) moveDelta = moveDelta + cameraFwd;
+  if (glfwGetKey(windowPtr, GLFW_KEY_S) == GLFW_PRESS) moveDelta = moveDelta - cameraFwd;
+  if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS) moveDelta = moveDelta - cameraRight;
+  if (glfwGetKey(windowPtr, GLFW_KEY_D) == GLFW_PRESS) moveDelta = moveDelta + cameraRight;
+
+  cameraTransform.addPosition(moveDelta.getNormalized() * cameraSpeed * deltaTime);
+  cameraTransform.setYPosition(1.0);
 }
 
 } // namespace input

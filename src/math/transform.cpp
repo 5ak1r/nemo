@@ -3,15 +3,15 @@
 
 namespace math {
 
-double Transform::Pitch() const {
+double Transform::getPitch() const {
   return mPitch;
 }
 
-double Transform::Yaw() const {
+double Transform::getYaw() const {
   return mYaw;
 }
 
-double3 Transform::Position() const {
+double3 Transform::getPosition() const {
   return mPosition;
 }
 
@@ -20,8 +20,28 @@ void Transform::setRotation(double pitch, double yaw) {
   mYaw = yaw;
 }
 
+void Transform::setPitch(double pitch) {
+  mPitch = pitch;
+}
+
+void Transform::setYaw(double yaw) {
+  mYaw = yaw;
+}
+
 void Transform::setPosition(double3 pos) {
   mPosition = pos;
+}
+
+void Transform::setXPosition(double x) {
+  mPosition.x = x;
+}
+
+void Transform::setYPosition(double y) {
+  mPosition.y = y;
+}
+
+void Transform::setZPosition(double z) {
+  mPosition.z = z;
 }
 
 void Transform::addPitch(double amount) {
@@ -36,6 +56,18 @@ void Transform::addPosition(double3 amount) {
   mPosition = mPosition + amount;
 }
 
+void Transform::addXPosition(double amount) {
+  mPosition.x += amount;
+}
+
+void Transform::addYPosition(double amount) {
+  mPosition.y += amount;
+}
+
+void Transform::addZPosition(double amount) {
+  mPosition.z += amount;
+}
+
 double3 Transform::ToWorldPoint(const double3& p) const {
   Matrix h = GetBasisMatrix();
 
@@ -43,12 +75,21 @@ double3 Transform::ToWorldPoint(const double3& p) const {
 }
 
 double3 Transform::ToLocalPoint(const double3& p) const {
-  return p - mPosition;
+  Matrix hInv = GetInverseBasisMatrix();
+
+  return TransformVector(hInv, p - mPosition);
 }
 
 Matrix Transform::GetBasisMatrix() const {
   Matrix bPitch(3, 3, {1, 0, 0, 0, std::cos(mPitch), -std::sin(mPitch), 0, std::sin(mPitch), std::cos(mPitch)});
   Matrix bYaw(3, 3, {std::cos(mYaw), 0.0, std::sin(mYaw), 0.0, 1.0, 0.0, -std::sin(mYaw), 0.0, std::cos(mYaw)});
+
+  return bYaw * bPitch;
+}
+
+Matrix Transform::GetInverseBasisMatrix() const {
+  Matrix bPitch(3, 3, {1, 0, 0, 0, std::cos(-mPitch), -std::sin(-mPitch), 0, std::sin(-mPitch), std::cos(-mPitch)});
+  Matrix bYaw(3, 3, {std::cos(-mYaw), 0.0, std::sin(-mYaw), 0.0, 1.0, 0.0, -std::sin(-mYaw), 0.0, std::cos(-mYaw)});
 
   return bPitch * bYaw;
 }

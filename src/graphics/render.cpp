@@ -34,6 +34,9 @@ void MainLoop(const window::Window& window, scene::Scene& scene) {
   GLFWwindow* windowPtr = window.getWindow();
   RenderTarget target(window.getWidth(), window.getHeight());
 
+  //glfwSetInputMode(windowPtr, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  glfwSetInputMode(windowPtr, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+
   float lastTime = glfwGetTime();
   int frameCount = 0;
 
