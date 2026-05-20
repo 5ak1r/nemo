@@ -17,7 +17,7 @@ struct Scene {
   std::vector<std::pair<model::Mesh, math::Transform>> components;
 };
 
-}
-}
+} // namespace scene
+} // namespace graphics
 
 #endif // SCENE_H

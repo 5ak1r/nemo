@@ -8,9 +8,11 @@ int main() {
   const int width = 1920;
   const int height = 1080;
 
-  const model::Mesh mesh = io::obj::Read("resources/suzanne.obj");
-  const model::Mesh mesh2 = io::obj::Read("resources/plane.obj");
-  const model::Mesh mesh3 = io::obj::Read("resources/cow.obj");
+  model::Mesh mesh = io::obj::Read("resources/suzanne.obj");
+  model::Mesh mesh2 = io::obj::Read("resources/plane.obj");
+  model::Mesh mesh3 = io::obj::Read("resources/cow.obj");
+
+  // add textures here
 
   graphics::window::InitGLFW();
 

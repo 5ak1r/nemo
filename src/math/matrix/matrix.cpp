@@ -59,7 +59,7 @@ int Matrix::size() const { return mSize; }
 std::vector<double> Matrix::data() const { return mData; }
 bool Matrix::isSquare() const { return mRows == mCols; }
 
-std::vector<double> Matrix::getRow(const int& idx) const {
+std::vector<double> Matrix::getRow(int idx) const {
   if (idx < 0 || idx >= mRows)
     throw std::invalid_argument("row index out of bounds");
 
@@ -68,7 +68,7 @@ std::vector<double> Matrix::getRow(const int& idx) const {
   return std::vector<double>(mData.begin() + start, mData.begin() + start + mCols);
 }
 
-std::vector<double> Matrix::getCol(const int& idx) const {
+std::vector<double> Matrix::getCol(int idx) const {
   if (idx < 0 || idx >= mCols)
     throw std::invalid_argument("column index out of bounds");
 
@@ -86,7 +86,7 @@ int Matrix::whichRow(int idx) const { return idx / mCols; }
 int Matrix::whichCol(int idx) const { return idx % mCols; }
 
 // helpers
-void Matrix::swapRows(const int& r1, const int& r2) {
+void Matrix::swapRows(int r1, int r2) {
   if (r1 == r2) return;
 
   if (r1 < 0 || r1 >= mRows || r2 < 0 || r2 >= mRows)

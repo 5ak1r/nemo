@@ -1,5 +1,4 @@
 #include "rasterizer.hpp"
-#include "render_target.hpp"
 
 namespace graphics {
 namespace rasterizer {
@@ -8,8 +7,11 @@ void RasterizeTriangle(
   const double3& a,
   const double3& b,
   const double3& c,
-  render::RenderTarget& image,
-  const render::Color& color
+  const double2& uvA,
+  const double2& uvB,
+  const double2& uvC,
+  const Texture& texture,
+  render::RenderTarget& image
 ) {
   int minX = std::floor(std::min({a.x, b.x, c.x}));
   int minY = std::floor(std::min({a.y, b.y, c.y}));
@@ -30,6 +32,13 @@ void RasterizeTriangle(
         double depth = 1.0 / vector::Dot(1.0 / depths, weights);
 
         if (depth > image.getDepth(x, y)) continue;
+
+        double2 texCoord;
+        texCoord += uvA * weights.x;
+        texCoord += uvB * weights.y;
+        texCoord += uvC * weights.z;
+
+        Color color = texture.Sample(texCoord);
 
         image.setColor(x, y, color);
         image.setDepth(x, y, depth);

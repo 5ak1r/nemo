@@ -1,31 +1,26 @@
 #include "render.hpp"
-#include "render_target.hpp"
-#include <GLFW/glfw3.h>
 
 namespace graphics {
 namespace render {
 
 GLuint screenVAO, screenVBO, screenShader, screenTexture;
 
-void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, const graphics::Camera& camera) {
+void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, const Camera& camera) {
   int width = target.getWidth();
   int height = target.getHeight();
 
   for (int i = 0; i < mesh.triangles.size(); i += 3) {
- 	  math::double3 a = VertexToScreen(mesh.vertices[mesh.triangles[i]].position, transform, camera, width, height);
- 		math::double3 b = VertexToScreen(mesh.vertices[mesh.triangles[i + 1]].position, transform, camera, width, height);
-  	math::double3 c = VertexToScreen(mesh.vertices[mesh.triangles[i + 2]].position, transform, camera, width, height);
+    const model::Vertex& va = mesh.vertices[mesh.triangles[i]];
+    const model::Vertex& vb = mesh.vertices[mesh.triangles[i + 1]];
+    const model::Vertex& vc = mesh.vertices[mesh.triangles[i + 2]];
+
+ 	  math::double3 a = VertexToScreen(va.position, transform, camera, width, height);
+ 		math::double3 b = VertexToScreen(vb.position, transform, camera, width, height);
+  	math::double3 c = VertexToScreen(vc.position, transform, camera, width, height);
 
     if (a.z <= 0 || b.z <= 0 || c.z <= 0) continue;
 
-    int triIndex = i / 3;
- 		double r = std::fmod(triIndex * 0.6180339887, 1.0); // 1 / φ
-    double g = std::fmod(triIndex * 0.3819660113, 1.0); // 1 − 1/φ
-    double d = std::fmod(triIndex * 0.7071067811, 1.0); // 1 / √2
-
-    Color color = {(uint8_t)(r * 255), (uint8_t)(g * 255), (uint8_t)(d * 255)}; // temporary until we add shaders/textures
-
-		rasterizer::RasterizeTriangle(a, b, c, target, color);
+		rasterizer::RasterizeTriangle(a, b, c, va.texture, vb.texture, vc.texture, mesh.texture, target);
  	}
 }
 

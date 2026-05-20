@@ -1,5 +1,5 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef CONSTANTS_CONVERSIONS_H
+#define CONSTANTS_CONVERSIONS_H
 
 namespace math {
 namespace constants {
@@ -16,4 +16,4 @@ inline double ToRadians(double deg) { return deg * constants::PI / 180; }
 } // namespace conversions
 } // namespace math
 
-#endif // CONSTANTS_H
+#endif // CONSTANTS_CONVERSIONS_H

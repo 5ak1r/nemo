@@ -35,6 +35,21 @@ struct double2 {
 
     return {x / length, y / length};
   }
+
+
+  double2 operator+=(const double2& other) {
+    x += other.x;
+    y += other.y;
+
+    return *this;
+  }
+
+  double2 operator-=(const double2& other) {
+    x -= other.x;
+    y -= other.y;
+
+    return *this;
+  }
 };
 
 inline double2 operator-(const double2& a, const double2& b) {

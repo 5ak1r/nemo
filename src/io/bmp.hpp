@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "../graphics/color.hpp"
 #include "../graphics/render_target.hpp"
 
 #include "../math/double2.hpp"

@@ -1,19 +1,13 @@
 #ifndef RENDER_TARGET_H
 #define RENDER_TARGET_H
 
-#include <cstdint>
+#include "color.hpp"
+
 #include <limits>
 #include <vector>
 
 namespace graphics {
 namespace render {
-
-struct Color {
-  uint8_t r, g, b;
-
-  Color() : r(0.0), g(0.0), b(0.0) {}
-  Color(uint8_t x, uint8_t y, uint8_t z) : r(x), g(y), b(z) {}
-};
 
 class RenderTarget {
 public:

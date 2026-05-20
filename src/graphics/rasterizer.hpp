@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "render_target.hpp"
+#include "texture.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 #include "../math/triangle.hpp"
@@ -18,8 +19,12 @@ void RasterizeTriangle(
   const double3& a,
   const double3& b,
   const double3& c,
-  render::RenderTarget& image,
-  const render::Color& color);
+  const double2& uvA,
+  const double2& uvB,
+  const double2& uvC,
+  const Texture& texture,
+  render::RenderTarget& image
+);
 
 } // namespace rasterizer
 } // namespace graphics

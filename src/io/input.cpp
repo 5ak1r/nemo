@@ -58,10 +58,10 @@ void ProcessInput(const graphics::window::Window& window, graphics::scene::Scene
   math::double3 cameraUp = cameraMatrix.getCol(1);
   math::double3 cameraFwd = cameraMatrix.getCol(2);
 
-  if (glfwGetKey(windowPtr, GLFW_KEY_W) == GLFW_PRESS) moveDelta = moveDelta + cameraFwd;
-  if (glfwGetKey(windowPtr, GLFW_KEY_S) == GLFW_PRESS) moveDelta = moveDelta - cameraFwd;
-  if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS) moveDelta = moveDelta - cameraRight;
-  if (glfwGetKey(windowPtr, GLFW_KEY_D) == GLFW_PRESS) moveDelta = moveDelta + cameraRight;
+  if (glfwGetKey(windowPtr, GLFW_KEY_W) == GLFW_PRESS) moveDelta += cameraFwd;
+  if (glfwGetKey(windowPtr, GLFW_KEY_S) == GLFW_PRESS) moveDelta -= cameraFwd;
+  if (glfwGetKey(windowPtr, GLFW_KEY_A) == GLFW_PRESS) moveDelta -= cameraRight;
+  if (glfwGetKey(windowPtr, GLFW_KEY_D) == GLFW_PRESS) moveDelta += cameraRight;
 
   cameraTransform.addPosition(moveDelta.getNormalized() * cameraSpeed * deltaTime);
   cameraTransform.setYPosition(1.0);

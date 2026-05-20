@@ -28,13 +28,13 @@ public:
   std::vector<double> data() const;
   bool isSquare() const;
 
-  std::vector<double> getRow(const int& idx) const;
-  std::vector<double> getCol(const int& idx) const;
+  std::vector<double> getRow(int idx) const;
+  std::vector<double> getCol(int idx) const;
 
   int whichRow(int idx) const;
   int whichCol(int idx) const;
 
-  void swapRows(const int& r1, const int& r2);
+  void swapRows(int r1, int r2);
 
   Matrix adjugate() const;
   Matrix cofactors() const;
