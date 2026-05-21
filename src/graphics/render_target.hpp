@@ -26,7 +26,10 @@ public:
   double getDepth(int x, int y) const;
 
   void setColor(int x, int y, const Color& value);
+  void setColorBuffer(std::vector<Color> value);
+
   void setDepth(int x, int y, double value);
+  void setDepthBuffer(std::vector<double> value);
 
   void clear();
 

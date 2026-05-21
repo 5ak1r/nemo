@@ -1,6 +1,8 @@
 #include "src/graphics/render.hpp"
+#include "src/graphics/render_target.hpp"
 #include "src/graphics/scene.hpp"
 #include "src/graphics/window.hpp"
+#include "src/io/bmp.hpp"
 #include "src/io/obj.hpp"
 #include "src/math/constants_conversions.hpp"
 
@@ -8,10 +10,11 @@ int main() {
   const int width = 1920;
   const int height = 1080;
 
-  model::Mesh mesh = io::obj::Read("resources/suzanne.obj");
-  model::Mesh mesh2 = io::obj::Read("resources/plane.obj");
-  model::Mesh mesh3 = io::obj::Read("resources/cow.obj");
+  model::Mesh mesh = io::obj::Read("resources/models/suzanne.obj");
+  model::Mesh mesh2 = io::obj::Read("resources/models/plane.obj");
+  model::Mesh mesh3 = io::obj::Read("resources/models/cow.obj");
 
+  mesh.texture = io::bmp::Read("resources/textures/coated_pine.bmp");
   // add textures here
 
   graphics::window::InitGLFW();

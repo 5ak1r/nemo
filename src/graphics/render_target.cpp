@@ -51,8 +51,22 @@ void RenderTarget::setColor(int x, int y, const Color& value) {
   mColorBuffer[y * mWidth + x] = value;
 }
 
+void RenderTarget::setColorBuffer(std::vector<Color> value) {
+  if (value.size() != mWidth * mHeight)
+    throw std::invalid_argument("incorrect size for colour buffer");
+
+  mColorBuffer = std::move(value);
+}
+
 void RenderTarget::setDepth(int x, int y, double value) {
   mDepthBuffer[y * mWidth + x] = value;
+}
+
+void RenderTarget::setDepthBuffer(std::vector<double> value) {
+  if (value.size() != mWidth * mHeight)
+    throw std::invalid_argument("incorrect size for colour buffer");
+
+  mDepthBuffer = std::move(value);
 }
 
 void RenderTarget::clear() {
