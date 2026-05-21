@@ -3,6 +3,20 @@
   namespace io {
   namespace bmp {
 
+  graphics::Texture Read(const std::string& name) {
+    graphics::Texture texture;
+
+    std::ifstream file;
+
+    if (!io::file::Open(file, name)) {
+      throw std::invalid_argument("not a valid BMP file");
+    }
+
+
+
+    return texture;
+  }
+
   void Write(const graphics::render::RenderTarget& image, const std::string& name) {
     std::ofstream bmp(name + ".bmp", std::ios::binary);
 
@@ -20,18 +34,18 @@
     // thanks sebastian lague
     // BMP header
     bmp.write("BM", 2); // BMP header start
-    utils::binary::WriteLE(bmp, byteCounts[0] + byteCounts[1] + byteCounts[2]); //total file size
-    utils::binary::WriteLE(bmp, (uint32_t)0); // unused
-    utils::binary::WriteLE(bmp, byteCounts[0] + byteCounts[1]); // data offset
+    utils::binary::WriteLE32(bmp, byteCounts[0] + byteCounts[1] + byteCounts[2]); //total file size
+    utils::binary::WriteLE32(bmp, (uint32_t)0); // unused
+    utils::binary::WriteLE32(bmp, byteCounts[0] + byteCounts[1]); // data offset
 
     // DIP header
-    utils::binary::WriteLE(bmp, byteCounts[1]); // DIP header size
-    utils::binary::WriteLE(bmp, width); // image width
-    utils::binary::WriteLE(bmp, height); //image height
-    utils::binary::WriteLE(bmp, (uint16_t)1); // num color planes
-    utils::binary::WriteLE(bmp, (uint16_t)32); // bits per pixel (RGBA)
-    utils::binary::WriteLE(bmp, (uint32_t)0); // RGB format no compression
-    utils::binary::WriteLE(bmp, byteCounts[2]); // data size
+    utils::binary::WriteLE32(bmp, byteCounts[1]); // DIP header size
+    utils::binary::WriteLE32(bmp, width); // image width
+    utils::binary::WriteLE32(bmp, height); //image height
+    utils::binary::WriteLE16(bmp, (uint16_t)1); // num color planes
+    utils::binary::WriteLE16(bmp, (uint16_t)32); // bits per pixel (RGBA)
+    utils::binary::WriteLE32(bmp, (uint32_t)0); // RGB format no compression
+    utils::binary::WriteLE32(bmp, byteCounts[2]); // data size
 
     char zeros[16] = {};
     bmp.write(zeros, 16); // print resolution and palette info

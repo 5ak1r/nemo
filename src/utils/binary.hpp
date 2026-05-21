@@ -7,8 +7,11 @@
 namespace utils {
 namespace binary {
 
-void WriteLE(std::ofstream& out, uint16_t value);
-void WriteLE(std::ofstream& out, uint32_t value);
+uint16_t ReadLE16(std::ifstream& in);
+uint32_t ReadLE32(std::ifstream& in);
+
+void WriteLE16(std::ofstream& out, uint16_t value);
+void WriteLE32(std::ofstream& out, uint32_t value);
 
 } // namespace binary
 } // namespace utils

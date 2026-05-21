@@ -34,9 +34,10 @@ void RasterizeTriangle(
         if (depth > image.getDepth(x, y)) continue;
 
         double2 texCoord;
-        texCoord += uvA * weights.x;
-        texCoord += uvB * weights.y;
-        texCoord += uvC * weights.z;
+        texCoord += uvA / depths.x * weights.x;
+        texCoord += uvB / depths.y * weights.y;
+        texCoord += uvC / depths.z * weights.z;
+        texCoord *= depths;
 
         Color color = texture.Sample(texCoord);
 

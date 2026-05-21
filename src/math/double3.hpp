@@ -49,6 +49,22 @@ struct double3 {
 
     return *this;
   }
+
+  double3 operator*=(const double3& other) {
+    x *= other.x;
+    y *= other.y;
+    z *= other.z;
+
+    return *this;
+  }
+
+  double3 operator/=(const double3& other) {
+    x /= other.x;
+    y /= other.y;
+    z /= other.z;
+
+    return *this;
+  }
 };
 
 inline double3 operator-(const double3& a, const double3& b) {
