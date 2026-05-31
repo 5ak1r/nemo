@@ -1,5 +1,4 @@
 #include "file.hpp"
-#include <stdexcept>
 
 namespace io {
 namespace file {

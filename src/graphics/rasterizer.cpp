@@ -1,4 +1,5 @@
 #include "rasterizer.hpp"
+#include "lighting.hpp"
 
 namespace graphics {
 namespace rasterizer {
@@ -11,6 +12,8 @@ void RasterizeTriangle(
   const model::Vertex& vb,
   const model::Vertex& vc,
   const Material& material,
+  const std::vector<DirectionalLight>& directionalLights,
+  const std::vector<PointLight>& pointLights,
   render::RenderTarget& image
 ) {
   int minX = std::floor(std::min({a.x, b.x, c.x}));

@@ -1,10 +1,10 @@
 #ifndef RENDER_TARGET_H
 #define RENDER_TARGET_H
 
-#include "color.hpp"
-
 #include <limits>
 #include <vector>
+
+#include "color.hpp"
 
 namespace graphics {
 namespace render {

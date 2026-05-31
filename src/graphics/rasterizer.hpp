@@ -4,11 +4,14 @@
 #include <algorithm>
 #include <vector>
 
-#include "render_target.hpp"
+#include "lighting.hpp"
 #include "material.hpp"
+#include "render_target.hpp"
+
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 #include "../math/triangle.hpp"
+
 #include "../model/mesh.hpp"
 
 using namespace math;
@@ -24,6 +27,8 @@ void RasterizeTriangle(
   const model::Vertex& vB,
   const model::Vertex& vC,
   const Material& material,
+  const std::vector<DirectionalLight>& directionalLights,
+  const std::vector<PointLight>& pointLight,
   render::RenderTarget& image
 );
 

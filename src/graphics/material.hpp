@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "texture.hpp"
+
 #include "../math/double3.hpp"
 
 namespace graphics {

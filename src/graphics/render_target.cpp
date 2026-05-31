@@ -1,5 +1,4 @@
 #include "render_target.hpp"
-#include <limits>
 
 namespace graphics {
 namespace render {

@@ -2,6 +2,7 @@
 #define LIGHTING_H
 
 #include "color.hpp"
+
 #include "../math/double3.hpp"
 
 namespace graphics {

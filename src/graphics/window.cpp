@@ -1,5 +1,4 @@
 #include "window.hpp"
-#include <stdexcept>
 
 namespace graphics {
 namespace window {

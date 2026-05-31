@@ -1,9 +1,9 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include "../math/double3.hpp"
-
 #include <cstdint>
+
+#include "../math/double3.hpp"
 
 namespace graphics {
 

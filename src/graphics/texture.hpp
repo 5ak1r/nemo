@@ -1,10 +1,11 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "color.hpp"
-#include "../math/double2.hpp"
-
 #include <vector>
+
+#include "color.hpp"
+
+#include "../math/double2.hpp"
 
 namespace graphics {
 

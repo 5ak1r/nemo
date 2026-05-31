@@ -1,5 +1,4 @@
 #include "triangle.hpp"
-#include "vector.hpp"
 
 namespace math {
 namespace triangle {

@@ -2,8 +2,10 @@
 #include "src/graphics/render_target.hpp"
 #include "src/graphics/scene.hpp"
 #include "src/graphics/window.hpp"
+
 #include "src/io/bmp.hpp"
 #include "src/io/obj.hpp"
+
 #include "src/math/constants_conversions.hpp"
 
 int main() {

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../graphics/material.hpp"
+
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 

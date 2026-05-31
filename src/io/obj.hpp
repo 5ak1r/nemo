@@ -8,10 +8,13 @@
 #include <vector>
 
 #include "../io/file.hpp"
+
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
+
 #include "../model/mesh.hpp"
 #include "../model/mesh_builder.hpp"
+
 #include "../utils/string.hpp"
 
 namespace io {
