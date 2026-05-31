@@ -55,18 +55,13 @@ void RasterizeTriangle(
 
         if (depth > image.getDepth(x, y)) continue;
 
-        double3 normal;
-        if (va.normal.getLength() < 1e-6 || vb.normal.getLength() < 1e-6 || vc.normal.getLength() < 1e-6) {
-          normal = Cross(vb.position - va.position, vc.position - va.position);
-        } else {
-          normal = InterpolatePerspective(
-            va.normal,
-            vb.normal,
-            vc.normal,
-            depths,
-            weights
-          );
-        }
+        double3 normal = InterpolatePerspective(
+          va.normal,
+          vb.normal,
+          vc.normal,
+          depths,
+          weights
+        );
 
         double3 worldPos = InterpolatePerspective(
           va.position,

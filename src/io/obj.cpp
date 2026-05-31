@@ -107,6 +107,29 @@ model::Mesh Read(const std::string& filename) {
     }
   }
 
+  // compute normals if none
+  if (mesh.vertices[0].normal.getLength() < 1e-6) {
+    for (int i = 0; i < mesh.triangles.size(); i += 3) {
+      const int idx1 = mesh.triangles[i];
+      const int idx2 = mesh.triangles[i + 1];
+      const int idx3 = mesh.triangles[i + 2];
+
+      const math::double3& p1 = mesh.vertices[idx1].position;
+      const math::double3& p2 = mesh.vertices[idx2].position;
+      const math::double3& p3 = mesh.vertices[idx3].position;
+
+      math::double3 norm = math::Cross(p2 - p1, p3 - p1);
+
+      mesh.vertices[idx1].normal += norm;
+      mesh.vertices[idx2].normal += norm;
+      mesh.vertices[idx3].normal += norm;
+    }
+
+    for (model::Vertex& v : mesh.vertices) {
+      v.normal = v.normal.getNormalized();
+    }
+  }
+
   return mesh;
 }
 
