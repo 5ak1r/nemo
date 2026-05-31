@@ -13,9 +13,9 @@
 namespace io {
 namespace input {
 
-void Update(const graphics::window::Window& window);
+void Update(const graphics::Window& window);
 math::double2 GetMouseDelta();
-void ProcessInput(const graphics::window::Window& window, graphics::scene::Scene& scene, float deltaTime);
+void ProcessInput(const graphics::Window& window, graphics::Scene& scene, float deltaTime);
 
 } // namespace input
 } // namespace io

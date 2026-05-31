@@ -1,3 +1,4 @@
+#include "src/graphics/lighting.hpp"
 #include "src/graphics/render.hpp"
 #include "src/graphics/render_target.hpp"
 #include "src/graphics/scene.hpp"
@@ -19,23 +20,30 @@ int main() {
   mesh.material.texture = io::bmp::Read("resources/textures/coated_pine.bmp");
   // add textures here
 
-  graphics::window::InitGLFW();
+  graphics::InitGLFW();
 
-  graphics::window::Window window(width, height, "test");
+  graphics::Window window(width, height, "test");
   window.MakeCurrent();
 
-  graphics::window::InitGLAD();
+  graphics::InitGLAD();
   glViewport(0, 0, window.getWidth(), window.getHeight());
 
   math::Transform transform({0, conversions::ToRadians(180)}, {0.0, 0.0, 10.0});
   math::Transform transform2({0, conversions::ToRadians(180)}, {1.0, 0.2, 3.0});
   math::Transform transform3({0, conversions::ToRadians(180)}, {-2.0, 0.2, 2.0});
 
-  graphics::scene::Scene scene;
+  graphics::Scene scene;
   scene.camera = graphics::Camera(conversions::ToRadians(60));
   scene.components.push_back({mesh, transform});
   scene.components.push_back({mesh2, transform2});
   scene.components.push_back({mesh3, transform3});
+
+  graphics::DirectionalLight sunLight;
+  sunLight.direction = {0.3, -1.0, 0.2};
+  sunLight.color = {1.0, 0.95, 0.8};
+  sunLight.intensity = 1.0;
+
+  scene.directionalLights.push_back(sunLight);
 
   graphics::render::MainLoop(window, scene);
 }

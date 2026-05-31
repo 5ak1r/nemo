@@ -22,8 +22,8 @@ namespace render {
 const std::string vertShader = "src/graphics/shaders/vert.glsl";
 const std::string fragShader = "src/graphics/shaders/frag.glsl";
 
-void Mesh(RenderTarget& target, const model::Mesh& mesh, const Camera& camera, const math::Transform& transform, double fov);
-void MainLoop(const window::Window& window, scene::Scene& scene);
+void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, const Scene& scene);
+void MainLoop(const Window& window, Scene& scene);
 
 void SetupScreen(int width, int height);
 void DrawScreen(const RenderTarget& target);

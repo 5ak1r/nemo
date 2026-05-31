@@ -5,9 +5,9 @@ namespace triangle {
 
 double SignedTriangleArea(const double2& a, const double2& b, const double2& c) {
   double2 ac = c - a;
-  double2 abPerp = vector::Perpendicular(b - a);
+  double2 abPerp = Perpendicular(b - a);
 
-  return vector::Dot(ac, abPerp) / 2;
+  return Dot(ac, abPerp) / 2;
 }
 
 bool InTriangle(const double2& a, const double2& b, const double2& c, const double2& p, double3& weights) {

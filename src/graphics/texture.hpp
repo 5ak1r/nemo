@@ -22,7 +22,7 @@ public:
   void setHeight(int h) { mHeight = h; }
   void setImage(std::vector<graphics::Color> img) { mImage = std::move(img); }
 
-  Color Sample(const math::double2& texCoord) const;
+  math::double3 Sample(const math::double2& texCoord) const;
 
 private:
   std::vector<graphics::Color> mImage;

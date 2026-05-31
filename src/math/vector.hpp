@@ -13,14 +13,6 @@
 namespace math {
 namespace vector {
 
-inline double Dot(const double2& a, const double2& b) {
-  return a.x * b.x + a.y * b.y;
-}
-
-inline double Dot(const double3& a, const double3& b) {
-  return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
 // version that works with matrix rows and columns
 inline double Dot(const std::vector<double>& vec) {
   double result = 0.0;
@@ -41,10 +33,6 @@ inline double Dot(const std::vector<double>& vec1, const std::vector<double>& ve
 
 inline double Norm(const std::vector<double>& vec) {
   return std::sqrt(Dot(vec));
-}
-
-inline double2 Perpendicular(const double2& a) {
-  return { a.y, -a.x };
 }
 
 inline std::vector<double> StandardBasis(int pos, int size) {

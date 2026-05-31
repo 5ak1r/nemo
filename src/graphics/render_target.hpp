@@ -2,6 +2,7 @@
 #define RENDER_TARGET_H
 
 #include <limits>
+#include <stdexcept>
 #include <vector>
 
 #include "color.hpp"

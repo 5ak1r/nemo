@@ -11,7 +11,7 @@ namespace {
   static bool first = true;
 }
 
-void Update(const graphics::window::Window& window) {
+void Update(const graphics::Window& window) {
   double x, y;
   glfwGetCursorPos(window.getWindow(), &x, &y);
 
@@ -30,7 +30,7 @@ void Update(const graphics::window::Window& window) {
 
 math::double2 GetMouseDelta() { return mouseDelta; }
 
-void ProcessInput(const graphics::window::Window& window, graphics::scene::Scene& scene, float deltaTime) {
+void ProcessInput(const graphics::Window& window, graphics::Scene& scene, float deltaTime) {
   GLFWwindow* windowPtr = window.getWindow();
 
   for (auto& component : scene.components) {

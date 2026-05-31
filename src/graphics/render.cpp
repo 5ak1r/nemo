@@ -5,9 +5,11 @@ namespace render {
 
 GLuint screenVAO, screenVBO, screenShader, screenTexture;
 
-void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, const Camera& camera) {
+void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& transform, const Scene& scene) {
   int width = target.getWidth();
   int height = target.getHeight();
+
+  const Camera& camera = scene.camera;
 
   for (int i = 0; i < mesh.triangles.size(); i += 3) {
     const model::Vertex& va = mesh.vertices[mesh.triangles[i]];
@@ -20,11 +22,11 @@ void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& 
 
     if (a.z <= 0 || b.z <= 0 || c.z <= 0) continue;
 
-		rasterizer::RasterizeTriangle(a, b, c, va, vb, vc, mesh.material, target);
+		rasterizer::RasterizeTriangle(a, b, c, va, vb, vc, mesh.material, scene, target);
  	}
 }
 
-void MainLoop(const window::Window& window, scene::Scene& scene) {
+void MainLoop(const Window& window, Scene& scene) {
   SetupScreen(window.getWidth(), window.getHeight());
   GLFWwindow* windowPtr = window.getWindow();
   RenderTarget target(window.getWidth(), window.getHeight());
@@ -55,7 +57,7 @@ void MainLoop(const window::Window& window, scene::Scene& scene) {
 
     target.clear();
     for (auto& object : scene.components) {
-      Mesh(target, object.first, object.second, scene.camera);
+      Mesh(target, object.first, object.second, scene);
     }
 
     glClear(GL_COLOR_BUFFER_BIT);

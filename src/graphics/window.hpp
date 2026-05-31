@@ -9,7 +9,6 @@
 #include <string>
 
 namespace graphics {
-namespace window {
 
 void InitGLFW();
 void InitGLAD();
@@ -33,7 +32,6 @@ private:
   GLFWwindow* mWindow;
 };
 
-} // namespace window
 } // namespace graphics
 
 #endif // WINDOW_H

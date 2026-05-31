@@ -66,6 +66,14 @@ struct double2 {
   }
 };
 
+inline double Dot(const double2& a, const double2& b) {
+  return a.x * b.x + a.y * b.y;
+}
+
+inline double2 Perpendicular(const double2& a) {
+  return { a.y, -a.x };
+}
+
 inline double2 operator-(const double2& a, const double2& b) {
   return double2(a.x - b.x, a.y - b.y);
 }

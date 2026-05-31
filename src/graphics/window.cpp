@@ -1,7 +1,6 @@
 #include "window.hpp"
 
 namespace graphics {
-namespace window {
 
 void InitGLFW() {
   glfwInit();
@@ -46,5 +45,4 @@ void Window::MakeCurrent() const {
   glfwMakeContextCurrent(mWindow);
 }
 
-} // namespace window
 } // namespace graphics
