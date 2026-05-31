@@ -20,7 +20,7 @@ void Mesh(RenderTarget& target, const model::Mesh& mesh, const math::Transform& 
 
     if (a.z <= 0 || b.z <= 0 || c.z <= 0) continue;
 
-		rasterizer::RasterizeTriangle(a, b, c, va.texture, vb.texture, vc.texture, mesh.texture, target);
+		rasterizer::RasterizeTriangle(a, b, c, va, vb, vc, mesh.material, target);
  	}
 }
 

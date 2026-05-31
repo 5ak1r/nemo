@@ -7,10 +7,10 @@ void RasterizeTriangle(
   const double3& a,
   const double3& b,
   const double3& c,
-  const double2& uvA,
-  const double2& uvB,
-  const double2& uvC,
-  const Texture& texture,
+  const model::Vertex& va,
+  const model::Vertex& vb,
+  const model::Vertex& vc,
+  const Material& material,
   render::RenderTarget& image
 ) {
   int minX = std::floor(std::min({a.x, b.x, c.x}));
@@ -34,14 +34,22 @@ void RasterizeTriangle(
         if (depth > image.getDepth(x, y)) continue;
 
         double2 texCoord;
-        texCoord += uvA / depths.x * weights.x;
-        texCoord += uvB / depths.y * weights.y;
-        texCoord += uvC / depths.z * weights.z;
+        texCoord += va.texture / depths.x * weights.x;
+        texCoord += vb.texture / depths.y * weights.y;
+        texCoord += vc.texture / depths.z * weights.z;
         texCoord *= depths;
 
-        Color color = texture.Sample(texCoord);
+        Color texColor = material.texture.Sample(texCoord);
 
-        image.setColor(x, y, color);
+        double3 normal;
+        normal += va.normal / depths.x * weights.x;
+        normal += vb.normal / depths.y * weights.y;
+        normal += vc.normal / depths.z * weights.z;
+        normal *= depths;
+
+        // apply lighting method, using all scene lights, inputs: scene, texColor, normal, output: one Color
+
+        image.setColor(x, y, texColor); // setColor to this new Color
         image.setDepth(x, y, depth);
       }
     }

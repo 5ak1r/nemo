@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../graphics/texture.hpp"
+#include "../graphics/material.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 
@@ -22,7 +22,7 @@ struct Mesh {
   std::vector<Vertex> vertices;
   std::vector<int> triangles;
 
-  graphics::Texture texture;
+  graphics::Material material;
 };
 
 } // namespace model

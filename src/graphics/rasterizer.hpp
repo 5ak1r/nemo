@@ -5,10 +5,11 @@
 #include <vector>
 
 #include "render_target.hpp"
-#include "texture.hpp"
+#include "material.hpp"
 #include "../math/double2.hpp"
 #include "../math/double3.hpp"
 #include "../math/triangle.hpp"
+#include "../model/mesh.hpp"
 
 using namespace math;
 
@@ -19,10 +20,10 @@ void RasterizeTriangle(
   const double3& a,
   const double3& b,
   const double3& c,
-  const double2& uvA,
-  const double2& uvB,
-  const double2& uvC,
-  const Texture& texture,
+  const model::Vertex& vA,
+  const model::Vertex& vB,
+  const model::Vertex& vC,
+  const Material& material,
   render::RenderTarget& image
 );
 

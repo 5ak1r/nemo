@@ -14,7 +14,7 @@ int main() {
   model::Mesh mesh2 = io::obj::Read("resources/models/plane.obj");
   model::Mesh mesh3 = io::obj::Read("resources/models/cow.obj");
 
-  mesh.texture = io::bmp::Read("resources/textures/coated_pine.bmp");
+  mesh.material.texture = io::bmp::Read("resources/textures/coated_pine.bmp");
   // add textures here
 
   graphics::window::InitGLFW();
